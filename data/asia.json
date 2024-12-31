@@ -1,0 +1,22 @@
+{
+    "Vietnam": {
+        "capital": "Hanoi",
+        "definiteArticle": false
+    },
+    "Cambodia": {
+        "capital": "Phnom Penh",
+        "definiteArticle": false
+    },
+    "Thailand": {
+        "capital": "Bangkok",
+        "definiteArticle": false
+    },
+    "Laos": {
+        "capital": "Vientiane",
+        "definiteArticle": false
+    },
+    "Malaysia": {
+        "capital": "Kuala Lumpur",
+        "definiteArticle": false
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "Tunisia": {
+        "capital": "Tunis",
+        "definiteArticle": false
+    },
+    "Mauritania": {
+        "capital": "Nouakchott",
+        "definiteArticle": false
+    },
+    "Kenya": {
+        "capital": "Nairobi",
+        "definiteArticle": false
+    },
+    "Botswana": {
+        "capital": "Gaborone",
+        "definiteArticle": false
+    },
+    "Central African Republic": {
+        "capital": "Bangui",
+        "definiteArticle": true
+    }
+}
