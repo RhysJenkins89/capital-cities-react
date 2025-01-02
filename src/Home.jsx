@@ -7,6 +7,8 @@ const Home = () => {
         queryFn: () => fetch("./data/europe.json").then((res) => res.json()),
     });
 
+    // queryFn: () => fetch("./data/europe.json").then((res) => res.json()),
+
     if (isPending) return "Loading...";
 
     if (error) return "An error has occurred: " + error.message;
