@@ -1,12 +1,9 @@
-import React from "react";
+import { React, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import getEuropeData from "./fetchFunctions/getEuropeData";
 
 const Home = () => {
-    const getEuropeData = async () => {
-        const data = await fetch("./data/europe.json");
-        const europeData = await data.json();
-        return europeData;
-    };
+    const [currentCountry, getCurrentCountry] = useState("");
 
     const { isPending, error, data } = useQuery({
         queryKey: ["europeData"],
@@ -17,7 +14,16 @@ const Home = () => {
 
     if (error) return "An error has occurred: " + error.message;
 
-    console.log("Europe data:", data);
+    // When should the below function run? Think about the lifecycle of the component.
+    const getRandomCountry = () => {
+        console.log("Europe data:", data);
+        const objectKeys = Object.keys(europeData);
+        console.log("objectKeys", objectKeys);
+        // const randomCountry =
+        //     objectKeys[Math.floor(Math.random() * objectKeys.length)];
+    };
+
+    getRandomCountry();
 
     return (
         <div>
@@ -26,10 +32,5 @@ const Home = () => {
         </div>
     );
 };
-
-// async () => {
-//     const data = await fetch("./data/europe.json");
-//     const europeData = await data.json();
-// }
 
 export default Home;
