@@ -29,6 +29,15 @@ const Home = () => {
     return (
         <div>
             <h1>Capital cities</h1>
+            <p>Select continent:</p>
+            <div>
+                <button>Europe</button>
+                <button>Asia</button>
+                <button>Africa</button>
+            </div>
+            <p>
+                Current continent: <span>Europe</span>
+            </p>
             <p>
                 What is the capital of{" "}
                 {data.countryData.definiteArticle ? "the " : null}
