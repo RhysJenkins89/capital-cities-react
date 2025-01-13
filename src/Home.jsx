@@ -3,10 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import getRandomCountryData from "./fetchFunctions/europe/getRandomCountryData";
 
 const Home = () => {
-    const [continentData, setContinentData] = useState({});
-    const [currentCountry, setCurrentCountry] = useState("");
+    const [showAnswer, setShowAnswer] = useState(false);
+    const [showNextQuestionButton, setShowNextQuestionButton] = useState(false);
 
-    const { isPending, error, data } = useQuery({
+    const { isPending, error, data, refetch } = useQuery({
         queryKey: ["europeData"],
         queryFn: getRandomCountryData,
     });
@@ -16,7 +16,14 @@ const Home = () => {
     if (error) return "An error has occurred: " + error.message;
 
     function handleRevealAnswer() {
-        console.log("The user clicked reveal answer.");
+        setShowAnswer(true);
+        setShowNextQuestionButton(true);
+    }
+
+    function handleNextQuestion() {
+        setShowAnswer(false);
+        setShowNextQuestionButton(false);
+        refetch();
     }
 
     return (
@@ -28,6 +35,10 @@ const Home = () => {
                 {data.countryName}?
             </p>
             <button onClick={handleRevealAnswer}>Reveal answer</button>
+            {showAnswer ? <p>{data.countryData.capital}</p> : <p></p>}
+            {showNextQuestionButton ? (
+                <button onClick={handleNextQuestion}>Next question</button>
+            ) : null}
         </div>
     );
 };
