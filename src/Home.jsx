@@ -1,6 +1,6 @@
 import { React, useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import getRandomCountryData from "./fetchFunctions/europe/getRandomCountryData";
+import getRandomCountryData from "./fetchFunctions/getRandomCountryData";
 
 const Home = () => {
     const [showAnswer, setShowAnswer] = useState(false);
@@ -9,6 +9,7 @@ const Home = () => {
     const { isPending, error, data, refetch } = useQuery({
         queryKey: ["europeData"],
         queryFn: getRandomCountryData,
+        meta: "europe",
     });
 
     if (isPending) return "Loading...";
@@ -25,6 +26,8 @@ const Home = () => {
         setShowNextQuestionButton(false);
         refetch();
     }
+
+    // I'll need another useQuery that fetches data from a different route.
 
     return (
         <div>
