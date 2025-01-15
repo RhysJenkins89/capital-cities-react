@@ -30,6 +30,7 @@ const Home = () => {
     // I'll need another useQuery that fetches data from a different route.
 
     return (
+        // Also add flags
         <div>
             <h1>Capital cities</h1>
             <p>Select continent:</p>
