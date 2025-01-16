@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import getRandomCountryData from "./fetchFunctions/getRandomCountryData";
 
 const Home = () => {
@@ -8,24 +8,34 @@ const Home = () => {
 
     const { isPending, error, data, refetch } = useQuery({
         queryKey: ["europeData"],
-        queryFn: getRandomCountryData,
-        meta: "europe",
+        queryFn: () => getRandomCountryData("europe"),
     });
 
     if (isPending) return "Loading...";
 
     if (error) return "An error has occurred: " + error.message;
 
-    function handleRevealAnswer() {
+    const handleRevealAnswer = () => {
         setShowAnswer(true);
         setShowNextQuestionButton(true);
-    }
+    };
 
     function handleNextQuestion() {
         setShowAnswer(false);
         setShowNextQuestionButton(false);
         refetch();
     }
+
+    // I should probably have one function for all fetch calls, but I'll come to that later
+    const getAsiaData = () => {
+        // Update the current continent text
+        // Get the data for Asia
+        // const asiaData: UseQueryResult = useQuery({
+        //     queryKey: ["asiaData"],
+        //     queryFn: () => getRandomCountryData("asia"),
+        // });
+        // Could I just update the DOM with useRef here?
+    };
 
     // I'll need another useQuery that fetches data from a different route.
 
@@ -35,7 +45,7 @@ const Home = () => {
             <p>Select continent:</p>
             <div>
                 <button>Europe</button>
-                <button>Asia</button>
+                <button onClick={getAsiaData}>Asia</button>
                 <button>Africa</button>
             </div>
             <p>

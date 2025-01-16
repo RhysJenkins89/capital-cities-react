@@ -1,15 +1,11 @@
 import { UseQueryOptions } from "@tanstack/react-query";
 
-const getRandomCountryData = async (
-    queryData: UseQueryOptions
-): Promise<any> => {
-    // Without type checking, this isn't a prudent function. If the parameter isn't a string, the function will error.
-    // Add TypeScript.
+const getRandomCountryData = async (continent: string): Promise<any> => {
     let url: string;
-    if (!queryData.meta) {
+    if (!continent) {
         url = `./data/europe.json`;
     } else {
-        url = `./data/${queryData.meta}.json`;
+        url = `./data/${continent}.json`;
     }
     const data: Response = await fetch(url);
     const continentData = await data.json(); // Type
