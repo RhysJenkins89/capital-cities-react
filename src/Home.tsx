@@ -34,7 +34,8 @@ const Home = () => {
         //     queryKey: ["asiaData"],
         //     queryFn: () => getRandomCountryData("asia"),
         // });
-        // Could I just update the DOM with useRef here?
+        // Can I just call useQuery again, passing in new data? That way, the page will re-render with all the new data that I need.
+        // Could I call a function that itself calls useQuery, passing in the data that I need?
     };
 
     // I'll need another useQuery that fetches data from a different route.
