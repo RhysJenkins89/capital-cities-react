@@ -1,4 +1,4 @@
-import { UseQueryOptions } from "@tanstack/react-query";
+import ContinentData from "../types/ContinentData";
 
 const getRandomCountryData = async (continent: string): Promise<any> => {
     let url: string;
@@ -8,7 +8,8 @@ const getRandomCountryData = async (continent: string): Promise<any> => {
         url = `./data/${continent}.json`;
     }
     const data: Response = await fetch(url);
-    const continentData = await data.json(); // Type
+    const continentData: ContinentData = await data.json(); // Type
+    console.log("Continent data:", continentData);
     const objectKeys: string[] = Object.keys(continentData);
     const randomCountry: string =
         objectKeys[Math.floor(Math.random() * objectKeys.length)];
