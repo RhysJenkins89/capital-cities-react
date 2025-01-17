@@ -54,11 +54,11 @@ const Home = () => {
             </p>
             <p>
                 What is the capital of{" "}
-                {data.countryData.definiteArticle ? "the " : null}
+                {data.countryInfo.definiteArticle ? "the " : null}
                 {data.countryName}?
             </p>
             <button onClick={handleRevealAnswer}>Reveal answer</button>
-            {showAnswer ? <p>{data.countryData.capital}</p> : <p></p>}
+            {showAnswer ? <p>{data.countryInfo.capital}</p> : <p></p>}
             {showNextQuestionButton ? (
                 <button onClick={handleNextQuestion}>Next question</button>
             ) : null}

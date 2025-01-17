@@ -1,7 +1,7 @@
 type ContinentData = {
     [index: string]: {
         capital: string;
-        definiteArticle: string;
+        definiteArticle: boolean;
     };
 };
 
