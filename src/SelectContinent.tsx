@@ -1,24 +1,41 @@
 import { useState } from "react";
 
-const SelectContinent = ({ sendDataToParent }) => {
-    const [userContinentSelection, setUserContinentSelection] = useState("");
-
-    const handleClick = () => {
-        sendDataToParent(userContinentSelection);
+const SelectContinent = ({ sendDataToParent, currentContinent }) => {
+    const handleClick = (continent: string) => {
+        sendDataToParent(continent);
     };
 
     return (
         <div>
-            <select
-                value={userContinentSelection}
-                onChange={(event) =>
-                    setUserContinentSelection(event.target.value)
-                }
-            >
-                <option value="europe">Europe</option>
-                <option value="asia">Asia</option>
-            </select>
-            <button onClick={handleClick}>Send data to parent</button>
+            <div>
+                <button
+                    onClick={(event) =>
+                        handleClick((event.target as HTMLInputElement).value)
+                    }
+                    value={"europe"}
+                >
+                    Europe
+                </button>
+                <button
+                    onClick={(event) =>
+                        handleClick((event.target as HTMLInputElement).value)
+                    }
+                    value={"asia"}
+                >
+                    Asia
+                </button>
+                <button
+                    onClick={(event) =>
+                        handleClick((event.target as HTMLInputElement).value)
+                    }
+                    value={"africa"}
+                >
+                    Africa
+                </button>
+            </div>
+            <p>
+                Current continent: <span>{currentContinent}</span>
+            </p>
         </div>
     );
 };

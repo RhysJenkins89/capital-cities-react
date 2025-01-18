@@ -7,25 +7,14 @@ import SelectContinent from "./SelectContinent";
 const Home = () => {
     const [showAnswer, setShowAnswer] = useState(false);
     const [showNextQuestionButton, setShowNextQuestionButton] = useState(false);
-    const [continent, setContinent] = useState(""); // Default required
+    const [continent, setContinent] = useState("Europe");
 
-    // Render a component that accepts the continent data
-    // Handle the continent selection in a state variable. When the user clicks on a new continent, update the state variable, which will cause the app to re-render, loading the component again with the new data.
-
-    // const [dataFromChild, setDataFromChild] = useState("");
-
-    const handleDataFromChild = (continentDataFromChild: string) => {
-        console.log("continent data from child:", continentDataFromChild);
-        setContinent(continentDataFromChild);
+    const handleDataFromChild = (continentData: string) => {
+        console.log("continent data from child:", continentData);
+        setContinent(continentData);
     };
 
-    // return (
-    //     <div>
-    //         <h1>Data from Child: {dataFromChild}</h1>
-    //         <Child sendDataToParent={handleDataFromChild} />
-    //     </div>
-    // );
-
+    // Think about the caching of this data. I don't want to refetch data that I already have.
     const { isPending, error, data, refetch } = useQuery({
         queryKey: [continent],
         queryFn: () => getRandomCountryData(continent),
@@ -62,10 +51,10 @@ const Home = () => {
         <div>
             <h1>Capital cities</h1>
             <p>Select continent:</p>
-            <SelectContinent sendDataToParent={handleDataFromChild} />
-            <p>
-                Current continent: <span>{continent}</span>
-            </p>
+            <SelectContinent
+                sendDataToParent={handleDataFromChild}
+                currentContinent={continent}
+            />
             <p>
                 What is the capital of{" "}
                 {data.countryInfo.definiteArticle ? "the " : null}
