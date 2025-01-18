@@ -10,7 +10,6 @@ const Home = () => {
     const [continent, setContinent] = useState("Europe");
 
     const handleDataFromChild = (continentData: string) => {
-        console.log("continent data from child:", continentData);
         setContinent(continentData);
     };
 

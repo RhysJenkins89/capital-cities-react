@@ -1,4 +1,5 @@
 import { useState } from "react";
+import capitaliseFirstLetter from "./helperFunctions/capitaliseFirstLetter";
 
 const SelectContinent = ({ sendDataToParent, currentContinent }) => {
     const handleClick = (continent: string) => {
@@ -34,7 +35,8 @@ const SelectContinent = ({ sendDataToParent, currentContinent }) => {
                 </button>
             </div>
             <p>
-                Current continent: <span>{currentContinent}</span>
+                Current continent:{" "}
+                <span>{capitaliseFirstLetter(currentContinent)}</span>
             </p>
         </div>
     );

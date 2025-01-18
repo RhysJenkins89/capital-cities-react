@@ -1,6 +1,6 @@
 # Doing
 
--   Change between continents
+-   Write a function to capitalise the first letter of a string
 
 ## To do
 
