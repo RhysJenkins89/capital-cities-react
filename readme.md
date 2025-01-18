@@ -1,9 +1,10 @@
 # Doing
 
--   Write a function to capitalise the first letter of a string
+-
 
 ## To do
 
+-   Add caching to useQuery
 -   Deploy site to rhysjenkins.uk
 -   Sort Vite config warning
 -   Add an error boundary to the app

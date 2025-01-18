@@ -1,9 +1,9 @@
 import { useState } from "react";
 import capitaliseFirstLetter from "./helperFunctions/capitaliseFirstLetter";
 
-const SelectContinent = ({ sendDataToParent, currentContinent }) => {
+const SelectContinent = ({ continentSelectionCallback, currentContinent }) => {
     const handleClick = (continent: string) => {
-        sendDataToParent(continent);
+        continentSelectionCallback(continent);
     };
 
     return (

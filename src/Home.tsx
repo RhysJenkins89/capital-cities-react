@@ -9,11 +9,6 @@ const Home = () => {
     const [showNextQuestionButton, setShowNextQuestionButton] = useState(false);
     const [continent, setContinent] = useState("Europe");
 
-    const handleDataFromChild = (continentData: string) => {
-        setContinent(continentData);
-    };
-
-    // Think about the caching of this data. I don't want to refetch data that I already have.
     const { isPending, error, data, refetch } = useQuery({
         queryKey: [continent],
         queryFn: () => getRandomCountryData(continent),
@@ -28,22 +23,16 @@ const Home = () => {
         setShowNextQuestionButton(true);
     };
 
-    function handleNextQuestion() {
+    const handleNextQuestion = () => {
         setShowAnswer(false);
         setShowNextQuestionButton(false);
         refetch();
-    }
+    };
 
-    const getAsiaData = () => {
-        // Update the current continent text
-        // Get the data for Asia
-        // const asiaData: UseQueryResult = useQuery({
-        //     queryKey: ["asiaData"],
-        //     queryFn: () => getRandomCountryData("asia"),
-        // });
-        // This is want I want to do:
-        // Can I just call useQuery again, passing in new data? That way, the page will re-render with all the new data that I need.
-        // Could I call a function that itself calls useQuery, passing in the data that I need?
+    const handleUserContinentSelection = (continentData: string) => {
+        setShowAnswer(false);
+        setShowNextQuestionButton(false);
+        setContinent(continentData);
     };
 
     return (
@@ -51,7 +40,7 @@ const Home = () => {
             <h1>Capital cities</h1>
             <p>Select continent:</p>
             <SelectContinent
-                sendDataToParent={handleDataFromChild}
+                continentSelectionCallback={handleUserContinentSelection}
                 currentContinent={continent}
             />
             <p>
