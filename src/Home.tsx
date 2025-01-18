@@ -1,13 +1,18 @@
-import { useState, useRef } from "react";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import getRandomCountryData from "./fetchFunctions/getRandomCountryData";
-import ChildCom from "./SelectContinent";
 import SelectContinent from "./SelectContinent";
 
 const Home = () => {
     const [showAnswer, setShowAnswer] = useState(false);
     const [showNextQuestionButton, setShowNextQuestionButton] = useState(false);
-    const [continent, setContinent] = useState("Europe");
+    const [continent, setContinent] = useState(
+        window.localStorage.getItem("lastUserContinentSelection") || "europe"
+    );
+
+    // useEffect(() => {
+    //     window.localStorage.setItem("test-one", "test-two");
+    // }, []);
 
     const { isPending, error, data, refetch } = useQuery({
         queryKey: [continent],
@@ -30,6 +35,10 @@ const Home = () => {
     };
 
     const handleUserContinentSelection = (continentData: string) => {
+        window.localStorage.setItem(
+            "lastUserContinentSelection",
+            continentData
+        );
         setShowAnswer(false);
         setShowNextQuestionButton(false);
         setContinent(continentData);
