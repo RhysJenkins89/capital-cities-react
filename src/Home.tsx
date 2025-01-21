@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import getRandomCountryData from "./fetchFunctions/getRandomCountryData";
 import SelectContinent from "./SelectContinent";
-import useLocalStorage from "./customHooks/useLocalStorage";
+// import useLocalStorage from "./customHooks/useLocalStorage";
+// import useLocalStorageState from "use-local-storage-state";
 
 const Home = () => {
     const [showAnswer, setShowAnswer] = useState(false);
@@ -11,7 +12,13 @@ const Home = () => {
         window.localStorage.getItem("lastUserContinentSelection") || "europe"
     );
 
-    const [continentTest, setContinetTest] = useLocalStorage("", "europe");
+    // const [todos, setTodos] = useLocalStorageState("todos", {
+    //     defaultValue: ["buy avocado", "do 50 push-ups"],
+    // });
+
+    // const [continent, setContinent] = useLocalStorageState(
+    //     "lastUserContinentSelection"
+    // );
 
     const { isPending, error, data, refetch } = useQuery({
         queryKey: [continent],

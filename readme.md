@@ -12,3 +12,4 @@
 -   Add an external database
 -   Add flags
 -   Add testing
+-   Add ESLint
