@@ -22,7 +22,7 @@ const Home = () => {
 
     const { isPending, error, data, refetch } = useQuery({
         queryKey: [continent],
-        queryFn: () => getRandomCountryData(continent),
+        queryFn: () => getRandomCountryData(continent), // There must be something strange going on with caching here.
     });
 
     if (isPending) return "Loading...";
