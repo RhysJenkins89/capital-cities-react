@@ -12,6 +12,15 @@ const Home = () => {
         window.localStorage.getItem("lastUserContinentSelection") || "europe"
     );
 
+    // Coding is shockingly uncomplicated:
+    // 1. Code doesn't work.
+    // 2. Don't know why.
+    // 3. Google the answers.
+    // 4. Code works.
+    // 5. Don't know why.
+
+    // Repeat forever.
+
     // const [todos, setTodos] = useLocalStorageState("todos", {
     //     defaultValue: ["buy avocado", "do 50 push-ups"],
     // });
