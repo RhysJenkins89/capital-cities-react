@@ -6,18 +6,20 @@ import SelectContinent from "./SelectContinent";
 // import useLocalStorageState from "use-local-storage-state";
 
 const Home = () => {
-    const [showAnswer, setShowAnswer] = useState(false);
-    const [showNextQuestionButton, setShowNextQuestionButton] = useState(false);
-    const [continent, setContinent] = useState(
+    const [showAnswer, setShowAnswer] = useState<boolean>(false);
+    const [showNextQuestionButton, setShowNextQuestionButton] =
+        useState<boolean>(false);
+    const [continent, setContinent] = useState<string>(
         window.localStorage.getItem("lastUserContinentSelection") || "europe"
     );
 
     // Coding is shockingly uncomplicated:
-    // 1. Code doesn't work.
-    // 2. Don't know why.
-    // 3. Google the answers.
-    // 4. Code works.
-    // 5. Don't know why.
+    // 1. Write code.
+    // 2. Code doesn't work.
+    // 3. Don't know why.
+    // 4. Google the answers.
+    // 5. Code works.
+    // 6. Don't know why.
 
     // Repeat forever.
 
@@ -49,7 +51,13 @@ const Home = () => {
         refetch();
     };
 
-    const handleUserContinentSelection = (continentData: string) => {
+    type ContinentData = {
+        name: string;
+    };
+
+    const handleUserContinentSelection = (
+        continentData: ContinentData["name"]
+    ) => {
         window.localStorage.setItem(
             "lastUserContinentSelection",
             continentData
