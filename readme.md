@@ -13,3 +13,7 @@
 -   Add flags
 -   Add testing
 -   Add ESLint
+
+## Notes
+
+-   Potential data source: https://datahelpdesk.worldbank.org/knowledgebase/articles/898590-country-api-queries

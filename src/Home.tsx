@@ -5,6 +5,16 @@ import SelectContinent from "./SelectContinent";
 // import useLocalStorage from "./customHooks/useLocalStorage";
 // import useLocalStorageState from "use-local-storage-state";
 
+// Coding is shockingly uncomplicated:
+// 1. Write code.
+// 2. Code doesn't work.
+// 3. Don't know why.
+// 4. Google the answers.
+// 5. Code works.
+// 6. Don't know why.
+
+// Repeat forever.
+
 const Home = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
     const [showNextQuestionButton, setShowNextQuestionButton] =
@@ -13,27 +23,9 @@ const Home = () => {
         window.localStorage.getItem("lastUserContinentSelection") || "europe"
     );
 
-    // Coding is shockingly uncomplicated:
-    // 1. Write code.
-    // 2. Code doesn't work.
-    // 3. Don't know why.
-    // 4. Google the answers.
-    // 5. Code works.
-    // 6. Don't know why.
-
-    // Repeat forever.
-
-    // const [todos, setTodos] = useLocalStorageState("todos", {
-    //     defaultValue: ["buy avocado", "do 50 push-ups"],
-    // });
-
-    // const [continent, setContinent] = useLocalStorageState(
-    //     "lastUserContinentSelection"
-    // );
-
     const { isPending, error, data, refetch } = useQuery({
         queryKey: [continent],
-        queryFn: () => getRandomCountryData(continent), // There must be something strange going on with caching here.
+        queryFn: () => getRandomCountryData(continent),
     });
 
     if (isPending) return "Loading...";
