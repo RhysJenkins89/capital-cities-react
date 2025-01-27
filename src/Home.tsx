@@ -15,6 +15,9 @@ import SelectContinent from "./SelectContinent";
 
 // Repeat forever.
 
+// Note:
+// The gh-pages-source branch and the main branch are different. At the time of writing, the site deploys from the gh-pages-source branch.
+
 const Home = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
     const [showNextQuestionButton, setShowNextQuestionButton] =
