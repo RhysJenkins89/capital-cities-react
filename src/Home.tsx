@@ -9,7 +9,7 @@ import SelectContinent from "./SelectContinent";
 // 1. Write code.
 // 2. Code doesn't work.
 // 3. Don't know why.
-// 4. Google the answers.
+// 4. Google the answer
 // 5. Code works.
 // 6. Don't know why.
 
