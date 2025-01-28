@@ -15,6 +15,8 @@ import SelectContinent from "./SelectContinent";
 
 // Repeat forever.
 
+// This is a GitHub workflow test.
+
 const Home = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
     const [showNextQuestionButton, setShowNextQuestionButton] =
