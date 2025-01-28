@@ -15,4 +15,8 @@
 
 ## Notes
 
+At the time of writing, the site deploys from the `gh-pages-source` branch. Pushing code to this branch's remote will deploy the site. Development of the site is currently done on the `main` branch.
+
+## Ideas
+
 -   Potential data source: https://datahelpdesk.worldbank.org/knowledgebase/articles/898590-country-api-queries
