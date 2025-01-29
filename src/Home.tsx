@@ -2,8 +2,6 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import getRandomCountryData from "./fetchFunctions/getRandomCountryData";
 import SelectContinent from "./SelectContinent";
-// import useLocalStorage from "./customHooks/useLocalStorage";
-// import useLocalStorageState from "use-local-storage-state";
 
 // Coding is shockingly uncomplicated:
 // 1. Write code.
@@ -14,11 +12,6 @@ import SelectContinent from "./SelectContinent";
 // 6. Don't know why.
 
 // Repeat forever.
-
-// Update to test actions.
-
-// Note:
-// The gh-pages-source branch and the main branch are different. At the time of writing, the site deploys from the gh-pages-source branch.
 
 const Home = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
