@@ -17,6 +17,8 @@
 
 At the time of writing, the site deploys from the `gh-pages-source` branch. Pushing code to this branch's remote will deploy the site. Development of the site is currently done on the `main` branch.
 
+To avoid each commit making one branch ahead of the other, look into the linear history option under the Rules tab in settings.
+
 ## Ideas
 
 -   Potential data source: https://datahelpdesk.worldbank.org/knowledgebase/articles/898590-country-api-queries
