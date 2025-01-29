@@ -1,9 +1,10 @@
 # Doing
 
--   Deploy site to rhysjenkins.uk
+-   Fix GitHub merging issue
 
 ## To do
 
+-   Fix useQuery bug
 -   Add caching to useQuery
 -   Sort Vite config warning
 -   Add an error boundary to the app
