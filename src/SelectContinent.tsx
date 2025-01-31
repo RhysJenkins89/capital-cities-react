@@ -19,6 +19,7 @@ const SelectContinent = ({ continentSelectionCallback, currentContinent }) => {
                     }
                     value={"europe"}
                 >
+                    {/* event.target above is an HTMLElement, which doesn't necessarily have the property value. TypeScript detects this and throws the error. Casting event.target as an HTMLInputElement guarantees that the element contains the value property. */}
                     Europe
                 </button>
                 <button
