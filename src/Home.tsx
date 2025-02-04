@@ -26,7 +26,7 @@ const Home = () => {
         queryFn: () => getRandomCountryData(continent),
     });
 
-    if (isPending) return "Loading...";
+    if (isPending) return "This is a test. Loading...";
 
     if (error) return "An error has occurred: " + error.message;
 
