@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import getRandomCountryData from "./fetchFunctions/getRandomCountryData";
 import SelectContinent from "./SelectContinent";
@@ -31,12 +31,12 @@ const Home = () => {
         refetch();
     };
 
-    type ContinentData = {
+    type ContinentName = {
         name: string;
     };
 
     const handleUserContinentSelection = (
-        continentData: ContinentData["name"]
+        continentData: ContinentName["name"]
     ) => {
         window.localStorage.setItem(
             "lastUserContinentSelection",

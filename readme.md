@@ -1,6 +1,6 @@
 # Doing
 
--   Fix useQuery bug
+-   The app shouldn't display the same country twice in a row
 
 ## To do
 
