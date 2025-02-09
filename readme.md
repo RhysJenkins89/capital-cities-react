@@ -13,6 +13,8 @@
 -   Add testing
 -   Add ESLint
 -   Look into Prettier formatting options
+-   Add a loading state
+-   Add a proper error state, which fits nicely with the error boundary item above
 
 ## Notes and ideas
 
