@@ -3,16 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import getRandomCountryData from "./fetchFunctions/getRandomCountryData";
 import SelectContinent from "./SelectContinent";
 
-// Coding is shockingly uncomplicated:
-// 1. Write code.
-// 2. Code doesn't work.
-// 3. Don't know why.
-// 4. Google the answer
-// 5. Code works.
-// 6. Don't know why.
-
-// Repeat forever.
-
 const Home = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
     const [showNextQuestionButton, setShowNextQuestionButton] =
@@ -26,7 +16,7 @@ const Home = () => {
         queryFn: () => getRandomCountryData(continent),
     });
 
-    if (isPending) return "This is a test. Loading...";
+    if (isPending) return "Loading...";
 
     if (error) return "An error has occurred: " + error.message;
 
