@@ -6,9 +6,9 @@ const getRandomCountryData = async (
 ): Promise<CountryData> => {
     let url: string;
     if (!continent) {
-        url = `https://cities-api.rhysjenkins.uk/europeRandom`;
+        url = `https://cities-api.rhysjenkins.uk/europe`;
     } else {
-        url = `https://cities-api.rhysjenkins.uk/${continent}Random`;
+        url = `https://cities-api.rhysjenkins.uk/${continent}`;
     }
     const data: Response = await fetch(url);
     const continentData: ContinentData = await data.json();
