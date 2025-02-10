@@ -10,6 +10,7 @@ const Home = () => {
     const [continent, setContinent] = useState<string>(
         window.localStorage.getItem("lastUserContinentSelection") || "europe"
     );
+    const previousCountry = useRef<string>("");
 
     const { isPending, error, data, refetch } = useQuery({
         queryKey: [continent],
@@ -19,6 +20,31 @@ const Home = () => {
     if (isPending) return "Loading...";
 
     if (error) return "An error has occurred: " + error.message;
+
+    // useEffect(() => {
+    //     if (previousCountry.current === data.countryName) {
+    //         refetch();
+    //     } else {
+    //         previousCountry.current = data.countryName;
+    //         // Continue rendering
+    //     }
+    // }, []);
+
+    console.log("previousCountry.current:", previousCountry.current);
+
+    // if previousCountry.current is an empty string, continue with the render as normal.
+    // if previousCountry.current === data.CountryName, refetch the data
+
+    // const refFunction = () => {
+    //     if (previousCountry.current === data.countryName) {
+    //         refetch();
+    //     } else {
+    //         previousCountry.current = data.countryName;
+    //         // Continue rendering
+    //     }
+    // };
+
+    // refFunction();
 
     const handleRevealAnswer = () => {
         setShowAnswer(true);
