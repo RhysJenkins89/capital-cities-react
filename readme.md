@@ -1,9 +1,10 @@
 # Doing
 
--   The app shouldn't display the same country twice in a row
+-   Building login functionality
 
 ## To do
 
+-   The app shouldn't display the same country twice in a row
 -   Add caching to useQuery
 -   Sort Vite config warning
 -   Add an error boundary to the app

@@ -12,7 +12,9 @@ const Home = () => {
     const [continent, setContinent] = useState<string>(
         window.localStorage.getItem("lastUserContinentSelection") || "europe"
     );
-    const previousCountry = useRef<string>("");
+    const [userEmail, setUserEmail] = useState<string>("");
+    const [userPassword, setUserPassword] = useState<string>("");
+    // const previousCountry = useRef<string>("");
 
     const { isPending, error, data, refetch } = useQuery({
         queryKey: [continent],
@@ -23,30 +25,8 @@ const Home = () => {
 
     if (error) return "An error has occurred: " + error.message;
 
-    // useEffect(() => {
-    //     if (previousCountry.current === data.countryName) {
-    //         refetch();
-    //     } else {
-    //         previousCountry.current = data.countryName;
-    //         // Continue rendering
-    //     }
-    // }, []);
-
-    console.log("previousCountry.current:", previousCountry.current);
-
     // if previousCountry.current is an empty string, continue with the render as normal.
     // if previousCountry.current === data.CountryName, refetch the data
-
-    // const refFunction = () => {
-    //     if (previousCountry.current === data.countryName) {
-    //         refetch();
-    //     } else {
-    //         previousCountry.current = data.countryName;
-    //         // Continue rendering
-    //     }
-    // };
-
-    // refFunction();
 
     const handleRevealAnswer = () => {
         setShowAnswer(true);
@@ -75,9 +55,45 @@ const Home = () => {
         setContinent(continentData);
     };
 
+    const handleUserLogin = () => {
+        console.log("user clicked login");
+
+        // Show a signup form -- email and password will do for now
+        // On submit, send a request to the backend
+        // Build a route on the backend to accept the request
+    };
+
+    const handleUserFormSubmit = (event) => {
+        // There is something going on with the Event type here
+        event.preventDefault();
+        console.log("user clicked submit");
+    };
+
     return (
         <div>
             <h1>Capital cities</h1>
+            <button onClick={handleUserLogin}>Login</button>
+            <form onSubmit={handleUserFormSubmit}>
+                <label>
+                    Email:
+                    <input
+                        type="email"
+                        value={userEmail}
+                        onChange={(event) => setUserEmail(event.target.value)}
+                    />
+                </label>
+                <label>
+                    Password:
+                    <input
+                        type="password"
+                        value={userPassword}
+                        onChange={(event) =>
+                            setUserPassword(event.target.value)
+                        }
+                    />
+                </label>
+                <input type="submit" />
+            </form>
             <p>Select continent:</p>
             <SelectContinent
                 continentSelectionCallback={handleUserContinentSelection}
