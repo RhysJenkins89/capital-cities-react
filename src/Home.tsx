@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, FormEvent } from "react";
 import { useQuery } from "@tanstack/react-query";
 import getRandomCountryData from "./fetchFunctions/getRandomCountryData";
 import SelectContinent from "./SelectContinent";
@@ -14,7 +14,7 @@ const Home = () => {
     );
     const [userEmail, setUserEmail] = useState<string>("");
     const [userPassword, setUserPassword] = useState<string>("");
-    // const previousCountry = useRef<string>("");
+    const previousCountry = useRef<string>("");
 
     const { isPending, error, data, refetch } = useQuery({
         queryKey: [continent],
@@ -24,6 +24,8 @@ const Home = () => {
     if (isPending) return "Loading...";
 
     if (error) return "An error has occurred: " + error.message;
+
+    console.log("useRef previous country:", previousCountry.current);
 
     // if previousCountry.current is an empty string, continue with the render as normal.
     // if previousCountry.current === data.CountryName, refetch the data
@@ -63,8 +65,8 @@ const Home = () => {
         // Build a route on the backend to accept the request
     };
 
-    const handleUserFormSubmit = (event) => {
-        // There is something going on with the Event type here
+    const handleUserFormSubmit = (event: FormEvent) => {
+        // Changing Event to FormEvent event fixed the error.
         event.preventDefault();
         console.log("user clicked submit");
     };
