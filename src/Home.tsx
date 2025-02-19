@@ -14,7 +14,7 @@ const Home = () => {
     );
     const [userEmail, setUserEmail] = useState<string>("");
     const [userPassword, setUserPassword] = useState<string>("");
-    // const previousCountry = useRef<string>("");
+    const previousCountry = useRef<string>("");
 
     const { isPending, error, data, refetch } = useQuery({
         queryKey: [continent],
@@ -25,12 +25,20 @@ const Home = () => {
 
     if (error) return "An error has occurred: " + error.message;
 
-    // console.log("useRef previous country:", previousCountry.current);
+    console.log("useRef previous country:", previousCountry.current);
 
     // if previousCountry.current is an empty string, continue with the render as normal.
-    // if previousCountry.current === data.CountryName, refetch the data
+    if (previousCountry.current === data.countryName) {
+        console.log(
+            `Previous country, ${previousCountry.current}, is the same as the current country, ${data.countryName}.`
+        );
+        console.log("Refetching data.");
+        refetch();
+    }
 
     const handleRevealAnswer = () => {
+        console.log("current data:", data);
+        previousCountry.current = data.countryName; // This is the right place to update the logic. Next I need to get the current city data into this function.
         setShowAnswer(true);
         setShowNextQuestionButton(true);
     };
