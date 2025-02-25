@@ -32,8 +32,8 @@ const Home = () => {
         console.log(
             `Previous country, ${previousCountry.current}, is the same as the current country, ${data.countryName}.`
         );
-        console.log("Refetching data.");
-        refetch();
+        // console.log("Refetching data.");
+        // refetch();
     }
 
     const handleRevealAnswer = () => {
@@ -82,7 +82,7 @@ const Home = () => {
     return (
         <div>
             <h1>Capital cities</h1>
-            <button onClick={handleUserLogin}>Login</button>
+            {/* <button onClick={handleUserLogin}>Login</button>
             <form onSubmit={handleUserFormSubmit}>
                 <label>
                     Email:
@@ -103,7 +103,7 @@ const Home = () => {
                     />
                 </label>
                 <input type="submit" />
-            </form>
+            </form> */}
             <p>Select continent:</p>
             <SelectContinent
                 continentSelectionCallback={handleUserContinentSelection}
