@@ -30,20 +30,21 @@ const Home = () => {
     // if previousCountry.current is an empty string, continue with the render as normal.
     if (previousCountry.current === data.countryName) {
         console.log(
-            `Previous country, ${previousCountry.current}, is the same as the current country, ${data.countryName}.`
+            `The previous country, ${previousCountry.current}, is the same as the current country, ${data.countryName}.`
         );
         // console.log("Refetching data.");
         // refetch();
     }
 
     const handleRevealAnswer = () => {
-        console.log("current data:", data);
-        previousCountry.current = data.countryName; // This is the right place to update the logic. Next I need to get the current city data into this function.
+        // console.log("current data:", data);
         setShowAnswer(true);
         setShowNextQuestionButton(true);
     };
 
     const handleNextQuestion = () => {
+        // debugger;
+        previousCountry.current = data.countryName; // This is the right place to update the logic. Next I need to get the current city data into this function.
         setShowAnswer(false);
         setShowNextQuestionButton(false);
         refetch();
