@@ -29,6 +29,7 @@ const Home = () => {
 
     // if previousCountry.current is an empty string, continue with the render as normal.
     if (previousCountry.current === data.countryName) {
+        debugger;
         console.log(
             `The previous country, ${previousCountry.current}, is the same as the current country, ${data.countryName}.`
         );
@@ -44,7 +45,7 @@ const Home = () => {
 
     const handleNextQuestion = () => {
         // debugger;
-        previousCountry.current = data.countryName; // This is the right place to update the logic. Next I need to get the current city data into this function.
+        previousCountry.current = data.countryName; // This is the right place to update the logic. I mean, maybe. Who knows really?
         setShowAnswer(false);
         setShowNextQuestionButton(false);
         refetch();
