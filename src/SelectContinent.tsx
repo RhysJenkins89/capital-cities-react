@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import capitaliseFirstLetter from "./helperFunctions/capitaliseFirstLetter";
 
 type ContinentData = {
     name: string;
 };
 
-const SelectContinent = ({ continentSelectionCallback, currentContinent }) => {
+type SelectContinentProps = {
+    continentSelectionCallback: Dispatch<SetStateAction<string>>;
+    currentContinent: string;
+};
+
+const SelectContinent = ({
+    continentSelectionCallback,
+    currentContinent,
+}: SelectContinentProps) => {
     const handleClick = (continent: ContinentData["name"]) => {
         continentSelectionCallback(continent);
     };
