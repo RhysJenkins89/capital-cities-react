@@ -43,6 +43,7 @@ const Home = () => {
         setShowNextQuestionButton(true);
     };
 
+    // I reckon that the problem is because of the rerender cycle -- or something like that. React does something interesting when it comes to rerenders using multiple useState calls. The the page reloads, the data hasn't refreshed to bring in a new country, which is why I get the .log stating that the previous country is the same as the current country.
     const handleNextQuestion = () => {
         // debugger;
         previousCountry.current = data.countryName; // This is the right place to update the logic. I mean, maybe. Who knows really?
