@@ -1,5 +1,5 @@
 import { useState, useRef, FormEvent } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import getRandomCountryData from "./fetchFunctions/getRandomCountryData";
 import SelectContinent from "./SelectContinent";
 
@@ -12,6 +12,8 @@ const Home = () => {
     const [continent, setContinent] = useState<string>(
         window.localStorage.getItem("lastUserContinentSelection") || "europe"
     );
+    const [userFirstName, setUserFirstName] = useState<string>("");
+    const [userLastName, setUserLastName] = useState<string>("");
     const [userEmail, setUserEmail] = useState<string>("");
     const [userPassword, setUserPassword] = useState<string>("");
     const previousCountry = useRef<string>("");
@@ -25,17 +27,17 @@ const Home = () => {
 
     if (error) return "An error has occurred: " + error.message;
 
-    console.log("useRef previous country:", previousCountry.current);
+    // console.log("useRef previous country:", previousCountry.current);
 
     // if previousCountry.current is an empty string, continue with the render as normal.
-    if (previousCountry.current === data.countryName) {
-        debugger;
-        console.log(
-            `The previous country, ${previousCountry.current}, is the same as the current country, ${data.countryName}.`
-        );
-        // console.log("Refetching data.");
-        // refetch();
-    }
+    // if (previousCountry.current === data.countryName) {
+    // debugger;
+    // console.log(
+    // `The previous country, ${previousCountry.current}, is the same as the current country, ${data.countryName}.`
+    // );
+    // console.log("Refetching data.");
+    // refetch();
+    // }
 
     const handleRevealAnswer = () => {
         // console.log("current data:", data);
@@ -47,6 +49,7 @@ const Home = () => {
     const handleNextQuestion = () => {
         // debugger;
         previousCountry.current = data.countryName; // This is the right place to update the logic. I mean, maybe. Who knows really?
+        // debugger;
         setShowAnswer(false);
         setShowNextQuestionButton(false);
         refetch();
@@ -70,43 +73,91 @@ const Home = () => {
 
     const handleUserLogin = () => {
         console.log("user clicked login");
-
         // Show a signup form -- email and password will do for now
         // On submit, send a request to the backend
         // Build a route on the backend to accept the request
     };
 
     const handleUserFormSubmit = (event: FormEvent) => {
-        // Changing Event to FormEvent event fixed the error.
         event.preventDefault();
         console.log("user clicked submit");
+        console.log("User first name: ", userFirstName);
+        console.log("User last name: ", userLastName);
+        console.log("User email: ", userEmail);
+        console.log("User password: ", userPassword);
+        console.log("Form event:", event);
+        setUserFirstName("");
+        setUserLastName("");
+        setUserEmail("");
+        setUserPassword("");
+        // Here I probably want to include the useQuery hook
+        // The function that I pass to the hook will be a post request
+        // I'll need to pass the form data to the useQuery request
+
+        // useMutaion
+        // const mutation = useMutation({
+        //     mutationFn: (newTodo) => {
+        //         return axios.post("/todos", newTodo);
+        //         return fetch('api-route-here',{method: post, body: event.data.somethingOrOther}) etc.
+        //     },
+        // });
     };
 
     return (
         <div>
             <h1>Capital cities</h1>
-            {/* <button onClick={handleUserLogin}>Login</button>
+            {/* <button onClick={handleUserLogin}>Login</button> */}
             <form onSubmit={handleUserFormSubmit}>
-                <label>
-                    Email:
-                    <input
-                        type="email"
-                        value={userEmail}
-                        onChange={(event) => setUserEmail(event.target.value)}
-                    />
-                </label>
-                <label>
-                    Password:
-                    <input
-                        type="password"
-                        value={userPassword}
-                        onChange={(event) =>
-                            setUserPassword(event.target.value)
-                        }
-                    />
-                </label>
+                <div>
+                    <label>
+                        First name:
+                        <input
+                            type="text"
+                            value={userFirstName}
+                            onChange={(event) =>
+                                setUserFirstName(event.target.value)
+                            }
+                        />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Last name:
+                        <input
+                            type="text"
+                            value={userLastName}
+                            onChange={(event) =>
+                                setUserLastName(event.target.value)
+                            }
+                        />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Email:
+                        <input
+                            type="email"
+                            value={userEmail}
+                            onChange={(event) =>
+                                setUserEmail(event.target.value)
+                            }
+                        />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Password:
+                        <input
+                            type="password"
+                            value={userPassword}
+                            onChange={(event) =>
+                                setUserPassword(event.target.value)
+                            }
+                        />
+                    </label>
+                </div>
                 <input type="submit" />
-            </form> */}
+            </form>
             <p>Select continent:</p>
             <SelectContinent
                 continentSelectionCallback={handleUserContinentSelection}

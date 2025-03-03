@@ -25,4 +25,6 @@ The following is a potential data source for capital cities: https://datahelpdes
 
 I'll add the following type note below for the time being. Find the code itself in the `SelectContinent` component. `event.target` is an `HTMLElement`, which doesn't necessarily have the property value. TypeScript detects this and throws the error. Casting `event.target` as an `HTMLInputElement` guarantees that the element contains the value property.
 
+Authentication article: https://dev.to/m_josh/build-a-jwt-login-and-logout-system-using-expressjs-nodejs-hd2
+
 When it comes to learning, the most important variable is time. Consistent effort over time will inevitably produce results.
