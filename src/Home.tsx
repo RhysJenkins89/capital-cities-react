@@ -78,7 +78,7 @@ const Home = () => {
         // Build a route on the backend to accept the request
     };
 
-    const handleUserFormSubmit = (event: FormEvent) => {
+    const handleUserFormSubmit = async (event: FormEvent) => {
         event.preventDefault();
         console.log("user clicked submit");
         console.log("User first name: ", userFirstName);
@@ -94,13 +94,18 @@ const Home = () => {
         // The function that I pass to the hook will be a post request
         // I'll need to pass the form data to the useQuery request
 
-        // const response = fetch("url", {
-        //     method: "POST",
-        //     body: "Data to post",
-        // });
+        const response: Response = await fetch(
+            // "https://cities-api.rhysjenkins.uk/signup",
+            "http://localhost:3000/signup",
+            {
+                method: "POST",
+                body: JSON.stringify({ test: "example" }),
+            }
+        );
 
-        // if (response.success) {
-        // }
+        if (response.status === 200) {
+            console.log("Response okay:", JSON.stringify(response.body));
+        }
 
         // useMutation
         // const mutation = useMutation({
