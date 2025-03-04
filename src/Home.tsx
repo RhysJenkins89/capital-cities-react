@@ -94,13 +94,29 @@ const Home = () => {
         // The function that I pass to the hook will be a post request
         // I'll need to pass the form data to the useQuery request
 
-        // useMutaion
+        // const response = fetch("url", {
+        //     method: "POST",
+        //     body: "Data to post",
+        // });
+
+        // if (response.success) {
+        // }
+
+        // useMutation
         // const mutation = useMutation({
-        //     mutationFn: (newTodo) => {
-        //         return axios.post("/todos", newTodo);
-        //         return fetch('api-route-here',{method: post, body: event.data.somethingOrOther}) etc.
+        //     mutationFn: () => {
+        //         return fetch("api-route-here", {
+        //             method: "POST",
+        //             body: "Test message",
+        //         });
         //     },
         // });
+
+        // mutation.mutate({})
+
+        // onClick={() => {
+        //     mutation.mutate({ id: new Date(), title: 'Do Laundry' })
+        // }}
     };
 
     return (
