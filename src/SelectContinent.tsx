@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import capitaliseFirstLetter from "./helperFunctions/capitaliseFirstLetter";
 
 type ContinentData = {
     name: string;
 };
 
-const SelectContinent = ({ continentSelectionCallback, currentContinent }) => {
+type SelectContinentProps = {
+    continentSelectionCallback: Dispatch<SetStateAction<string>>;
+    currentContinent: string;
+};
+
+const SelectContinent = ({
+    continentSelectionCallback,
+    currentContinent,
+}: SelectContinentProps) => {
     const handleClick = (continent: ContinentData["name"]) => {
         continentSelectionCallback(continent);
     };
@@ -19,7 +27,6 @@ const SelectContinent = ({ continentSelectionCallback, currentContinent }) => {
                     }
                     value={"europe"}
                 >
-                    {/* event.target above is an HTMLElement, which doesn't necessarily have the property value. TypeScript detects this and throws the error. Casting event.target as an HTMLInputElement guarantees that the element contains the value property. */}
                     Europe
                 </button>
                 <button
