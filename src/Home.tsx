@@ -23,7 +23,8 @@ const Home = () => {
         queryFn: () => getRandomCountryData(continent),
     });
 
-    if (isPending) return "Loading...";
+    if (isPending)
+        return "Loading... This project runs on a free tier of Render, which means that the server will spin down with inactivity. If you're here for the first time, it'll take roughly a minute to load.";
 
     if (error) return "An error has occurred: " + error.message;
 
@@ -48,7 +49,7 @@ const Home = () => {
     // I reckon that the problem is because of the rerender cycle -- or something like that. React does something interesting when it comes to rerenders using multiple useState calls. The the page reloads, the data hasn't refreshed to bring in a new country, which is why I get the .log stating that the previous country is the same as the current country.
     const handleNextQuestion = () => {
         // debugger;
-        previousCountry.current = data.countryName; // This is the right place to update the logic. I mean, maybe. Who knows really?
+        // previousCountry.current = data.countryName; // This is the right place to update the logic. I mean, maybe. Who knows really?
         // debugger;
         setShowAnswer(false);
         setShowNextQuestionButton(false);
@@ -80,32 +81,32 @@ const Home = () => {
 
     const handleUserFormSubmit = async (event: FormEvent) => {
         event.preventDefault();
-        console.log("user clicked submit");
-        console.log("User first name: ", userFirstName);
-        console.log("User last name: ", userLastName);
-        console.log("User email: ", userEmail);
-        console.log("User password: ", userPassword);
-        console.log("Form event:", event);
-        setUserFirstName("");
-        setUserLastName("");
-        setUserEmail("");
-        setUserPassword("");
+        // console.log("user clicked submit");
+        // console.log("User first name: ", userFirstName);
+        // console.log("User last name: ", userLastName);
+        // console.log("User email: ", userEmail);
+        // console.log("User password: ", userPassword);
+        // console.log("Form event:", event);
+        // setUserFirstName("");
+        // setUserLastName("");
+        // setUserEmail("");
+        // setUserPassword("");
         // Here I probably want to include the useQuery hook
         // The function that I pass to the hook will be a post request
         // I'll need to pass the form data to the useQuery request
 
-        const response: Response = await fetch(
-            // "https://cities-api.rhysjenkins.uk/signup",
-            "http://localhost:3000/signup",
-            {
-                method: "POST",
-                body: JSON.stringify({ test: "example" }),
-            }
-        );
+        // const response: Response = await fetch(
+        //     // "https://cities-api.rhysjenkins.uk/signup",
+        //     "http://localhost:3000/signup",
+        //     {
+        //         method: "POST",
+        //         body: JSON.stringify({ test: "example" }),
+        //     }
+        // );
 
-        if (response.status === 200) {
-            console.log("Response okay:", JSON.stringify(response.body));
-        }
+        // if (response.status === 200) {
+        //     console.log("Response okay:", JSON.stringify(response.body));
+        // }
 
         // useMutation
         // const mutation = useMutation({
@@ -128,7 +129,7 @@ const Home = () => {
         <div>
             <h1>Capital cities</h1>
             {/* <button onClick={handleUserLogin}>Login</button> */}
-            <form onSubmit={handleUserFormSubmit}>
+            {/* <form onSubmit={handleUserFormSubmit}>
                 <div>
                     <label>
                         First name:
@@ -178,7 +179,7 @@ const Home = () => {
                     </label>
                 </div>
                 <input type="submit" />
-            </form>
+            </form> */}
             <p>Select continent:</p>
             <SelectContinent
                 continentSelectionCallback={handleUserContinentSelection}
