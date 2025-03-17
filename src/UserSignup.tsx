@@ -7,53 +7,17 @@ const UserSignup: React.FC = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
-
-    const handleUserFormSubmit = async (event: FormEvent) => {
-        event.preventDefault();
-
-        // try {
-        //     const response: Response = await fetch(
-        //         "http://localhost:3000/signup",
-        //         {
-        //             method: "POST",
-        //             headers: { "Content-Type": "application/json" },
-        //             body: JSON.stringify({
-        //                 firstName,
-        //                 lastName,
-        //                 email,
-        //                 password,
-        //             }),
-        //         }
-        //     );
-
-        //     const result = await response.json();
-        //     if (!response.ok) {
-        //         throw new Error(result);
-        //     } else {
-        //         console.log("User successfully created.");
-        //     }
-        // } catch (error) {
-        //     console.log("An error occured.");
-        //     console.log("Error:", error);
-        // }
-
-        // // Reset form states
-        // setFirstName("");
-        // setLastName("");
-        // setEmail("");
-        // setPassword("");
-    };
-
     interface IFormInput {
         name: string;
         email: string;
         password: string;
     }
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<IFormInput>();
 
     const onSubmit: SubmitHandler<IFormInput> = (data) => {
         console.log("Form submitted successfully:", data);
@@ -123,3 +87,39 @@ const UserSignup: React.FC = () => {
 };
 
 export default UserSignup;
+
+// const handleUserFormSubmit = async (event: FormEvent) => {
+// event.preventDefault();
+
+// try {
+//     const response: Response = await fetch(
+//         "http://localhost:3000/signup",
+//         {
+//             method: "POST",
+//             headers: { "Content-Type": "application/json" },
+//             body: JSON.stringify({
+//                 firstName,
+//                 lastName,
+//                 email,
+//                 password,
+//             }),
+//         }
+//     );
+
+//     const result = await response.json();
+//     if (!response.ok) {
+//         throw new Error(result);
+//     } else {
+//         console.log("User successfully created.");
+//     }
+// } catch (error) {
+//     console.log("An error occured.");
+//     console.log("Error:", error);
+// }
+
+// // Reset form states
+// setFirstName("");
+// setLastName("");
+// setEmail("");
+// setPassword("");
+// };
