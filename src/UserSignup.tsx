@@ -68,16 +68,25 @@ const UserSignup: React.FC = () => {
                         onChange={(event) => setPassword(event.target.value)}
                     /> */}
                     <input
-                        type="password"
+                        type="text"
                         {...register("password", {
-                            required: "Password is required",
+                            required: "Please enter a password.",
                             minLength: {
-                                value: 6,
+                                value: 10,
                                 message:
-                                    "Password must be at least 6 characters long",
+                                    "Your password must be at least ten characters long.",
+                            },
+                            pattern: {
+                                value: /^(?=.*[A-Z])(?=.*[a-z]).{10,}$/,
+                                message:
+                                    "Your password must contain an uppercase and a lowercase letter.",
                             },
                         })}
                     />
+                    {/* /^(?=.*[A-Z]).{6,}$/ */}
+                    {/* /^(?=.*[A-Z])(?=.*[a-z]).{10,}$/ */}
+                    {/* At least one uppercase: (?=.*[A-Z]) */}
+                    {/* At least ten characters long: .{10,} */}
                     {errors.password && <p>{errors.password.message}</p>}
                 </label>
             </div>
