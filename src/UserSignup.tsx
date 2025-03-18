@@ -1,14 +1,9 @@
-import { useState, FormEvent } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 const UserSignup: React.FC = () => {
-    const [firstName, setFirstName] = useState<string>("");
-    const [lastName, setLastName] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-
     interface IFormInput {
-        name: string;
+        firstName: string;
+        lastName: string;
         email: string;
         password: string;
     }
@@ -16,11 +11,13 @@ const UserSignup: React.FC = () => {
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm<IFormInput>();
 
-    const onSubmit: SubmitHandler<IFormInput> = (data) => {
-        console.log("Form submitted successfully:", data);
+    const onSubmit: SubmitHandler<IFormInput> = (formData: IFormInput) => {
+        console.log("Form submitted successfully:", formData);
+        reset(); // Think about the default value here
     };
 
     return (
@@ -28,47 +25,55 @@ const UserSignup: React.FC = () => {
             <div>
                 <label>
                     First name:
-                    {/* <input
-                        type="text"
-                        value={firstName}
-                        onChange={(event) => setFirstName(event.target.value)}
-                    /> */}
                     <input
-                        {...register("name", { required: "Name is required" })}
+                        {...register("firstName", {
+                            required: "Please enter your first name.",
+                            validate: {
+                                containsOnly: (value) =>
+                                    /^[A-Za-z-' ]+$/.test(value) ||
+                                    "The first name field must contain only letters, spaces, hyphens, or apostrophes.",
+                            },
+                        })}
                     />
-                    {errors.name && <p>{errors.name.message}</p>}
+                    {errors.firstName && <p>{errors.firstName.message}</p>}
                 </label>
             </div>
-            {/* <div>
+            <div>
                 <label>
                     Last name:
                     <input
-                        type="text"
-                        value={lastName}
-                        onChange={(event) => setLastName(event.target.value)}
+                        {...register("lastName", {
+                            required: "Please enter your last name.",
+                            validate: {
+                                containsOnly: (value) =>
+                                    /^[A-Za-z-' ]+$/.test(value) ||
+                                    "The last name field must contain only letters, spaces, hyphens, or apostrophes.",
+                            },
+                        })}
                     />
+                    {errors.lastName && <p>{errors.lastName.message}</p>}
                 </label>
             </div>
             <div>
                 <label>
                     Email:
                     <input
-                        type="email"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
+                        {...register("email", {
+                            required: "Email enter your email.",
+                            pattern: {
+                                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                message: "Please enter a valid email address.",
+                            },
+                        })}
                     />
+                    {errors.email && <p>{errors.email.message}</p>}
                 </label>
-            </div> */}
+            </div>
             <div>
                 <label>
                     Password:
-                    {/* <input
-                        type="password"
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
-                    /> */}
                     <input
-                        type="text"
+                        type="text" // Change back to type="password"
                         {...register("password", {
                             required: "Please enter a password.",
                             minLength: {
@@ -76,17 +81,22 @@ const UserSignup: React.FC = () => {
                                 message:
                                     "Your password must be at least ten characters long.",
                             },
-                            pattern: {
-                                value: /^(?=.*[A-Z])(?=.*[a-z]).{10,}$/,
-                                message:
-                                    "Your password must contain an uppercase and a lowercase letter.",
+                            validate: {
+                                hasUppercaseChar: (value) =>
+                                    /[A-Z]/.test(value) ||
+                                    "Your password must contain at least one uppercase letter.",
+                                hasLowercaseChar: (value) =>
+                                    /[a-z]/.test(value) ||
+                                    "Your password must contain at least one lowercase letter.",
+                                hasSpecialChar: (value) =>
+                                    /[!@#$%^&*(),.?":{}|<>]/.test(value) ||
+                                    "Your password must contain at least one special character.",
+                                hasNumber: (value) =>
+                                    /\d/.test(value) ||
+                                    "Your password must contain at least one number.",
                             },
                         })}
                     />
-                    {/* /^(?=.*[A-Z]).{6,}$/ */}
-                    {/* /^(?=.*[A-Z])(?=.*[a-z]).{10,}$/ */}
-                    {/* At least one uppercase: (?=.*[A-Z]) */}
-                    {/* At least ten characters long: .{10,} */}
                     {errors.password && <p>{errors.password.message}</p>}
                 </label>
             </div>
