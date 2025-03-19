@@ -15,8 +15,39 @@ const UserSignup: React.FC = () => {
         formState: { errors },
     } = useForm<IFormInput>();
 
-    const onSubmit: SubmitHandler<IFormInput> = (formData: IFormInput) => {
+    const onSubmit: SubmitHandler<IFormInput> = async (
+        formData: IFormInput
+    ) => {
         console.log("Form submitted successfully:", formData);
+
+        const { firstName, lastName, email, password } = formData;
+
+        try {
+            const response: Response = await fetch(
+                "http://cities-api.rhysjenkins.uk/signup",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        firstName,
+                        lastName,
+                        email,
+                        password,
+                    }),
+                }
+            );
+
+            const result = await response.json();
+            if (!response.ok) {
+                throw new Error(result);
+            } else {
+                console.log("User successfully created.");
+            }
+        } catch (error) {
+            console.log("An error occured.");
+            console.log("Error:", error);
+        }
+
         reset(); // Think about the default value here
     };
 
@@ -135,10 +166,4 @@ export default UserSignup;
 //     console.log("An error occured.");
 //     console.log("Error:", error);
 // }
-
-// // Reset form states
-// setFirstName("");
-// setLastName("");
-// setEmail("");
-// setPassword("");
 // };
