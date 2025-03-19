@@ -2,6 +2,8 @@ import { useState, useRef, FormEvent } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import getRandomCountryData from "./fetchFunctions/getRandomCountryData";
 import SelectContinent from "./SelectContinent";
+import UserLogin from "./UserLogin";
+import UserSignup from "./UserSignup";
 
 // Add login functionality and an account page
 
@@ -16,6 +18,8 @@ const Home = () => {
     const [userLastName, setUserLastName] = useState<string>("");
     const [userEmail, setUserEmail] = useState<string>("");
     const [userPassword, setUserPassword] = useState<string>("");
+    const [showLogin, setShowLogin] = useState<boolean>(false);
+    const [showSignup, setShowSignup] = useState<boolean>(false);
     const previousCountry = useRef<string>("");
 
     const { isPending, error, data, refetch } = useQuery({
@@ -72,11 +76,9 @@ const Home = () => {
         setContinent(continentData);
     };
 
-    const handleUserLogin = () => {
+    const handleUserLogin = (event: FormEvent) => {
+        event.preventDefault();
         console.log("user clicked login");
-        // Show a signup form -- email and password will do for now
-        // On submit, send a request to the backend
-        // Build a route on the backend to accept the request
     };
 
     const handleUserFormSubmit = async (event: FormEvent) => {
@@ -128,58 +130,18 @@ const Home = () => {
     return (
         <div>
             <h1>Capital cities</h1>
-            {/* <button onClick={handleUserLogin}>Login</button> */}
-            {/* <form onSubmit={handleUserFormSubmit}>
-                <div>
-                    <label>
-                        First name:
-                        <input
-                            type="text"
-                            value={userFirstName}
-                            onChange={(event) =>
-                                setUserFirstName(event.target.value)
-                            }
-                        />
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Last name:
-                        <input
-                            type="text"
-                            value={userLastName}
-                            onChange={(event) =>
-                                setUserLastName(event.target.value)
-                            }
-                        />
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Email:
-                        <input
-                            type="email"
-                            value={userEmail}
-                            onChange={(event) =>
-                                setUserEmail(event.target.value)
-                            }
-                        />
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Password:
-                        <input
-                            type="password"
-                            value={userPassword}
-                            onChange={(event) =>
-                                setUserPassword(event.target.value)
-                            }
-                        />
-                    </label>
-                </div>
-                <input type="submit" />
-            </form> */}
+            {/* <div>
+                <button onClick={() => setShowLogin(!showLogin)}>
+                    {showLogin ? "Hide login" : "Show login"}
+                </button>
+            </div>
+            {showLogin && <UserLogin />} */}
+            <div>
+                <button onClick={() => setShowSignup(!showSignup)}>
+                    {showSignup ? "Hide signup" : "Show signup"}
+                </button>
+            </div>
+            {showSignup && <UserSignup />}
             <p>Select continent:</p>
             <SelectContinent
                 continentSelectionCallback={handleUserContinentSelection}
