@@ -24,7 +24,7 @@ const UserSignup: React.FC = () => {
 
         try {
             const response: Response = await fetch(
-                "http://cities-api.rhysjenkins.uk/signup",
+                "https://cities-api.rhysjenkins.uk/signup",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
