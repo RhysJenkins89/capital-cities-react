@@ -130,12 +130,12 @@ const Home = () => {
     return (
         <div>
             <h1>Capital cities</h1>
-            <div>
+            {/* <div>
                 <button onClick={() => setShowLogin(!showLogin)}>
                     {showLogin ? "Hide login" : "Show login"}
                 </button>
             </div>
-            {showLogin && <UserLogin />}
+            {showLogin && <UserLogin />} */}
             <div>
                 <button onClick={() => setShowSignup(!showSignup)}>
                     {showSignup ? "Hide signup" : "Show signup"}
