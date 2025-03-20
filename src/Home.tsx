@@ -4,6 +4,7 @@ import getRandomCountryData from "./fetchFunctions/getRandomCountryData";
 import SelectContinent from "./SelectContinent";
 import UserLogin from "./UserLogin";
 import UserSignup from "./UserSignup";
+import { Button } from "@mui/material";
 
 // Add login functionality and an account page
 
@@ -137,9 +138,15 @@ const Home = () => {
             </div>
             {showLogin && <UserLogin />} */}
             <div>
-                <button onClick={() => setShowSignup(!showSignup)}>
+                <Button
+                    onClick={() => setShowSignup(!showSignup)}
+                    variant="contained"
+                >
                     {showSignup ? "Hide signup" : "Show signup"}
-                </button>
+                </Button>
+                {/* <button onClick={() => setShowSignup(!showSignup)}>
+                    {showSignup ? "Hide signup" : "Show signup"}
+                </button> */}
             </div>
             {showSignup && <UserSignup />}
             <p>Select continent:</p>
