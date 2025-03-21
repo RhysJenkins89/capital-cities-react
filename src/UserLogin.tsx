@@ -1,6 +1,7 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useContext } from "react";
+import { AppContext } from "./Context";
 
-const UserLogin = () => {
+const UserLogin: React.FC = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
@@ -8,7 +9,7 @@ const UserLogin = () => {
         event.preventDefault();
         try {
             const response: Response = await fetch(
-                "http://localhost:3000/login",
+                "https://cities-api.rhysjenkins.uk/login",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -25,6 +26,10 @@ const UserLogin = () => {
                 "Successfully logged in. Here is the token:",
                 userData.token
             );
+            // If the user successfully logs in, I need to show it somehow. However, this state should probably live in the Home component
+            // For now, show the text 'You have logged in.'
+            // Show a signout button
+            // I also need signout functionaltity
         } catch (error) {
             console.log("An error occured.");
             console.log("Error:", error);
@@ -35,30 +40,47 @@ const UserLogin = () => {
         setPassword("");
     };
 
+    const context = useContext(AppContext);
+
+    if (!context) {
+        throw new Error(
+            "Use this component inside of the AppContextProvider component."
+        );
+    }
+
+    const { userIsLoggedIn, setUserIsLoggedIn } = context;
+
     return (
-        <form onSubmit={handleUserLogin}>
-            <div>
-                <label>
-                    Email:
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
-                    />
-                </label>
-            </div>
-            <div>
-                <label>
-                    Password:
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
-                    />
-                </label>
-            </div>
-            <input type="submit" />
-        </form>
+        <div>
+            <form onSubmit={handleUserLogin}>
+                <div>
+                    <label>
+                        Email:
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
+                        />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Password:
+                        <input
+                            type="test"
+                            value={password}
+                            onChange={(event) =>
+                                setPassword(event.target.value)
+                            }
+                        />
+                    </label>
+                </div>
+                <input type="submit" />
+            </form>
+            <button onClick={() => setUserIsLoggedIn(true)}>
+                Update user logged in state
+            </button>
+        </div>
     );
 };
 

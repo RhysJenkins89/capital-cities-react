@@ -1,14 +1,15 @@
-import { useState, useRef, FormEvent } from "react";
+import { useState, useRef, FormEvent, useContext } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import getRandomCountryData from "./fetchFunctions/getRandomCountryData";
 import SelectContinent from "./SelectContinent";
 import UserLogin from "./UserLogin";
 import UserSignup from "./UserSignup";
-import { Button } from "@mui/material";
+// import { Button } from "@mui/material"; // Finish basic functionality before working on styles
+import { AppContext } from "./Context";
 
 // Add login functionality and an account page
 
-const Home = () => {
+const Home: React.FC = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
     const [showNextQuestionButton, setShowNextQuestionButton] =
         useState<boolean>(false);
@@ -22,6 +23,16 @@ const Home = () => {
     const [showLogin, setShowLogin] = useState<boolean>(false);
     const [showSignup, setShowSignup] = useState<boolean>(false);
     const previousCountry = useRef<string>("");
+
+    const context = useContext(AppContext);
+
+    if (!context) {
+        throw new Error(
+            "Use this component inside of the AppContextProvider component."
+        );
+    }
+
+    const { userIsLoggedIn, setUserIsLoggedIn } = context;
 
     const { isPending, error, data, refetch } = useQuery({
         queryKey: [continent],
@@ -131,22 +142,16 @@ const Home = () => {
     return (
         <div>
             <h1>Capital cities</h1>
-            {/* <div>
+            <div>
                 <button onClick={() => setShowLogin(!showLogin)}>
                     {showLogin ? "Hide login" : "Show login"}
                 </button>
             </div>
-            {showLogin && <UserLogin />} */}
+            {showLogin && <UserLogin />}
             <div>
-                <Button
-                    onClick={() => setShowSignup(!showSignup)}
-                    variant="contained"
-                >
+                <button onClick={() => setShowSignup(!showSignup)}>
                     {showSignup ? "Hide signup" : "Show signup"}
-                </Button>
-                {/* <button onClick={() => setShowSignup(!showSignup)}>
-                    {showSignup ? "Hide signup" : "Show signup"}
-                </button> */}
+                </button>
             </div>
             {showSignup && <UserSignup />}
             <p>Select continent:</p>
@@ -164,6 +169,12 @@ const Home = () => {
             {showNextQuestionButton ? (
                 <button onClick={handleNextQuestion}>Next question</button>
             ) : null}
+            <div>
+                <p>
+                    Current state:{" "}
+                    {userIsLoggedIn ? "State is true" : "State is false"}
+                </p>
+            </div>
         </div>
     );
 };
