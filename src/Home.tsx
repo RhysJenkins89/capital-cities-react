@@ -5,6 +5,7 @@ import getRandomCountryData from "./fetchFunctions/getRandomCountryData";
 import SelectContinent from "./SelectContinent";
 import UserLogin from "./UserLogin";
 import UserSignup from "./UserSignup";
+import ContinentName from "./types/ContinentName";
 
 const Home: React.FC = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
@@ -16,11 +17,6 @@ const Home: React.FC = () => {
     const [showLogin, setShowLogin] = useState<boolean>(false);
     const [showSignup, setShowSignup] = useState<boolean>(false);
 
-    // Component types
-    type ContinentName = {
-        name: string;
-    };
-
     // App context
     const context = useContext(AppContext);
 
@@ -30,7 +26,7 @@ const Home: React.FC = () => {
         );
     }
 
-    const { userIsLoggedIn, setUserIsLoggedIn } = context;
+    const { userIsLoggedIn } = context;
 
     // Get country data
     const { isPending, error, data, refetch } = useQuery({
@@ -70,6 +66,7 @@ const Home: React.FC = () => {
     return (
         <div>
             <h1>Capital cities</h1>
+            {userIsLoggedIn && <p>User is logged in</p>}
             <div>
                 <button onClick={() => setShowLogin(!showLogin)}>
                     {showLogin ? "Hide login" : "Show login"}

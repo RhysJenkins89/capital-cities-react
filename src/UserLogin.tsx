@@ -9,7 +9,7 @@ const UserLogin: React.FC = () => {
         event.preventDefault();
         try {
             const response: Response = await fetch(
-                "https://cities-api.rhysjenkins.uk/login",
+                "http://localhost:3000/login", // I need to way to switch between the live api and my local machine
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -20,12 +20,15 @@ const UserLogin: React.FC = () => {
             const userData = await response.json();
             if (!response.ok) {
                 throw new Error(userData.error);
+            } else {
+                setUserIsLoggedIn(true);
+                console.log("userData:", userData);
+                localStorage.setItem("token", userData.token);
+                console.log(
+                    "Successfully logged in. Here is the token:",
+                    userData.token
+                );
             }
-            localStorage.setItem("token", userData.token);
-            console.log(
-                "Successfully logged in. Here is the token:",
-                userData.token
-            );
             // If the user successfully logs in, I need to show it somehow. However, this state should probably live in the Home component
             // For now, show the text 'You have logged in.'
             // Show a signout button
@@ -48,7 +51,7 @@ const UserLogin: React.FC = () => {
         );
     }
 
-    const { userIsLoggedIn, setUserIsLoggedIn } = context;
+    const { setUserIsLoggedIn } = context;
 
     return (
         <div>
@@ -77,9 +80,6 @@ const UserLogin: React.FC = () => {
                 </div>
                 <input type="submit" />
             </form>
-            <button onClick={() => setUserIsLoggedIn(true)}>
-                Update user logged in state
-            </button>
         </div>
     );
 };
