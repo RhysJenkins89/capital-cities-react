@@ -16,6 +16,7 @@
 -   Look into Prettier formatting options
 -   Add a loading state
 -   Add a proper error state, which fits nicely with the error boundary item above
+-   Add style with Materialui
 
 ## Notes and ideas
 

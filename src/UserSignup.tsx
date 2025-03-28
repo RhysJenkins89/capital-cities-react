@@ -44,8 +44,9 @@ const UserSignup: React.FC = () => {
                 console.log("User successfully created.");
             }
         } catch (error) {
+            // If the email is already in the database, I get to this catch block. But the error message doesn't tell me that.
             console.log("An error occured.");
-            console.log("Error:", error);
+            console.log("Error:", error); // This is not a useful error message.
         }
 
         reset(); // Think about the default value here

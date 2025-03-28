@@ -1,27 +1,34 @@
-import { useState, useRef, FormEvent } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useState, useRef, useContext } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { AppContext } from "./Context";
 import getRandomCountryData from "./fetchFunctions/getRandomCountryData";
 import SelectContinent from "./SelectContinent";
 import UserLogin from "./UserLogin";
 import UserSignup from "./UserSignup";
+import ContinentName from "./types/ContinentName";
 
-// Add login functionality and an account page
-
-const Home = () => {
+const Home: React.FC = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
     const [showNextQuestionButton, setShowNextQuestionButton] =
         useState<boolean>(false);
     const [continent, setContinent] = useState<string>(
         window.localStorage.getItem("lastUserContinentSelection") || "europe"
     );
-    const [userFirstName, setUserFirstName] = useState<string>("");
-    const [userLastName, setUserLastName] = useState<string>("");
-    const [userEmail, setUserEmail] = useState<string>("");
-    const [userPassword, setUserPassword] = useState<string>("");
     const [showLogin, setShowLogin] = useState<boolean>(false);
     const [showSignup, setShowSignup] = useState<boolean>(false);
-    const previousCountry = useRef<string>("");
 
+    // App context
+    const context = useContext(AppContext);
+
+    if (!context) {
+        throw new Error(
+            "Use this component inside of the AppContextProvider component."
+        );
+    }
+
+    const { userIsLoggedIn } = context;
+
+    // Get country data
     const { isPending, error, data, refetch } = useQuery({
         queryKey: [continent],
         queryFn: () => getRandomCountryData(continent),
@@ -32,36 +39,16 @@ const Home = () => {
 
     if (error) return "An error has occurred: " + error.message;
 
-    // console.log("useRef previous country:", previousCountry.current);
-
-    // if previousCountry.current is an empty string, continue with the render as normal.
-    // if (previousCountry.current === data.countryName) {
-    // debugger;
-    // console.log(
-    // `The previous country, ${previousCountry.current}, is the same as the current country, ${data.countryName}.`
-    // );
-    // console.log("Refetching data.");
-    // refetch();
-    // }
-
+    // Component functions
     const handleRevealAnswer = () => {
-        // console.log("current data:", data);
         setShowAnswer(true);
         setShowNextQuestionButton(true);
     };
 
-    // I reckon that the problem is because of the rerender cycle -- or something like that. React does something interesting when it comes to rerenders using multiple useState calls. The the page reloads, the data hasn't refreshed to bring in a new country, which is why I get the .log stating that the previous country is the same as the current country.
     const handleNextQuestion = () => {
-        // debugger;
-        // previousCountry.current = data.countryName; // This is the right place to update the logic. I mean, maybe. Who knows really?
-        // debugger;
         setShowAnswer(false);
         setShowNextQuestionButton(false);
         refetch();
-    };
-
-    type ContinentName = {
-        name: string;
     };
 
     const handleUserContinentSelection = (
@@ -76,72 +63,22 @@ const Home = () => {
         setContinent(continentData);
     };
 
-    const handleUserLogin = (event: FormEvent) => {
-        event.preventDefault();
-        console.log("user clicked login");
-    };
-
-    const handleUserFormSubmit = async (event: FormEvent) => {
-        event.preventDefault();
-        // console.log("user clicked submit");
-        // console.log("User first name: ", userFirstName);
-        // console.log("User last name: ", userLastName);
-        // console.log("User email: ", userEmail);
-        // console.log("User password: ", userPassword);
-        // console.log("Form event:", event);
-        // setUserFirstName("");
-        // setUserLastName("");
-        // setUserEmail("");
-        // setUserPassword("");
-        // Here I probably want to include the useQuery hook
-        // The function that I pass to the hook will be a post request
-        // I'll need to pass the form data to the useQuery request
-
-        // const response: Response = await fetch(
-        //     // "https://cities-api.rhysjenkins.uk/signup",
-        //     "http://localhost:3000/signup",
-        //     {
-        //         method: "POST",
-        //         body: JSON.stringify({ test: "example" }),
-        //     }
-        // );
-
-        // if (response.status === 200) {
-        //     console.log("Response okay:", JSON.stringify(response.body));
-        // }
-
-        // useMutation
-        // const mutation = useMutation({
-        //     mutationFn: () => {
-        //         return fetch("api-route-here", {
-        //             method: "POST",
-        //             body: "Test message",
-        //         });
-        //     },
-        // });
-
-        // mutation.mutate({})
-
-        // onClick={() => {
-        //     mutation.mutate({ id: new Date(), title: 'Do Laundry' })
-        // }}
-    };
-
     return (
         <div>
             <h1>Capital cities</h1>
+            {/* {userIsLoggedIn && <p>User is logged in</p>} */}
             {/* <div>
                 <button onClick={() => setShowLogin(!showLogin)}>
                     {showLogin ? "Hide login" : "Show login"}
                 </button>
             </div>
             {showLogin && <UserLogin />} */}
-            <div>
+            {/* <div>
                 <button onClick={() => setShowSignup(!showSignup)}>
                     {showSignup ? "Hide signup" : "Show signup"}
                 </button>
             </div>
-            {showSignup && <UserSignup />}
+            {showSignup && <UserSignup />} */}
             <p>Select continent:</p>
             <SelectContinent
                 continentSelectionCallback={handleUserContinentSelection}
