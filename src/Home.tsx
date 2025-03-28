@@ -66,19 +66,19 @@ const Home: React.FC = () => {
     return (
         <div>
             <h1>Capital cities</h1>
-            {userIsLoggedIn && <p>User is logged in</p>}
-            <div>
+            {/* {userIsLoggedIn && <p>User is logged in</p>} */}
+            {/* <div>
                 <button onClick={() => setShowLogin(!showLogin)}>
                     {showLogin ? "Hide login" : "Show login"}
                 </button>
             </div>
-            {showLogin && <UserLogin />}
-            <div>
+            {showLogin && <UserLogin />} */}
+            {/* <div>
                 <button onClick={() => setShowSignup(!showSignup)}>
                     {showSignup ? "Hide signup" : "Show signup"}
                 </button>
             </div>
-            {showSignup && <UserSignup />}
+            {showSignup && <UserSignup />} */}
             <p>Select continent:</p>
             <SelectContinent
                 continentSelectionCallback={handleUserContinentSelection}
