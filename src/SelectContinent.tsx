@@ -11,6 +11,15 @@ const SelectContinent = ({
     continentSelectionCallback,
     currentContinent,
 }: SelectContinentProps) => {
+    const continents: string[] = [
+        "europe",
+        "asia",
+        "oceania",
+        "north-america",
+        "south-america",
+        "africa",
+    ];
+
     const handleClick = (continent: ContinentName["name"]) => {
         continentSelectionCallback(continent);
     };
@@ -18,30 +27,21 @@ const SelectContinent = ({
     return (
         <div>
             <div>
-                <button
-                    onClick={(event) =>
-                        handleClick((event.target as HTMLInputElement).value)
-                    }
-                    value={"europe"}
-                >
-                    Europe
-                </button>
-                <button
-                    onClick={(event) =>
-                        handleClick((event.target as HTMLInputElement).value)
-                    }
-                    value={"asia"}
-                >
-                    Asia
-                </button>
-                <button
-                    onClick={(event) =>
-                        handleClick((event.target as HTMLInputElement).value)
-                    }
-                    value={"africa"}
-                >
-                    Africa
-                </button>
+                {continents.map((continent) => {
+                    return (
+                        <button
+                            key={continent}
+                            onClick={(event) =>
+                                handleClick(
+                                    (event.target as HTMLInputElement).value
+                                )
+                            }
+                            value={continent}
+                        >
+                            {capitaliseFirstLetter(continent)}
+                        </button>
+                    );
+                })}
             </div>
             <p>
                 Current continent:{" "}
