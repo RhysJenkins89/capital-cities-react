@@ -24,6 +24,16 @@ const SelectContinent = ({
         continentSelectionCallback(continent);
     };
 
+    const renderButtonText = (text: string): string => {
+        if (text === "north-america") {
+            return "North America";
+        } else if (text === "south-america") {
+            return "South America";
+        } else {
+            return capitaliseFirstLetter(text);
+        }
+    };
+
     return (
         <div>
             <div>
@@ -38,7 +48,7 @@ const SelectContinent = ({
                             }
                             value={continent}
                         >
-                            {capitaliseFirstLetter(continent)}
+                            {renderButtonText(continent)}
                         </button>
                     );
                 })}
