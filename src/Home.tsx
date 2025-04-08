@@ -27,8 +27,9 @@ const Home: React.FC = () => {
     }
 
     const { userIsLoggedIn } = context;
-
     // Get country data
+    // I make this request every time that app rerenders. That ain't good.
+    // In fact, it's worse. I don't use the built-in caching in useQuery because I use this fetch to get a specific country, not the continent data, so the data is almost always going to be different.
     const { isPending, error, data, refetch } = useQuery({
         queryKey: [continent],
         queryFn: () => getRandomCountryData(continent),
