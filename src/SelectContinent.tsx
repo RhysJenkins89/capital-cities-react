@@ -7,10 +7,7 @@ type SelectContinentProps = {
     currentContinent: string;
 };
 
-const SelectContinent = ({
-    continentSelectionCallback,
-    currentContinent,
-}: SelectContinentProps) => {
+const SelectContinent = ({continentSelectionCallback,currentContinent,}: SelectContinentProps) => {
     const continents: string[] = [
         "europe",
         "asia",
@@ -24,7 +21,7 @@ const SelectContinent = ({
         continentSelectionCallback(continent);
     };
 
-    const renderButtonText = (text: string): string => {
+    const renderContinentText = (text: string): string => {
         if (text === "north-america") {
             return "North America";
         } else if (text === "south-america") {
@@ -48,14 +45,14 @@ const SelectContinent = ({
                             }
                             value={continent}
                         >
-                            {renderButtonText(continent)}
+                            {renderContinentText(continent)}
                         </button>
                     );
                 })}
             </div>
             <p>
                 Current continent:{" "}
-                <span>{capitaliseFirstLetter(currentContinent)}</span>
+                <span>{renderContinentText(currentContinent)}</span>
             </p>
         </div>
     );
