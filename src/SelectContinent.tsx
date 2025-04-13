@@ -7,7 +7,7 @@ type SelectContinentProps = {
     currentContinent: string;
 };
 
-const SelectContinent = ({continentSelectionCallback,currentContinent,}: SelectContinentProps) => {
+const SelectContinent = ({continentSelectionCallback, currentContinent}: SelectContinentProps) => {
     const continents: string[] = [
         "europe",
         "asia",

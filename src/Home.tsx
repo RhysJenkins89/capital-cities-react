@@ -1,21 +1,20 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AppContext } from "./Context";
-import getRandomCountryData from "./fetchFunctions/getRandomCountryData";
+import getContinentData from "./fetchFunctions/getContinentData";
 import SelectContinent from "./SelectContinent";
 import UserLogin from "./UserLogin";
 import UserSignup from "./UserSignup";
 import ContinentName from "./types/ContinentName";
+import CountryData from "./types/CountryData";
 
 const Home: React.FC = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
-    const [showNextQuestionButton, setShowNextQuestionButton] =
-        useState<boolean>(false);
-    const [continent, setContinent] = useState<string>(
-        window.localStorage.getItem("lastUserContinentSelection") || "europe"
-    );
+    const [showNextQuestionButton, setShowNextQuestionButton] = useState<boolean>(false);
+    const [continent, setContinent] = useState<string>(window.localStorage.getItem("lastUserContinentSelection") || "europe");
     const [showLogin, setShowLogin] = useState<boolean>(false);
     const [showSignup, setShowSignup] = useState<boolean>(false);
+    const [randomCountryData, setRandomCountryData] = useState<CountryData | null>(null)
 
     // App context
     const context = useContext(AppContext);
@@ -27,13 +26,24 @@ const Home: React.FC = () => {
     }
 
     const { userIsLoggedIn } = context;
+
     // Get country data
-    // I make this request every time that app rerenders. That ain't good.
-    // In fact, it's worse. I don't use the built-in caching in useQuery because I use this fetch to get a specific country, not the continent data, so the data is almost always going to be different.
     const { isPending, error, data, refetch } = useQuery({
         queryKey: [continent],
-        queryFn: () => getRandomCountryData(continent),
+        queryFn: () => getContinentData(continent),
+        staleTime: Infinity,
+        gcTime: Infinity
     });
+
+    useEffect(() => {
+        if (!data) return;
+        const objectKeys: string[] = Object.keys(data);
+        const randomCountry: string = objectKeys[Math.floor(Math.random() * objectKeys.length)]
+        setRandomCountryData({
+            countryName: randomCountry,
+            countryInfo: data[randomCountry]
+        })
+    }, [data])
 
     if (isPending)
         return "Loading... This project runs on a free tier of Render, which means that the server will spin down with inactivity. If you're here for the first time, it'll take roughly a minute to load.";
@@ -41,6 +51,18 @@ const Home: React.FC = () => {
     if (error) return "An error has occurred: " + error.message;
 
     // Component functions
+    const getRandomCountryFromContinent = () => {
+        if (!data) {
+            return;
+        }
+        const objectKeys: string[] = Object.keys(data);
+        const randomCountry: string = objectKeys[Math.floor(Math.random() * objectKeys.length)]
+        setRandomCountryData({
+            countryName: randomCountry,
+            countryInfo: data[randomCountry]
+        }) 
+    }
+
     const handleRevealAnswer = () => {
         setShowAnswer(true);
         setShowNextQuestionButton(true);
@@ -49,16 +71,12 @@ const Home: React.FC = () => {
     const handleNextQuestion = () => {
         setShowAnswer(false);
         setShowNextQuestionButton(false);
-        refetch();
+        // refetch();
+        getRandomCountryFromContinent();
     };
 
-    const handleUserContinentSelection = (
-        continentData: ContinentName["name"]
-    ) => {
-        window.localStorage.setItem(
-            "lastUserContinentSelection",
-            continentData
-        );
+    const handleUserContinentSelection = (continentData: ContinentName["name"]) => {
+        window.localStorage.setItem("lastUserContinentSelection", continentData);
         setShowAnswer(false);
         setShowNextQuestionButton(false);
         setContinent(continentData);
@@ -87,11 +105,11 @@ const Home: React.FC = () => {
             />
             <p>
                 What is the capital of{" "}
-                {data.countryInfo.definiteArticle ? "the " : null}
-                {data.countryName}?
+                {randomCountryData?.countryInfo.definiteArticle ? "the " : null}
+                {randomCountryData?.countryName}?
             </p>
             <button onClick={handleRevealAnswer}>Reveal answer</button>
-            {showAnswer ? <p>{data.countryInfo.capital}</p> : <p></p>}
+            {showAnswer ? <p>{randomCountryData?.countryInfo.capital}</p> : <p></p>}
             {showNextQuestionButton ? (
                 <button onClick={handleNextQuestion}>Next question</button>
             ) : null}
@@ -100,3 +118,15 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+
+// This is the logic to get a random country: 
+
+// const objectKeys: string[] = Object.keys(continentData);
+// const randomCountry: string =
+//     objectKeys[Math.floor(Math.random() * objectKeys.length)];
+// return {
+//     countryName: randomCountry,
+//     countryInfo: continentData[randomCountry],
+// };
+
+// Write why you are refactoring the code. It'll be practice and it might prove useful in an interview situation. 

@@ -1,6 +1,6 @@
 # Doing
 
--   Building login functionality
+-   Refactoring continent fetch function   
 
 ## To do
 
