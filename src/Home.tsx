@@ -35,6 +35,10 @@ const Home: React.FC = () => {
         gcTime: Infinity
     });
 
+    // Write about: 
+        // The fetch request issue
+        // The useEffect/hooks bug
+
     useEffect(() => {
         if (!data) return;
         const objectKeys: string[] = Object.keys(data);

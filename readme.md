@@ -1,19 +1,15 @@
 # Doing
 
--   Refactoring continent fetch function   
+-   The app shouldn't display the same country twice in a row   
 
 ## To do
 
--   The app shouldn't display the same country twice in a row
--   Add caching to useQuery
 -   Sort Vite config warning
 -   Add an error boundary to the app
--   Build a backend service
 -   Add an external database
 -   Add flags
 -   Add testing
 -   Add ESLint
--   Look into Prettier formatting options
 -   Add a loading state
 -   Add a proper error state, which fits nicely with the error boundary item above
 -   Add style with Materialui
