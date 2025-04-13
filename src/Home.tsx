@@ -28,14 +28,22 @@ const Home: React.FC = () => {
     const { userIsLoggedIn } = context;
 
     // Get country data
-    // I make this request every time the app rerenders. That ain't good.
-    // In fact, it's worse. I don't use the built-in caching in useQuery because I use this fetch to get a specific country, not the continent data, so the data is almost always going to be different.
     const { isPending, error, data, refetch } = useQuery({
         queryKey: [continent],
         queryFn: () => getContinentData(continent),
         staleTime: Infinity,
         gcTime: Infinity
     });
+
+    useEffect(() => {
+        if (!data) return;
+        const objectKeys: string[] = Object.keys(data);
+        const randomCountry: string = objectKeys[Math.floor(Math.random() * objectKeys.length)]
+        setRandomCountryData({
+            countryName: randomCountry,
+            countryInfo: data[randomCountry]
+        })
+    }, [data])
 
     if (isPending)
         return "Loading... This project runs on a free tier of Render, which means that the server will spin down with inactivity. If you're here for the first time, it'll take roughly a minute to load.";
@@ -55,28 +63,6 @@ const Home: React.FC = () => {
         }) 
     }
 
-    // const getInitialRandomCountry = (): CountryData | null => {
-    //     if (!data) {
-    //         return null;
-    //     }
-    //     const objectKeys: string[] = Object.keys(data);
-    //     const randomCountry: string = objectKeys[Math.floor(Math.random() * objectKeys.length)]
-    //     return {
-    //         countryName: randomCountry,
-    //         countryInfo: data[randomCountry]
-    //     }
-    // }
-
-    useEffect(() => {
-        if (!data) return;
-        const objectKeys: string[] = Object.keys(data);
-        const randomCountry: string = objectKeys[Math.floor(Math.random() * objectKeys.length)]
-        setRandomCountryData({
-            countryName: randomCountry,
-            countryInfo: data[randomCountry]
-        })
-    }, [data])
-
     const handleRevealAnswer = () => {
         setShowAnswer(true);
         setShowNextQuestionButton(true);
@@ -85,7 +71,8 @@ const Home: React.FC = () => {
     const handleNextQuestion = () => {
         setShowAnswer(false);
         setShowNextQuestionButton(false);
-        refetch();
+        // refetch();
+        getRandomCountryFromContinent();
     };
 
     const handleUserContinentSelection = (continentData: ContinentName["name"]) => {
