@@ -3,7 +3,7 @@ import capitaliseFirstLetter from "./helperFunctions/capitaliseFirstLetter";
 import ContinentName from "./types/ContinentName";
 
 type SelectContinentProps = {
-    continentSelectionCallback: Dispatch<SetStateAction<string>>;
+    continentSelectionCallback: (input: string) => void;
     currentContinent: string;
 };
 

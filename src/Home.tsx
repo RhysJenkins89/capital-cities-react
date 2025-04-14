@@ -49,7 +49,6 @@ const Home: React.FC = () => {
             countryName: randomCountry,
             countryInfo: data[randomCountry]
         })
-        previousCountry.current = randomCountry; // On initial render, I set .current to the current country
     }, [data])
 
     if (isPending)
@@ -87,11 +86,11 @@ const Home: React.FC = () => {
         getRandomCountryFromContinent();
     };
 
-    const handleUserContinentSelection = (continentData: ContinentName["name"]) => {
-        window.localStorage.setItem("lastUserContinentSelection", continentData);
+    const handleUserContinentSelection = (continentName: ContinentName["name"]) => {
+        window.localStorage.setItem("lastUserContinentSelection", continentName);
         setShowAnswer(false);
         setShowNextQuestionButton(false);
-        setContinent(continentData);
+        setContinent(continentName);
     };
 
     return (
