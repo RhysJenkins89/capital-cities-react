@@ -1,4 +1,4 @@
-import { useState, useRef, useContext, useEffect } from "react";
+import { useState, useRef, useContext, useEffect, RefObject } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AppContext } from "./Context";
 import getContinentData from "./fetchFunctions/getContinentData";
@@ -14,7 +14,8 @@ const Home: React.FC = () => {
     const [continent, setContinent] = useState<string>(window.localStorage.getItem("lastUserContinentSelection") || "europe");
     const [showLogin, setShowLogin] = useState<boolean>(false);
     const [showSignup, setShowSignup] = useState<boolean>(false);
-    const [randomCountryData, setRandomCountryData] = useState<CountryData | null>(null)
+    const [randomCountryData, setRandomCountryData] = useState<CountryData | null>(null);
+    const previousCountry: RefObject<string> = useRef<string>('');
 
     // App context
     const context = useContext(AppContext);
@@ -28,12 +29,17 @@ const Home: React.FC = () => {
     const { userIsLoggedIn } = context;
 
     // Get country data
-    const { isPending, error, data, refetch } = useQuery({
+    const { isPending, error, data } = useQuery({
         queryKey: [continent],
         queryFn: () => getContinentData(continent),
         staleTime: Infinity,
         gcTime: Infinity
     });
+
+    // Write about: 
+        // The fetch request issue
+        // The useEffect/hooks bug
+        // chatGPT thinks that React.MutableRefObject is the correct type for a useRef object, but VS Code tells me that it's been deprecated
 
     useEffect(() => {
         if (!data) return;
@@ -43,6 +49,7 @@ const Home: React.FC = () => {
             countryName: randomCountry,
             countryInfo: data[randomCountry]
         })
+        previousCountry.current = randomCountry; // On initial render, I set .current to the current country
     }, [data])
 
     if (isPending)
@@ -56,11 +63,17 @@ const Home: React.FC = () => {
             return;
         }
         const objectKeys: string[] = Object.keys(data);
-        const randomCountry: string = objectKeys[Math.floor(Math.random() * objectKeys.length)]
+        let randomCountry: string = objectKeys[Math.floor(Math.random() * objectKeys.length)]
+        // If the previous country is the same as the new country, get another new country. 
+        while (previousCountry.current === randomCountry) {
+            console.log(`The previous country, ${previousCountry.current}, is the same as the next country, ${randomCountry}. Updating...`)
+            randomCountry = objectKeys[Math.floor(Math.random() * objectKeys.length)]
+        }
         setRandomCountryData({
             countryName: randomCountry,
             countryInfo: data[randomCountry]
         }) 
+        previousCountry.current = randomCountry;
     }
 
     const handleRevealAnswer = () => {
@@ -71,7 +84,6 @@ const Home: React.FC = () => {
     const handleNextQuestion = () => {
         setShowAnswer(false);
         setShowNextQuestionButton(false);
-        // refetch();
         getRandomCountryFromContinent();
     };
 
@@ -118,15 +130,3 @@ const Home: React.FC = () => {
 };
 
 export default Home;
-
-// This is the logic to get a random country: 
-
-// const objectKeys: string[] = Object.keys(continentData);
-// const randomCountry: string =
-//     objectKeys[Math.floor(Math.random() * objectKeys.length)];
-// return {
-//     countryName: randomCountry,
-//     countryInfo: continentData[randomCountry],
-// };
-
-// Write why you are refactoring the code. It'll be practice and it might prove useful in an interview situation. 
