@@ -1,6 +1,6 @@
 # Doing
 
--      
+-   Find a replacement for Prettier         
 
 ## To do
 

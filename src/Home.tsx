@@ -36,10 +36,12 @@ const Home: React.FC = () => {
         gcTime: Infinity
     });
 
+    // Check that @biomejs has been removed from the node modules
+
     // Write about: 
-        // The fetch request issue
-        // The useEffect/hooks bug
-        // chatGPT thinks that React.MutableRefObject is the correct type for a useRef object, but VS Code tells me that it's been deprecated
+    // The fetch request issue
+    // The useEffect/hooks bug
+    // chatGPT thinks that React.MutableRefObject is the correct type for a useRef object, but VS Code tells me that it's been deprecated
 
     useEffect(() => {
         if (!data) return;
@@ -51,8 +53,15 @@ const Home: React.FC = () => {
         })
     }, [data])
 
-    if (isPending)
-        return "Loading... This project runs on a free tier of Render, which means that the server will spin down with inactivity. If you're here for the first time, it'll take roughly a minute to load.";
+    if (isPending) { // Update only the country text when the user selects a new continent, not the whole app.
+        return (
+            <div>
+                <h1>Capital cities</h1>
+                <p>Loading... This project runs on a free tier of Render, which means that the server will spin down with inactivity. If you're here for the first time, it'll take roughly a minute to load.</p>
+            </div>
+        )
+    }
+
 
     if (error) return "An error has occurred: " + error.message;
 
@@ -71,7 +80,7 @@ const Home: React.FC = () => {
         setRandomCountryData({
             countryName: randomCountry,
             countryInfo: data[randomCountry]
-        }) 
+        })
         previousCountry.current = randomCountry;
     }
 
