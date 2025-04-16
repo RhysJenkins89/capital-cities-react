@@ -10,12 +10,16 @@ import CountryData from "./types/CountryData";
 
 const Home: React.FC = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
-    const [showNextQuestionButton, setShowNextQuestionButton] = useState<boolean>(false);
-    const [continent, setContinent] = useState<string>(window.localStorage.getItem("lastUserContinentSelection") || "europe");
+    const [showNextQuestionButton, setShowNextQuestionButton] =
+        useState<boolean>(false);
+    const [continent, setContinent] = useState<string>(
+        window.localStorage.getItem("lastUserContinentSelection") || "europe"
+    );
     const [showLogin, setShowLogin] = useState<boolean>(false);
     const [showSignup, setShowSignup] = useState<boolean>(false);
-    const [randomCountryData, setRandomCountryData] = useState<CountryData | null>(null);
-    const previousCountry: RefObject<string> = useRef<string>('');
+    const [randomCountryData, setRandomCountryData] =
+        useState<CountryData | null>(null);
+    const previousCountry: RefObject<string> = useRef<string>("");
 
     // App context
     const context = useContext(AppContext);
@@ -33,12 +37,12 @@ const Home: React.FC = () => {
         queryKey: [continent],
         queryFn: () => getContinentData(continent),
         staleTime: Infinity,
-        gcTime: Infinity
+        gcTime: Infinity,
     });
 
     // Check that @biomejs has been removed from the node modules
 
-    // Write about: 
+    // Write about:
     // The fetch request issue
     // The useEffect/hooks bug
     // chatGPT thinks that React.MutableRefObject is the correct type for a useRef object, but VS Code tells me that it's been deprecated
@@ -46,22 +50,28 @@ const Home: React.FC = () => {
     useEffect(() => {
         if (!data) return;
         const objectKeys: string[] = Object.keys(data);
-        const randomCountry: string = objectKeys[Math.floor(Math.random() * objectKeys.length)]
+        const randomCountry: string =
+            objectKeys[Math.floor(Math.random() * objectKeys.length)];
         setRandomCountryData({
             countryName: randomCountry,
-            countryInfo: data[randomCountry]
-        })
-    }, [data])
+            countryInfo: data[randomCountry],
+        });
+    }, [data]);
 
-    if (isPending) { // Update only the country text when the user selects a new continent, not the whole app.
+    if (isPending) {
+        // Update only the country text when the user selects a new continent, not the whole app.
         return (
             <div>
                 <h1>Capital cities</h1>
-                <p>Loading... This project runs on a free tier of Render, which means that the server will spin down with inactivity. If you're here for the first time, it'll take roughly a minute to load.</p>
+                <p>
+                    Loading... This project runs on a free tier of Render, which
+                    means that the server will spin down with inactivity. If
+                    you're here for the first time, it'll take roughly a minute
+                    to load.
+                </p>
             </div>
-        )
+        );
     }
-
 
     if (error) return "An error has occurred: " + error.message;
 
@@ -71,18 +81,22 @@ const Home: React.FC = () => {
             return;
         }
         const objectKeys: string[] = Object.keys(data);
-        let randomCountry: string = objectKeys[Math.floor(Math.random() * objectKeys.length)]
-        // If the previous country is the same as the new country, get another new country. 
+        let randomCountry: string =
+            objectKeys[Math.floor(Math.random() * objectKeys.length)];
+        // If the previous country is the same as the new country, get another new country.
         while (previousCountry.current === randomCountry) {
-            console.log(`The previous country, ${previousCountry.current}, is the same as the next country, ${randomCountry}. Updating...`)
-            randomCountry = objectKeys[Math.floor(Math.random() * objectKeys.length)]
+            console.log(
+                `The previous country, ${previousCountry.current}, is the same as the next country, ${randomCountry}. Updating...`
+            );
+            randomCountry =
+                objectKeys[Math.floor(Math.random() * objectKeys.length)];
         }
         setRandomCountryData({
             countryName: randomCountry,
-            countryInfo: data[randomCountry]
-        })
+            countryInfo: data[randomCountry],
+        });
         previousCountry.current = randomCountry;
-    }
+    };
 
     const handleRevealAnswer = () => {
         setShowAnswer(true);
@@ -95,8 +109,13 @@ const Home: React.FC = () => {
         getRandomCountryFromContinent();
     };
 
-    const handleUserContinentSelection = (continentName: ContinentName["name"]) => {
-        window.localStorage.setItem("lastUserContinentSelection", continentName);
+    const handleUserContinentSelection = (
+        continentName: ContinentName["name"]
+    ) => {
+        window.localStorage.setItem(
+            "lastUserContinentSelection",
+            continentName
+        );
         setShowAnswer(false);
         setShowNextQuestionButton(false);
         setContinent(continentName);
@@ -129,7 +148,11 @@ const Home: React.FC = () => {
                 {randomCountryData?.countryName}?
             </p>
             <button onClick={handleRevealAnswer}>Reveal answer</button>
-            {showAnswer ? <p>{randomCountryData?.countryInfo.capital}</p> : <p></p>}
+            {showAnswer ? (
+                <p>{randomCountryData?.countryInfo.capital}</p>
+            ) : (
+                <p></p>
+            )}
             {showNextQuestionButton ? (
                 <button onClick={handleNextQuestion}>Next question</button>
             ) : null}

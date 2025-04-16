@@ -9,7 +9,7 @@ type SelectContinentProps = {
 
 const SelectContinent = ({
     continentSelectionCallback,
-    currentContinent
+    currentContinent,
 }: SelectContinentProps) => {
     const continents: string[] = [
         "europe",
