@@ -1,6 +1,6 @@
 # Doing
 
--
+-   Build the isPending state
 
 ## To do
 

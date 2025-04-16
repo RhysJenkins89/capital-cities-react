@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 import capitaliseFirstLetter from "./helperFunctions/capitaliseFirstLetter";
 import ContinentName from "./types/ContinentName";
 
@@ -25,13 +24,9 @@ const SelectContinent = ({
     };
 
     const renderContinentText = (text: string): string => {
-        if (text === "north-america") {
-            return "North America";
-        } else if (text === "south-america") {
-            return "South America";
-        } else {
-            return capitaliseFirstLetter(text);
-        }
+        if (text === "north-america") return "North America";
+        if (text === "south-america") return "South America";
+        return capitaliseFirstLetter(text);
     };
 
     return (

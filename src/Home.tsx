@@ -40,8 +40,6 @@ const Home: React.FC = () => {
         gcTime: Infinity,
     });
 
-    // Check that @biomejs has been removed from the node modules
-
     // Write about:
     // The fetch request issue
     // The useEffect/hooks bug
@@ -58,22 +56,22 @@ const Home: React.FC = () => {
         });
     }, [data]);
 
-    if (isPending) {
-        // Update only the country text when the user selects a new continent, not the whole app.
-        return (
-            <div>
-                <h1>Capital cities</h1>
-                <p>
-                    Loading... This project runs on a free tier of Render, which
-                    means that the server will spin down with inactivity. If
-                    you're here for the first time, it'll take roughly a minute
-                    to load.
-                </p>
-            </div>
-        );
-    }
+    // if (isPending) {
+    //     // Update only the country text when the user selects a new continent, not the whole app.
+    //     return (
+    //         <div>
+    //             <h1>Capital cities</h1>
+    //             <p>
+    //                 Loading... This project runs on a free tier of Render, which
+    //                 means that the server will spin down with inactivity. If
+    //                 you're here for the first time, it'll take roughly a minute
+    //                 to load.
+    //             </p>
+    //         </div>
+    //     );
+    // }
 
-    if (error) return "An error has occurred: " + error.message;
+    // if (error) return "An error has occurred: " + error.message;
 
     // Component functions
     const getRandomCountryFromContinent = () => {
@@ -137,25 +135,37 @@ const Home: React.FC = () => {
                 </button>
             </div>
             {showSignup && <UserSignup />} */}
-            <p>Select continent:</p>
-            <SelectContinent
-                continentSelectionCallback={handleUserContinentSelection}
-                currentContinent={continent}
-            />
-            <p>
-                What is the capital of{" "}
-                {randomCountryData?.countryInfo.definiteArticle ? "the " : null}
-                {randomCountryData?.countryName}?
-            </p>
-            <button onClick={handleRevealAnswer}>Reveal answer</button>
-            {showAnswer ? (
-                <p>{randomCountryData?.countryInfo.capital}</p>
+            {isPending ? (
+                <p>Loading country data.</p>
             ) : (
-                <p></p>
+                <div>
+                    <p>Select continent:</p>
+                    <SelectContinent
+                        continentSelectionCallback={
+                            handleUserContinentSelection
+                        }
+                        currentContinent={continent}
+                    />
+                    <p>
+                        What is the capital of{" "}
+                        {randomCountryData?.countryInfo.definiteArticle
+                            ? "the "
+                            : null}
+                        {randomCountryData?.countryName}?
+                    </p>
+                    <button onClick={handleRevealAnswer}>Reveal answer</button>
+                    {showAnswer ? (
+                        <p>{randomCountryData?.countryInfo.capital}</p>
+                    ) : (
+                        <p></p>
+                    )}
+                    {showNextQuestionButton ? (
+                        <button onClick={handleNextQuestion}>
+                            Next question
+                        </button>
+                    ) : null}
+                </div>
             )}
-            {showNextQuestionButton ? (
-                <button onClick={handleNextQuestion}>Next question</button>
-            ) : null}
         </div>
     );
 };
