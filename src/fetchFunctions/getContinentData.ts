@@ -1,15 +1,20 @@
-import ContinentData from "../types/ContinentData";
+import CountryData from "../types/CountryData";
 
 const getContinentData = async (continent: string) => {
-    let url: string;
-    if (continent) {
-        url = `https://cities-api.rhysjenkins.uk/${continent}`;
-    } else {
-        url = `https://cities-api.rhysjenkins.uk/europe`;
+    try {
+        let url: string;
+        continent
+            ? (url = `https://cities-api.rhysjenkins.uk/${continent}`)
+            : (url = `https://cities-api.rhysjenkins.uk/europe`);
+        const delay: Promise<void> = new Promise((resolve) =>
+            setTimeout(resolve, 1000)
+        );
+        const [data] = await Promise.all([fetch(url), delay]); // This delay is entirely for UX purposes.
+        const continentData: CountryData[] = await data.json();
+        return continentData;
+    } catch (error) {
+        console.log("An error occured while fetching the data:", error);
     }
-    const data: Response = await fetch(url);
-    const continentData: ContinentData = await data.json();
-    return continentData;
 };
 
 export default getContinentData;

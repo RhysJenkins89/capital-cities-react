@@ -1,6 +1,6 @@
 # Doing
 
--   Add ESLint
+-   Build the isPending state
 
 ## To do
 
