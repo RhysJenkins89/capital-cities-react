@@ -1,4 +1,4 @@
-import ContinentData from "../types/ContinentData";
+import CountryData from "../types/CountryData";
 
 const getContinentData = async (continent: string) => {
     try {
@@ -10,7 +10,7 @@ const getContinentData = async (continent: string) => {
             setTimeout(resolve, 1000)
         );
         const [data] = await Promise.all([fetch(url), delay]); // This delay is entirely for UX purposes.
-        const continentData: ContinentData = await data.json();
+        const continentData: CountryData[] = await data.json();
         return continentData;
     } catch (error) {
         console.log("An error occured while fetching the data:", error);

@@ -46,14 +46,12 @@ const Home: React.FC = () => {
     // chatGPT thinks that React.MutableRefObject is the correct type for a useRef object, but VS Code tells me that it's been deprecated
 
     useEffect(() => {
-        if (!data) return;
-        const objectKeys: string[] = Object.keys(data);
-        const randomCountry: string =
-            objectKeys[Math.floor(Math.random() * objectKeys.length)];
-        setRandomCountryData({
-            countryName: randomCountry,
-            countryInfo: data[randomCountry],
-        });
+        if (!data) {
+            return;
+        }
+        const randomCountry: CountryData =
+            data[Math.floor(Math.random() * data.length)];
+        setRandomCountryData(randomCountry);
     }, [data]);
 
     // if (isPending) {
@@ -78,22 +76,14 @@ const Home: React.FC = () => {
         if (!data) {
             return;
         }
-        const objectKeys: string[] = Object.keys(data);
-        let randomCountry: string =
-            objectKeys[Math.floor(Math.random() * objectKeys.length)];
+        let randomCountry: CountryData =
+            data[Math.floor(Math.random() * data.length)];
         // If the previous country is the same as the new country, get another new country.
-        while (previousCountry.current === randomCountry) {
-            console.log(
-                `The previous country, ${previousCountry.current}, is the same as the next country, ${randomCountry}. Updating...`
-            );
-            randomCountry =
-                objectKeys[Math.floor(Math.random() * objectKeys.length)];
+        while (previousCountry.current === randomCountry.name) {
+            randomCountry = data[Math.floor(Math.random() * data.length)];
         }
-        setRandomCountryData({
-            countryName: randomCountry,
-            countryInfo: data[randomCountry],
-        });
-        previousCountry.current = randomCountry;
+        setRandomCountryData(randomCountry);
+        previousCountry.current = randomCountry.name;
     };
 
     const handleRevealAnswer = () => {
@@ -148,17 +138,11 @@ const Home: React.FC = () => {
                     />
                     <p>
                         What is the capital of{" "}
-                        {randomCountryData?.countryInfo.definiteArticle
-                            ? "the "
-                            : null}
-                        {randomCountryData?.countryName}?
+                        {randomCountryData?.definiteArticle ? "the " : null}
+                        {randomCountryData?.name}?
                     </p>
                     <button onClick={handleRevealAnswer}>Reveal answer</button>
-                    {showAnswer ? (
-                        <p>{randomCountryData?.countryInfo.capital}</p>
-                    ) : (
-                        <p></p>
-                    )}
+                    {showAnswer ? <p>{randomCountryData?.capital}</p> : <p></p>}
                     {showNextQuestionButton ? (
                         <button onClick={handleNextQuestion}>
                             Next question
