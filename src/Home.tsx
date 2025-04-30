@@ -19,6 +19,8 @@ const Home: React.FC = () => {
     const [showSignup, setShowSignup] = useState<boolean>(false);
     const [randomCountryData, setRandomCountryData] =
         useState<CountryData | null>(null);
+    const [showConfidenceSelection, setShowConfidenceSelection] =
+        useState<boolean>(false);
     const previousCountry: RefObject<string> = useRef<string>("");
 
     // App context
@@ -40,11 +42,6 @@ const Home: React.FC = () => {
         gcTime: Infinity,
     });
 
-    // Write about:
-    // The fetch request issue
-    // The useEffect/hooks bug
-    // chatGPT thinks that React.MutableRefObject is the correct type for a useRef object, but VS Code tells me that it's been deprecated
-
     useEffect(() => {
         if (!data) {
             return;
@@ -54,23 +51,6 @@ const Home: React.FC = () => {
         setRandomCountryData(randomCountry);
     }, [data]);
 
-    // if (isPending) {
-    //     // Update only the country text when the user selects a new continent, not the whole app.
-    //     return (
-    //         <div>
-    //             <h1>Capital cities</h1>
-    //             <p>
-    //                 Loading... This project runs on a free tier of Render, which
-    //                 means that the server will spin down with inactivity. If
-    //                 you're here for the first time, it'll take roughly a minute
-    //                 to load.
-    //             </p>
-    //         </div>
-    //     );
-    // }
-
-    // if (error) return "An error has occurred: " + error.message;
-
     // Component functions
     const getRandomCountryFromContinent = () => {
         if (!data) {
@@ -78,8 +58,8 @@ const Home: React.FC = () => {
         }
         let randomCountry: CountryData =
             data[Math.floor(Math.random() * data.length)];
-        // If the previous country is the same as the new country, get another new country.
         while (previousCountry.current === randomCountry.name) {
+            // If the previous country is the same as the new country, get another new country.
             randomCountry = data[Math.floor(Math.random() * data.length)];
         }
         setRandomCountryData(randomCountry);
@@ -88,12 +68,16 @@ const Home: React.FC = () => {
 
     const handleRevealAnswer = () => {
         setShowAnswer(true);
+        setShowConfidenceSelection(true);
         setShowNextQuestionButton(true);
     };
 
-    const handleNextQuestion = () => {
+    const handleConfidenceSelection = (
+        event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+        const userConfidence: number = parseInt(event.currentTarget.value);
         setShowAnswer(false);
-        setShowNextQuestionButton(false);
+        setShowConfidenceSelection(false);
         getRandomCountryFromContinent();
     };
 
@@ -143,10 +127,44 @@ const Home: React.FC = () => {
                     </p>
                     <button onClick={handleRevealAnswer}>Reveal answer</button>
                     {showAnswer ? <p>{randomCountryData?.capital}</p> : <p></p>}
-                    {showNextQuestionButton ? (
-                        <button onClick={handleNextQuestion}>
-                            Next question
-                        </button>
+                    {showConfidenceSelection ? (
+                        <div>
+                            <div>
+                                <p>How well do you know this?</p>
+                                <div>
+                                    <button
+                                        onClick={handleConfidenceSelection}
+                                        value={1}
+                                    >
+                                        1
+                                    </button>
+                                    <button
+                                        onClick={handleConfidenceSelection}
+                                        value={2}
+                                    >
+                                        2
+                                    </button>
+                                    <button
+                                        onClick={handleConfidenceSelection}
+                                        value={3}
+                                    >
+                                        3
+                                    </button>
+                                    <button
+                                        onClick={handleConfidenceSelection}
+                                        value={4}
+                                    >
+                                        4
+                                    </button>
+                                    <button
+                                        onClick={handleConfidenceSelection}
+                                        value={5}
+                                    >
+                                        5
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     ) : null}
                 </div>
             )}
@@ -155,3 +173,8 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+
+// Write about:
+// The fetch request issue
+// The useEffect/hooks bug
+// chatGPT thinks that React.MutableRefObject is the correct type for a useRef object, but VS Code tells me that it's been deprecated
