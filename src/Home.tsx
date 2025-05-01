@@ -79,6 +79,8 @@ const Home: React.FC = () => {
         setShowAnswer(false);
         setShowConfidenceSelection(false);
         getRandomCountryFromContinent();
+        // Update the database with the user's confidence index
+        // Do I immediately update the database at this point?
     };
 
     const handleUserContinentSelection = (
