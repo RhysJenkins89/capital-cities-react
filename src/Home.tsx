@@ -73,12 +73,15 @@ const Home: React.FC = () => {
     };
 
     const handleConfidenceSelection = (
-        event: React.MouseEvent<HTMLButtonElement>
+        event: React.MouseEvent<HTMLButtonElement>,
+        id: string
     ) => {
+        console.log("string:", id);
         const userConfidence: number = parseInt(event.currentTarget.value);
         setShowAnswer(false);
         setShowConfidenceSelection(false);
         getRandomCountryFromContinent();
+        console.log("User confidence: ", userConfidence);
         // Update the database with the user's confidence index
         // Do I immediately update the database at this point?
     };
@@ -94,6 +97,8 @@ const Home: React.FC = () => {
         setShowNextQuestionButton(false);
         setContinent(continentName);
     };
+
+    const confidenceIndex: number[] = [1, 2, 3, 4, 5];
 
     return (
         <div>
@@ -134,36 +139,19 @@ const Home: React.FC = () => {
                             <div>
                                 <p>How well do you know this?</p>
                                 <div>
-                                    <button
-                                        onClick={handleConfidenceSelection}
-                                        value={1}
-                                    >
-                                        1
-                                    </button>
-                                    <button
-                                        onClick={handleConfidenceSelection}
-                                        value={2}
-                                    >
-                                        2
-                                    </button>
-                                    <button
-                                        onClick={handleConfidenceSelection}
-                                        value={3}
-                                    >
-                                        3
-                                    </button>
-                                    <button
-                                        onClick={handleConfidenceSelection}
-                                        value={4}
-                                    >
-                                        4
-                                    </button>
-                                    <button
-                                        onClick={handleConfidenceSelection}
-                                        value={5}
-                                    >
-                                        5
-                                    </button>
+                                    {confidenceIndex.map((index) => {
+                                        return (
+                                            <button
+                                                key={index}
+                                                onClick={handleConfidenceSelection(
+                                                    randomCountryData?._id
+                                                )}
+                                                value={index}
+                                            >
+                                                {index}
+                                            </button>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         </div>
