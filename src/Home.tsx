@@ -74,16 +74,17 @@ const Home: React.FC = () => {
 
     const handleConfidenceSelection = (
         event: React.MouseEvent<HTMLButtonElement>,
-        id: string
+        id: string | undefined
     ) => {
-        console.log("string:", id);
         const userConfidence: number = parseInt(event.currentTarget.value);
         setShowAnswer(false);
         setShowConfidenceSelection(false);
         getRandomCountryFromContinent();
         console.log("User confidence: ", userConfidence);
+        console.log("country id:", id);
         // Update the database with the user's confidence index
         // Do I immediately update the database at this point?
+        // Also recall that updating the database at this point won't affect the countries data that has already been stored on the frontend
     };
 
     const handleUserContinentSelection = (
@@ -143,9 +144,12 @@ const Home: React.FC = () => {
                                         return (
                                             <button
                                                 key={index}
-                                                onClick={handleConfidenceSelection(
-                                                    randomCountryData?._id
-                                                )}
+                                                onClick={(event) =>
+                                                    handleConfidenceSelection(
+                                                        event,
+                                                        randomCountryData?._id
+                                                    )
+                                                }
                                                 value={index}
                                             >
                                                 {index}
