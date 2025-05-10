@@ -137,26 +137,24 @@ const Home: React.FC = () => {
                     {showAnswer ? <p>{randomCountryData?.capital}</p> : <p></p>}
                     {showConfidenceSelection ? (
                         <div>
+                            <p>How well do you know this?</p>
                             <div>
-                                <p>How well do you know this?</p>
-                                <div>
-                                    {confidenceIndex.map((index) => {
-                                        return (
-                                            <button
-                                                key={index}
-                                                onClick={(event) =>
-                                                    handleConfidenceSelection(
-                                                        event,
-                                                        randomCountryData?._id
-                                                    )
-                                                }
-                                                value={index}
-                                            >
-                                                {index}
-                                            </button>
-                                        );
-                                    })}
-                                </div>
+                                {confidenceIndex.map((index) => {
+                                    return (
+                                        <button
+                                            key={index}
+                                            onClick={(event) =>
+                                                handleConfidenceSelection(
+                                                    event,
+                                                    randomCountryData?._id
+                                                )
+                                            }
+                                            value={index}
+                                        >
+                                            {index}
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </div>
                     ) : null}
