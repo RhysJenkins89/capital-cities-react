@@ -10,26 +10,21 @@ import CountryData from "./types/CountryData";
 
 const Home: React.FC = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
-    const [showNextQuestionButton, setShowNextQuestionButton] =
-        useState<boolean>(false);
+    const [showNextQuestionButton, setShowNextQuestionButton] = useState<boolean>(false);
     const [continent, setContinent] = useState<string>(
         window.localStorage.getItem("lastUserContinentSelection") || "europe"
     );
     const [showLogin, setShowLogin] = useState<boolean>(false);
     const [showSignup, setShowSignup] = useState<boolean>(false);
-    const [randomCountryData, setRandomCountryData] =
-        useState<CountryData | null>(null);
-    const [showConfidenceSelection, setShowConfidenceSelection] =
-        useState<boolean>(false);
+    const [randomCountryData, setRandomCountryData] = useState<CountryData | null>(null);
+    const [showConfidenceSelection, setShowConfidenceSelection] = useState<boolean>(false);
     const previousCountry: RefObject<string> = useRef<string>("");
 
     // App context
     const context = useContext(AppContext);
 
     if (!context) {
-        throw new Error(
-            "Use this component inside of the AppContextProvider component."
-        );
+        throw new Error("Use this component inside of the AppContextProvider component.");
     }
 
     const { userIsLoggedIn } = context;
@@ -46,8 +41,7 @@ const Home: React.FC = () => {
         if (!data) {
             return;
         }
-        const randomCountry: CountryData =
-            data[Math.floor(Math.random() * data.length)];
+        const randomCountry: CountryData = data[Math.floor(Math.random() * data.length)];
         setRandomCountryData(randomCountry);
     }, [data]);
 
@@ -56,10 +50,8 @@ const Home: React.FC = () => {
         if (!data) {
             return;
         }
-        let randomCountry: CountryData =
-            data[Math.floor(Math.random() * data.length)];
+        let randomCountry: CountryData = data[Math.floor(Math.random() * data.length)];
         while (previousCountry.current === randomCountry.name) {
-            // If the previous country is the same as the new country, get another new country.
             randomCountry = data[Math.floor(Math.random() * data.length)];
         }
         setRandomCountryData(randomCountry);
@@ -72,10 +64,7 @@ const Home: React.FC = () => {
         setShowNextQuestionButton(true);
     };
 
-    const handleConfidenceSelection = (
-        event: React.MouseEvent<HTMLButtonElement>,
-        id: string | undefined
-    ) => {
+    const handleConfidenceSelection = (event: React.MouseEvent<HTMLButtonElement>, id: string | undefined) => {
         const userConfidence: number = parseInt(event.currentTarget.value);
         setShowAnswer(false);
         setShowConfidenceSelection(false);
@@ -83,17 +72,13 @@ const Home: React.FC = () => {
         console.log("User confidence: ", userConfidence);
         console.log("country id:", id);
         // Update the database with the user's confidence index
-        // Do I immediately update the database at this point?
-        // Also recall that updating the database at this point won't affect the countries data that has already been stored on the frontend
+        // What does the route need to post to the database?
+        // the confidence index
+        // the country id
     };
 
-    const handleUserContinentSelection = (
-        continentName: ContinentName["name"]
-    ) => {
-        window.localStorage.setItem(
-            "lastUserContinentSelection",
-            continentName
-        );
+    const handleUserContinentSelection = (continentName: ContinentName["name"]) => {
+        window.localStorage.setItem("lastUserContinentSelection", continentName);
         setShowAnswer(false);
         setShowNextQuestionButton(false);
         setContinent(continentName);
@@ -123,14 +108,11 @@ const Home: React.FC = () => {
                 <div>
                     <p>Select continent:</p>
                     <SelectContinent
-                        continentSelectionCallback={
-                            handleUserContinentSelection
-                        }
+                        continentSelectionCallback={handleUserContinentSelection}
                         currentContinent={continent}
                     />
                     <p>
-                        What is the capital of{" "}
-                        {randomCountryData?.definiteArticle ? "the " : null}
+                        What is the capital of {randomCountryData?.definiteArticle ? "the " : null}
                         {randomCountryData?.name}?
                     </p>
                     <button onClick={handleRevealAnswer}>Reveal answer</button>
@@ -144,10 +126,7 @@ const Home: React.FC = () => {
                                         <button
                                             key={index}
                                             onClick={(event) =>
-                                                handleConfidenceSelection(
-                                                    event,
-                                                    randomCountryData?._id
-                                                )
+                                                handleConfidenceSelection(event, randomCountryData?._id)
                                             }
                                             value={index}
                                         >
