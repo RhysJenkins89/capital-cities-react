@@ -2,7 +2,7 @@ const updateCountryConfidenceIndex = async (countryId: string) => {
     // Send the id of the country
     try {
         const response: Response = await fetch("", {
-            method: "POST",
+            method: "PATCH",
             body: JSON.stringify({ test: "test-data" }),
         });
     } catch (error) {
