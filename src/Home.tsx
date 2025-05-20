@@ -8,6 +8,8 @@ import UserSignup from "./UserSignup";
 import ContinentName from "./types/ContinentName";
 import CountryData from "./types/CountryData";
 
+// This is a great blog design: https://www.codemzy.com/blog/
+
 const Home: React.FC = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
     const [showNextQuestionButton, setShowNextQuestionButton] = useState<boolean>(false);
@@ -64,7 +66,7 @@ const Home: React.FC = () => {
         setShowNextQuestionButton(true);
     };
 
-    const handleConfidenceSelection = (event: React.MouseEvent<HTMLButtonElement>, id: string | undefined) => {
+    const handleConfidenceSelection = async (event: React.MouseEvent<HTMLButtonElement>, id: string | undefined) => {
         const userConfidence: number = parseInt(event.currentTarget.value);
         setShowAnswer(false);
         setShowConfidenceSelection(false);
@@ -75,6 +77,23 @@ const Home: React.FC = () => {
         // What does the route need to post to the database?
         // the confidence index
         // the country id
+
+        // Put function:
+        console.log("Update country confidence function");
+        // Send the id of the country
+        try {
+            const response: Response = await fetch("http://localhost:3000/update", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ test: "test-data" }),
+            });
+            const resData = await response.json();
+            console.log("Response: ", resData);
+        } catch (error) {
+            console.error("Error: ", error);
+        }
     };
 
     const handleUserContinentSelection = (continentName: ContinentName["name"]) => {
