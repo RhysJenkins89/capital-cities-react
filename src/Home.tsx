@@ -89,6 +89,7 @@ const Home: React.FC = () => {
                 },
                 body: JSON.stringify({ test: "test-data" }),
             });
+            console.log("Response: ", response);
             const resData = await response.json();
             console.log("Response: ", resData);
         } catch (error) {
