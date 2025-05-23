@@ -87,11 +87,13 @@ const Home: React.FC = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ test: "test-data" }),
+                body: JSON.stringify({ test: "test-data", countryId: id }),
             });
-            console.log("Response: ", response);
-            const resData = await response.json();
-            console.log("Response: ", resData);
+            console.log("Response:", response.body);
+            // const resData = await response.json();
+            // console.log("resData:", resData);
+            // console.log("Response: ", response);
+            // const resData = await response.json();
         } catch (error) {
             console.error("Error: ", error);
         }
