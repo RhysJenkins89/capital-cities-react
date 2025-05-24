@@ -82,18 +82,16 @@ const Home: React.FC = () => {
         console.log("Update country confidence function");
         // Send the id of the country
         try {
+            // This should be a useQuery method
             const response: Response = await fetch("http://localhost:3000/update", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ test: "test-data", countryId: id }),
+                body: JSON.stringify({ countryId: id }),
             });
-            console.log("Response:", response.body);
-            // const resData = await response.json();
-            // console.log("resData:", resData);
-            // console.log("Response: ", response);
-            // const resData = await response.json();
+            const resData = await response.json();
+            console.log("Response:", resData);
         } catch (error) {
             console.error("Error: ", error);
         }
