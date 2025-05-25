@@ -20,6 +20,7 @@ const Home: React.FC = () => {
     const [showLogin, setShowLogin] = useState<boolean>(false);
     const [showSignup, setShowSignup] = useState<boolean>(false);
     const [randomCountryData, setRandomCountryData] = useState<CountryData | null>(null);
+    // const [randomCountryData, setRandomCountryData] = useState<CountryData>();
     const [showConfidenceSelection, setShowConfidenceSelection] = useState<boolean>(false);
     const previousCountry: RefObject<string> = useRef<string>("");
 
@@ -152,13 +153,13 @@ const Home: React.FC = () => {
                         <div>
                             <p>How well do you know this?</p>
                             <div>
+                                {/* This should probably be its own function */}
+                                {/* In fact, it definitely should */}
                                 {confidenceIndex.map((index) => {
                                     return (
                                         <button
                                             key={index}
-                                            onClick={(event) =>
-                                                handleConfidenceSelection(event, randomCountryData?._id)
-                                            }
+                                            onClick={(event) => handleConfidenceSelection(event, randomCountryData._id)}
                                             value={index}
                                         >
                                             {index}
