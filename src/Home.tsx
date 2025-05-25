@@ -1,7 +1,8 @@
 import { useState, useRef, useContext, useEffect, RefObject } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { AppContext } from "./Context";
 import getContinentData from "./fetchFunctions/getContinentData";
+import updateCountryConfidenceIndex from "./fetchFunctions/updateCountryConfidenceIndex";
 import SelectContinent from "./SelectContinent";
 import UserLogin from "./UserLogin";
 import UserSignup from "./UserSignup";
@@ -66,7 +67,7 @@ const Home: React.FC = () => {
         setShowNextQuestionButton(true);
     };
 
-    const handleConfidenceSelection = async (event: React.MouseEvent<HTMLButtonElement>, id: string | undefined) => {
+    const handleConfidenceSelection = async (event: React.MouseEvent<HTMLButtonElement>, id: string) => {
         const userConfidence: number = parseInt(event.currentTarget.value);
         setShowAnswer(false);
         setShowConfidenceSelection(false);
@@ -95,6 +96,16 @@ const Home: React.FC = () => {
         } catch (error) {
             console.error("Error: ", error);
         }
+
+        // TanStack Query
+
+        const { isPending, isError, isSuccess } = useMutation({
+            mutationKey: ["testing"],
+            // mutationFn: (newTodo) => {
+            //     return axios.post("/todos", newTodo);
+            // },
+            mutationFn: () => updateCountryConfidenceIndex(userConfidence, id),
+        });
     };
 
     const handleUserContinentSelection = (continentName: ContinentName["name"]) => {
