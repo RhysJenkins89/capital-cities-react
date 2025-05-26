@@ -8,6 +8,7 @@ import UserLogin from "./UserLogin";
 import UserSignup from "./UserSignup";
 import ContinentName from "./types/ContinentName";
 import CountryData from "./types/CountryData";
+import ConfidenceIndexButtons from "./ConfidenceIndexButtons";
 
 // This is a great blog design: https://www.codemzy.com/blog/
 
@@ -153,9 +154,10 @@ const Home: React.FC = () => {
                         <div>
                             <p>How well do you know this?</p>
                             <div>
+                                <ConfidenceIndexButtons />
                                 {/* This should probably be its own function */}
                                 {/* In fact, it definitely should */}
-                                {confidenceIndex.map((index) => {
+                                {/* {confidenceIndex.map((index) => {
                                     return (
                                         <button
                                             key={index}
@@ -165,7 +167,7 @@ const Home: React.FC = () => {
                                             {index}
                                         </button>
                                     );
-                                })}
+                                })} */}
                             </div>
                         </div>
                     ) : null}
