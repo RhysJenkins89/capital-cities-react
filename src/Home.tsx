@@ -154,7 +154,7 @@ const Home: React.FC = () => {
                         <div>
                             <p>How well do you know this?</p>
                             <div>
-                                <ConfidenceIndexButtons />
+                                <ConfidenceIndexButtons randomCountryId={randomCountryData?._id} />
                                 {/* This should probably be its own function */}
                                 {/* In fact, it definitely should */}
                                 {/* {confidenceIndex.map((index) => {
