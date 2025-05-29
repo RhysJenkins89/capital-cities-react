@@ -14,6 +14,8 @@ const handleConfidenceSelection = (
     confidenceIndexCallback(randomCountryId);
 };
 
+// In order to keep this component simple, it might be better to do all the logic in the parent.
+
 const ConfidenceIndexButtons = ({ confidenceIndexCallback, randomCountryId }: ConfidenceIndexProps) => {
     const confidenceIndex: number[] = [1, 2, 3, 4, 5];
 
