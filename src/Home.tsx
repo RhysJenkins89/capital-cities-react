@@ -68,46 +68,49 @@ const Home: React.FC = () => {
         setShowConfidenceSelection(true);
         setShowNextQuestionButton(true);
     };
+    // event: React.MouseEvent<HTMLButtonElement>,
+    const handleConfidenceSelection = async (id: string) => {
+        console.log("Hanlde confidence callback");
+        console.log("Country id: ", id);
 
-    const handleConfidenceSelection = async (event: React.MouseEvent<HTMLButtonElement>, id: string) => {
-        const userConfidence: number = parseInt(event.currentTarget.value);
-        setShowAnswer(false);
-        setShowConfidenceSelection(false);
-        getRandomCountryFromContinent();
-        console.log("User confidence: ", userConfidence);
-        console.log("country id:", id);
-        // Update the database with the user's confidence index
-        // What does the route need to post to the database?
-        // the confidence index
-        // the country id
+        // const userConfidence: number = parseInt(event.currentTarget.value);
+        // setShowAnswer(false);
+        // setShowConfidenceSelection(false);
+        // getRandomCountryFromContinent();
+        // console.log("User confidence: ", userConfidence);
+        // console.log("country id:", id);
+        // // Update the database with the user's confidence index
+        // // What does the route need to post to the database?
+        // // the confidence index
+        // // the country id
 
-        // Put function:
-        console.log("Update country confidence function");
-        // Send the id of the country
-        try {
-            // This should be a useQuery method
-            const response: Response = await fetch("http://localhost:3000/update", {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ countryId: id }),
-            });
-            const resData = await response.json();
-            console.log("Response:", resData);
-        } catch (error) {
-            console.error("Error: ", error);
-        }
+        // // Put function:
+        // console.log("Update country confidence function");
+        // // Send the id of the country
+        // try {
+        //     // This should be a useQuery method
+        //     const response: Response = await fetch("http://localhost:3000/update", {
+        //         method: "PUT",
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //         },
+        //         body: JSON.stringify({ countryId: id }),
+        //     });
+        //     const resData = await response.json();
+        //     console.log("Response:", resData);
+        // } catch (error) {
+        //     console.error("Error: ", error);
+        // }
 
-        // TanStack Query
+        // // TanStack Query
 
-        const { isPending, isError, isSuccess } = useMutation({
-            mutationKey: ["testing"],
-            // mutationFn: (newTodo) => {
-            //     return axios.post("/todos", newTodo);
-            // },
-            mutationFn: () => updateCountryConfidenceIndex(userConfidence, id),
-        });
+        // const { isPending, isError, isSuccess } = useMutation({
+        //     mutationKey: ["testing"],
+        //     // mutationFn: (newTodo) => {
+        //     //     return axios.post("/todos", newTodo);
+        //     // },
+        //     mutationFn: () => updateCountryConfidenceIndex(userConfidence, id),
+        // });
     };
 
     const handleUserContinentSelection = (continentName: ContinentName["name"]) => {
@@ -154,7 +157,10 @@ const Home: React.FC = () => {
                         <div>
                             <p>How well do you know this?</p>
                             <div>
-                                <ConfidenceIndexButtons randomCountryId={randomCountryData?._id} />
+                                <ConfidenceIndexButtons
+                                    randomCountryId={randomCountryData?._id}
+                                    confidenceIndexCallback={handleConfidenceSelection}
+                                />
                                 {/* This should probably be its own function */}
                                 {/* In fact, it definitely should */}
                                 {/* {confidenceIndex.map((index) => {
