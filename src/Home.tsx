@@ -14,14 +14,12 @@ import ConfidenceIndexButtons from "./ConfidenceIndexButtons";
 
 const Home: React.FC = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
-    const [showNextQuestionButton, setShowNextQuestionButton] = useState<boolean>(false);
     const [continent, setContinent] = useState<string>(
         window.localStorage.getItem("lastUserContinentSelection") || "europe"
     );
     const [showLogin, setShowLogin] = useState<boolean>(false);
     const [showSignup, setShowSignup] = useState<boolean>(false);
     const [randomCountryData, setRandomCountryData] = useState<CountryData | null>(null);
-    // const [randomCountryData, setRandomCountryData] = useState<CountryData>();
     const [showConfidenceSelection, setShowConfidenceSelection] = useState<boolean>(false);
     const previousCountry: RefObject<string> = useRef<string>("");
 
@@ -42,6 +40,7 @@ const Home: React.FC = () => {
         gcTime: Infinity,
     });
 
+    // useEffect
     useEffect(() => {
         if (!data) {
             return;
@@ -66,19 +65,13 @@ const Home: React.FC = () => {
     const handleRevealAnswer = () => {
         setShowAnswer(true);
         setShowConfidenceSelection(true);
-        setShowNextQuestionButton(true);
     };
-    // event: React.MouseEvent<HTMLButtonElement>,
-    const handleConfidenceSelection = async (id: string) => {
-        console.log("Hanlde confidence callback");
-        console.log("Country id: ", id);
 
-        // const userConfidence: number = parseInt(event.currentTarget.value);
-        // setShowAnswer(false);
-        // setShowConfidenceSelection(false);
-        // getRandomCountryFromContinent();
-        // console.log("User confidence: ", userConfidence);
-        // console.log("country id:", id);
+    const handleConfidenceSelection = async (id: string, confidenceIndex: number) => {
+        setShowAnswer(false);
+        setShowConfidenceSelection(false);
+        getRandomCountryFromContinent();
+
         // // Update the database with the user's confidence index
         // // What does the route need to post to the database?
         // // the confidence index
@@ -120,24 +113,9 @@ const Home: React.FC = () => {
         setContinent(continentName);
     };
 
-    const confidenceIndex: number[] = [1, 2, 3, 4, 5];
-
     return (
         <div>
             <h1>Capital cities</h1>
-            {/* {userIsLoggedIn && <p>User is logged in</p>} */}
-            {/* <div>
-                <button onClick={() => setShowLogin(!showLogin)}>
-                    {showLogin ? "Hide login" : "Show login"}
-                </button>
-            </div>
-            {showLogin && <UserLogin />} */}
-            {/* <div>
-                <button onClick={() => setShowSignup(!showSignup)}>
-                    {showSignup ? "Hide signup" : "Show signup"}
-                </button>
-            </div>
-            {showSignup && <UserSignup />} */}
             {isPending ? (
                 <p>Loading country data.</p>
             ) : (
@@ -161,19 +139,6 @@ const Home: React.FC = () => {
                                     randomCountryId={randomCountryData?._id}
                                     confidenceIndexCallback={handleConfidenceSelection}
                                 />
-                                {/* This should probably be its own function */}
-                                {/* In fact, it definitely should */}
-                                {/* {confidenceIndex.map((index) => {
-                                    return (
-                                        <button
-                                            key={index}
-                                            onClick={(event) => handleConfidenceSelection(event, randomCountryData._id)}
-                                            value={index}
-                                        >
-                                            {index}
-                                        </button>
-                                    );
-                                })} */}
                             </div>
                         </div>
                     ) : null}

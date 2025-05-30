@@ -1,25 +1,21 @@
 type ConfidenceIndexProps = {
-    confidenceIndexCallback: (input: string) => void;
+    confidenceIndexCallback: (randomCountryId: string, confidenceIndex: number) => void;
     randomCountryId: string;
 };
 
 const handleConfidenceSelection = (
     event: React.MouseEvent<HTMLButtonElement>,
     randomCountryId: string,
-    confidenceIndexCallback: (id: string) => void
+    confidenceIndexCallback: (randomCountryId: string, confidenceIndex: number) => void
 ) => {
-    console.log("Event: ", event.currentTarget.value);
-    console.log("Random country id: ", randomCountryId);
-    // I would call the update route from here.
-    confidenceIndexCallback(randomCountryId);
+    const confidenceIndex: number = parseInt(event.currentTarget.value);
+    confidenceIndexCallback(randomCountryId, confidenceIndex);
 };
 
-// In order to keep this component simple, it might be better to do all the logic in the parent.
-
 const ConfidenceIndexButtons = ({ confidenceIndexCallback, randomCountryId }: ConfidenceIndexProps) => {
-    const confidenceIndex: number[] = [1, 2, 3, 4, 5];
+    const confidenceIndexArray: number[] = [1, 2, 3, 4, 5];
 
-    return confidenceIndex.map((index) => {
+    return confidenceIndexArray.map((index) => {
         return (
             <button
                 key={index}
@@ -28,9 +24,6 @@ const ConfidenceIndexButtons = ({ confidenceIndexCallback, randomCountryId }: Co
             >
                 {index}
             </button>
-            // <button key={index} onClick={(event) => confidenceIndexCallback(randomCountryId)} value={index}>
-            //     {index}
-            // </button>
         );
     });
 };
