@@ -10,8 +10,6 @@ import ContinentName from "./types/ContinentName";
 import CountryData from "./types/CountryData";
 import ConfidenceIndexButtons from "./ConfidenceIndexButtons";
 
-// This is a great blog design: https://www.codemzy.com/blog/
-
 const Home: React.FC = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
     const [continent, setContinent] = useState<string>(

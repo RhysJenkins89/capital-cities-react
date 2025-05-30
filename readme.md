@@ -1,6 +1,6 @@
 # Doing
 
--   Build the isPending state
+-
 
 ## To do
 
@@ -24,3 +24,5 @@ I'll add the following type note below for the time being. Find the code itself 
 Authentication article: https://dev.to/m_josh/build-a-jwt-login-and-logout-system-using-expressjs-nodejs-hd2
 
 When it comes to learning, the most important variable is time. Consistent effort over time will inevitably produce results.
+
+// This is a great blog design: https://www.codemzy.com/blog/
