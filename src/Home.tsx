@@ -107,7 +107,6 @@ const Home: React.FC = () => {
     const handleUserContinentSelection = (continentName: ContinentName["name"]) => {
         window.localStorage.setItem("lastUserContinentSelection", continentName);
         setShowAnswer(false);
-        setShowNextQuestionButton(false);
         setContinent(continentName);
     };
 
@@ -117,30 +116,32 @@ const Home: React.FC = () => {
             {isPending ? (
                 <p>Loading country data.</p>
             ) : (
-                <div>
-                    <p>Select continent:</p>
-                    <SelectContinent
-                        continentSelectionCallback={handleUserContinentSelection}
-                        currentContinent={continent}
-                    />
-                    <p>
-                        What is the capital of {randomCountryData?.definiteArticle ? "the " : null}
-                        {randomCountryData?.name}?
-                    </p>
-                    <button onClick={handleRevealAnswer}>Reveal answer</button>
-                    {showAnswer ? <p>{randomCountryData?.capital}</p> : <p></p>}
-                    {showConfidenceSelection ? (
-                        <div>
-                            <p>How well do you know this?</p>
+                randomCountryData && (
+                    <div>
+                        <p>Select continent:</p>
+                        <SelectContinent
+                            continentSelectionCallback={handleUserContinentSelection}
+                            currentContinent={continent}
+                        />
+                        <p>
+                            What is the capital of {randomCountryData.definiteArticle ? "the " : null}
+                            {randomCountryData.name}?
+                        </p>
+                        <button onClick={handleRevealAnswer}>Reveal answer</button>
+                        {showAnswer ? <p>{randomCountryData.capital}</p> : <p></p>}
+                        {showConfidenceSelection ? (
                             <div>
-                                <ConfidenceIndexButtons
-                                    randomCountryId={randomCountryData?._id}
-                                    confidenceIndexCallback={handleConfidenceSelection}
-                                />
+                                <p>How well do you know this?</p>
+                                <div>
+                                    <ConfidenceIndexButtons
+                                        randomCountryId={randomCountryData._id}
+                                        confidenceIndexCallback={handleConfidenceSelection}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    ) : null}
-                </div>
+                        ) : null}
+                    </div>
+                )
             )}
         </div>
     );
