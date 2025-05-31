@@ -38,6 +38,22 @@ const Home: React.FC = () => {
         gcTime: Infinity,
     });
 
+    // useMutation
+    const mutation = useMutation({
+        mutationKey: ["updateConfidenceIndex"],
+        // mutationFn: () => updateCountryConfidenceIndex(id, confidenceIndex),
+        mutationFn: (id, confidenceIndex) => fetch("http://localhost:3000/update", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                countryId: countryId,
+                userConfidence: userConfidence,
+            }),
+        });,
+    });
+
     // useEffect
     useEffect(() => {
         if (!data) {
@@ -75,33 +91,16 @@ const Home: React.FC = () => {
         // // the confidence index
         // // the country id
 
-        // // Put function:
-        // console.log("Update country confidence function");
-        // // Send the id of the country
-        // try {
-        //     // This should be a useQuery method
-        //     const response: Response = await fetch("http://localhost:3000/update", {
-        //         method: "PUT",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify({ countryId: id }),
-        //     });
-        //     const resData = await response.json();
-        //     console.log("Response:", resData);
-        // } catch (error) {
-        //     console.error("Error: ", error);
-        // }
-
-        // // TanStack Query
-
         // const { isPending, isError, isSuccess } = useMutation({
-        //     mutationKey: ["testing"],
-        //     // mutationFn: (newTodo) => {
-        //     //     return axios.post("/todos", newTodo);
-        //     // },
-        //     mutationFn: () => updateCountryConfidenceIndex(userConfidence, id),
+        //     mutationKey: ["updateConfidenceIndex"],
+        //     mutationFn: () => updateCountryConfidenceIndex(id, confidenceIndex),
         // });
+
+        // if (isPending) {
+        //     console.log("Pending.");
+        // } else if (isSuccess) {
+        //     console.log("Success.");
+        // }
     };
 
     const handleUserContinentSelection = (continentName: ContinentName["name"]) => {

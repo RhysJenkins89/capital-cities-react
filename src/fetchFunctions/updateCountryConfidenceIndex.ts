@@ -1,6 +1,6 @@
-const updateCountryConfidenceIndex = async (userConfidence: number, countryId: string) => {
-    console.log("User confidence: ", userConfidence);
+const updateCountryConfidenceIndex = async (countryId: string, userConfidence: number) => {
     console.log("Country id: ", countryId);
+    console.log("User confidence: ", userConfidence);
     try {
         const response: Response = await fetch("http://localhost:3000/update", {
             method: "PUT",
@@ -12,7 +12,7 @@ const updateCountryConfidenceIndex = async (userConfidence: number, countryId: s
                 userConfidence: userConfidence,
             }),
         });
-        const resData = await response.json();
+        const resData = await response.json(); // resData type
         return resData;
     } catch (error) {
         console.error("Error: ", error);
