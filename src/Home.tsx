@@ -40,18 +40,9 @@ const Home: React.FC = () => {
 
     // useMutation
     const mutation = useMutation({
-        mutationKey: ["updateConfidenceIndex"],
+        // mutationKey: ["updateConfidenceIndex"],
         // mutationFn: () => updateCountryConfidenceIndex(id, confidenceIndex),
-        mutationFn: (id, confidenceIndex) => fetch("http://localhost:3000/update", {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                countryId: countryId,
-                userConfidence: userConfidence,
-            }),
-        });,
+        mutationFn: updateCountryConfidenceIndex,
     });
 
     // useEffect
