@@ -38,13 +38,6 @@ const Home: React.FC = () => {
         gcTime: Infinity,
     });
 
-    // useMutation
-    // const mutation = useMutation({
-    //     // mutationKey: ["updateConfidenceIndex"],
-    //     // mutationFn: () => updateCountryConfidenceIndex(id, confidenceIndex),
-    //     mutationFn: updateCountryConfidenceIndex,
-    // });
-
     // useEffect
     useEffect(() => {
         if (!data) {
