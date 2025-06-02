@@ -1,4 +1,9 @@
-const updateCountryConfidenceIndex = async (countryId: string, userConfidence: number) => {
+type UpdateCountryConfidenceIndexInput = {
+    countryId: string;
+    userConfidence: number;
+};
+
+const updateCountryConfidenceIndex = async ({ countryId, userConfidence }: UpdateCountryConfidenceIndexInput) => {
     console.log("Country id: ", countryId);
     console.log("User confidence: ", userConfidence);
     try {

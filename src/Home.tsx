@@ -39,11 +39,11 @@ const Home: React.FC = () => {
     });
 
     // useMutation
-    const mutation = useMutation({
-        // mutationKey: ["updateConfidenceIndex"],
-        // mutationFn: () => updateCountryConfidenceIndex(id, confidenceIndex),
-        mutationFn: updateCountryConfidenceIndex,
-    });
+    // const mutation = useMutation({
+    //     // mutationKey: ["updateConfidenceIndex"],
+    //     // mutationFn: () => updateCountryConfidenceIndex(id, confidenceIndex),
+    //     mutationFn: updateCountryConfidenceIndex,
+    // });
 
     // useEffect
     useEffect(() => {
@@ -72,26 +72,23 @@ const Home: React.FC = () => {
         setShowConfidenceSelection(true);
     };
 
+    // useMutation
+    const mutation = useMutation({
+        mutationKey: ["updateConfidenceIndex"],
+        mutationFn: updateCountryConfidenceIndex,
+        onSuccess: (data) => {
+            console.log("Country updated", data);
+        },
+        onError: (error) => {
+            console.error("Error posting to the database:", error);
+        },
+    });
+
     const handleConfidenceSelection = async (id: string, confidenceIndex: number) => {
         setShowAnswer(false);
         setShowConfidenceSelection(false);
         getRandomCountryFromContinent();
-
-        // // Update the database with the user's confidence index
-        // // What does the route need to post to the database?
-        // // the confidence index
-        // // the country id
-
-        // const { isPending, isError, isSuccess } = useMutation({
-        //     mutationKey: ["updateConfidenceIndex"],
-        //     mutationFn: () => updateCountryConfidenceIndex(id, confidenceIndex),
-        // });
-
-        // if (isPending) {
-        //     console.log("Pending.");
-        // } else if (isSuccess) {
-        //     console.log("Success.");
-        // }
+        mutation.mutate({ countryId: id, userConfidence: confidenceIndex });
     };
 
     const handleUserContinentSelection = (continentName: ContinentName["name"]) => {
