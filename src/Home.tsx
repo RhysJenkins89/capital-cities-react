@@ -81,7 +81,7 @@ const Home: React.FC = () => {
         setShowAnswer(false);
         setShowConfidenceSelection(false);
         getRandomCountryFromContinent();
-        mutation.mutate({ countryId: id, userConfidence: confidenceIndex });
+        mutation.mutate({ continent: continent, countryId: id, userConfidence: confidenceIndex });
     };
 
     const handleUserContinentSelection = (continentName: ContinentName["name"]) => {
