@@ -1,6 +1,6 @@
 # Doing
 
--
+-   Updating confidenceIndex
 
 ## To do
 
