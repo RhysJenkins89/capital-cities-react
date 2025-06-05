@@ -30,12 +30,24 @@ const Home: React.FC = () => {
 
     const { userIsLoggedIn } = context;
 
-    // Get country data
+    // useQuery
     const { isPending, error, data } = useQuery({
         queryKey: [continent],
         queryFn: () => getContinentData(continent),
         staleTime: Infinity,
         gcTime: Infinity,
+    });
+
+    // useMutation
+    const mutation = useMutation({
+        mutationKey: ["updateConfidenceIndex"],
+        mutationFn: updateCountryConfidenceIndex,
+        onSuccess: (data) => {
+            console.log("Country updated", data);
+        },
+        onError: (error) => {
+            console.error("Error posting to the database:", error);
+        },
     });
 
     // useEffect
@@ -64,18 +76,6 @@ const Home: React.FC = () => {
         setShowAnswer(true);
         setShowConfidenceSelection(true);
     };
-
-    // useMutation
-    const mutation = useMutation({
-        mutationKey: ["updateConfidenceIndex"],
-        mutationFn: updateCountryConfidenceIndex,
-        onSuccess: (data) => {
-            console.log("Country updated", data);
-        },
-        onError: (error) => {
-            console.error("Error posting to the database:", error);
-        },
-    });
 
     const handleConfidenceSelection = async (id: string, confidenceIndex: number) => {
         setShowAnswer(false);
