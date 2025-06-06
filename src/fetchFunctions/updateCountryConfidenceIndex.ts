@@ -9,9 +9,6 @@ const updateCountryConfidenceIndex = async ({
     countryId,
     userConfidence,
 }: UpdateCountryConfidenceIndexInput) => {
-    console.log("Continent:", continent);
-    console.log("Country id: ", countryId);
-    console.log("User confidence: ", userConfidence);
     try {
         const response: Response = await fetch("http://localhost:3000/update", {
             method: "PUT",
@@ -25,6 +22,7 @@ const updateCountryConfidenceIndex = async ({
             }),
         });
         const resData = await response.json(); // resData type. In fact, the only response I need here is a success or a failure indicator.
+        console.log("resData:", resData);
         return resData;
     } catch (error) {
         console.error("Error: ", error);
