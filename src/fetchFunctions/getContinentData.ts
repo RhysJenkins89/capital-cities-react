@@ -8,6 +8,8 @@ const getContinentData = async (continent: string) => {
     // continent ? (url = `http://localhost:3000/${continent}`) : (url = `http://localhost:3000/europe`);
     // I absolutely must setup dev and production environments
     try {
+        console.log("API_URL:", API_URL);
+        console.log("With continent:", `${API_URL}/${continent}`);
         let url: string;
         continent ? (url = `${API_URL}/${continent}`) : (url = `${API_URL}/europe`);
         const data: Response = await fetch(url);
