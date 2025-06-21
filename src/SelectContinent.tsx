@@ -6,18 +6,8 @@ type SelectContinentProps = {
     currentContinent: string;
 };
 
-const SelectContinent = ({
-    continentSelectionCallback,
-    currentContinent,
-}: SelectContinentProps) => {
-    const continents: string[] = [
-        "europe",
-        "asia",
-        "oceania",
-        "north-america",
-        "south-america",
-        "africa",
-    ];
+const SelectContinent = ({ continentSelectionCallback, currentContinent }: SelectContinentProps) => {
+    const continents: string[] = ["europe", "asia", "oceania", "north-america", "south-america", "africa"];
 
     const handleClick = (continent: ContinentName["name"]) => {
         continentSelectionCallback(continent);
@@ -36,11 +26,7 @@ const SelectContinent = ({
                     return (
                         <button
                             key={continent}
-                            onClick={(event) =>
-                                handleClick(
-                                    (event.target as HTMLInputElement).value
-                                )
-                            }
+                            onClick={(event) => handleClick((event.target as HTMLInputElement).value)}
                             value={continent}
                         >
                             {renderContinentText(continent)}
@@ -49,8 +35,7 @@ const SelectContinent = ({
                 })}
             </div>
             <p>
-                Current continent:{" "}
-                <span>{renderContinentText(currentContinent)}</span>
+                Current continent: <span>{renderContinentText(currentContinent)}</span>
             </p>
         </div>
     );
