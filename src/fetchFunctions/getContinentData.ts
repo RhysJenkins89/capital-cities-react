@@ -2,11 +2,6 @@ const API_URL = import.meta.env.VITE_API_URL;
 import CountryData from "../types/CountryData";
 
 const getContinentData = async (continent: string) => {
-    // continent
-    //     ? (url = `https://cities-api.rhysjenkins.uk/${continent}`)
-    //     : (url = `https://cities-api.rhysjenkins.uk/europe`);
-    // continent ? (url = `http://localhost:3000/${continent}`) : (url = `http://localhost:3000/europe`);
-    // I absolutely must setup dev and production environments
     try {
         console.log("API_URL:", API_URL);
         console.log("With continent:", `${API_URL}/${continent}`);

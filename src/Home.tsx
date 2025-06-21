@@ -42,12 +42,6 @@ const Home: React.FC = () => {
     const mutation = useMutation({
         mutationKey: ["updateConfidenceIndex"],
         mutationFn: updateCountryConfidenceIndex,
-        onSuccess: (data) => {
-            console.log("Country updated", data);
-        },
-        onError: (error) => {
-            console.error("Error posting to the database:", error);
-        },
     });
 
     // useEffect
@@ -118,6 +112,10 @@ const Home: React.FC = () => {
                                         confidenceIndexCallback={handleConfidenceSelection}
                                     />
                                 </div>
+                                <p>
+                                    Note that this selection does not yet have any effect on the frequency of recurring
+                                    items.
+                                </p>
                             </div>
                         ) : null}
                     </div>
