@@ -1,22 +1,18 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 type UpdateCountryConfidenceIndexInput = {
-    continent: string;
     countryId: string;
     userConfidence: number;
 };
 
-const updateCountryConfidenceIndex = async ({
-    continent,
-    countryId,
-    userConfidence,
-}: UpdateCountryConfidenceIndexInput) => {
+const updateCountryConfidenceIndex = async ({ countryId, userConfidence }: UpdateCountryConfidenceIndexInput) => {
     try {
-        const response: Response = await fetch("http://localhost:3000/update", {
+        const response: Response = await fetch(`${API_URL}/update`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                continent: continent,
                 countryId: countryId,
                 userConfidence: userConfidence,
             }),
