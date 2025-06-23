@@ -4,6 +4,7 @@
 
 ## To do
 
+-   Add accessibility functionality
 -   Sort Vite config warning
 -   Add an error boundary to the app
 -   Add an external database
