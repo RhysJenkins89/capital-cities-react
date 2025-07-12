@@ -1,6 +1,7 @@
 import { useState, useRef, useContext, useEffect, RefObject } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { AppContext } from "./Context";
+import { useNavigate } from "react-router";
 import getContinentData from "./fetchFunctions/getContinentData";
 import updateCountryConfidenceIndex from "./fetchFunctions/updateCountryConfidenceIndex";
 import SelectContinent from "./SelectContinent";
@@ -53,6 +54,9 @@ const Home: React.FC = () => {
         setRandomCountryData(randomCountry);
     }, [data]);
 
+    // useNavigate
+    const navigate = useNavigate();
+
     // Component functions
     const getRandomCountryFromContinent = () => {
         if (!data) {
@@ -92,6 +96,15 @@ const Home: React.FC = () => {
             ) : (
                 randomCountryData && (
                     <div>
+                        <div>
+                            <div>
+                                <button onClick={() => navigate("/register")}>Register</button>
+                            </div>
+                            <br />
+                            <div>
+                                <button onClick={() => navigate("/signin")}>Sign in</button>
+                            </div>
+                        </div>
                         <p>Select continent:</p>
                         <SelectContinent
                             continentSelectionCallback={handleUserContinentSelection}

@@ -1,6 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL;
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Navigate } from "react-router";
+import { useNavigate } from "react-router";
 
 const UserRegister: React.FC = () => {
     interface IFormInput {
@@ -16,6 +16,8 @@ const UserRegister: React.FC = () => {
         reset,
         formState: { errors },
     } = useForm<IFormInput>();
+
+    const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<IFormInput> = async (formData: IFormInput) => {
         const { firstName, lastName, email, password } = formData;
@@ -37,9 +39,7 @@ const UserRegister: React.FC = () => {
                 throw new Error(result);
             } else {
                 console.log("User successfully created.");
-                // At this point I have a successful 201 status returned
-                <Navigate to="/" />;
-                console.log("Test after Navigate");
+                navigate("/signin");
             }
         } catch (error) {
             // If the email is already in the database, I get to this catch block. But the error message doesn't tell me that.

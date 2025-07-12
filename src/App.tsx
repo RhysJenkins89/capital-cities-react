@@ -5,6 +5,7 @@ import { AppContextProvider } from "./Context";
 import { BrowserRouter, Routes, Route } from "react-router";
 import Home from "./Home";
 import UserRegister from "./UserRegister";
+import UserLogin from "./UserLogin";
 
 const queryClient: QueryClient = new QueryClient();
 
@@ -16,7 +17,7 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/register" element={<UserRegister />} />
-                        <Route path="/signin" element={<p>This is the /signin route.</p>} />
+                        <Route path="/signin" element={<UserLogin />} />
                     </Routes>
                 </QueryClientProvider>
             </AppContextProvider>
