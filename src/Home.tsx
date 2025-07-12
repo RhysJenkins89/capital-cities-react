@@ -5,7 +5,7 @@ import getContinentData from "./fetchFunctions/getContinentData";
 import updateCountryConfidenceIndex from "./fetchFunctions/updateCountryConfidenceIndex";
 import SelectContinent from "./SelectContinent";
 import UserLogin from "./UserLogin";
-import UserSignup from "./UserSignup";
+import UserSignup from "./UserRegister";
 import ContinentName from "./types/ContinentName";
 import CountryData from "./types/CountryData";
 import ConfidenceIndexButtons from "./ConfidenceIndexButtons";
@@ -87,7 +87,6 @@ const Home: React.FC = () => {
     return (
         <div>
             <h1>Capital cities</h1>
-            {/* <UserLogin /> */}
             {isPending ? (
                 <p>Loading country data.</p>
             ) : (

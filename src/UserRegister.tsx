@@ -1,6 +1,8 @@
+const API_URL = import.meta.env.VITE_API_URL;
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Navigate } from "react-router";
 
-const UserSignup: React.FC = () => {
+const UserRegister: React.FC = () => {
     interface IFormInput {
         firstName: string;
         lastName: string;
@@ -15,40 +17,35 @@ const UserSignup: React.FC = () => {
         formState: { errors },
     } = useForm<IFormInput>();
 
-    const onSubmit: SubmitHandler<IFormInput> = async (
-        formData: IFormInput
-    ) => {
-        console.log("Form submitted successfully:", formData);
-
+    const onSubmit: SubmitHandler<IFormInput> = async (formData: IFormInput) => {
         const { firstName, lastName, email, password } = formData;
-
         try {
-            const response: Response = await fetch(
-                "https://cities-api.rhysjenkins.uk/signup",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        firstName,
-                        lastName,
-                        email,
-                        password,
-                    }),
-                }
-            );
-
+            const response: Response = await fetch(`${API_URL}/register`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                }),
+            });
+            console.log("response:", response);
             const result = await response.json();
             if (!response.ok) {
+                console.error("Error from UserSignup.tsx", result);
                 throw new Error(result);
             } else {
                 console.log("User successfully created.");
+                // At this point I have a successful 201 status returned
+                <Navigate to="/" />;
+                console.log("Test after Navigate");
             }
         } catch (error) {
             // If the email is already in the database, I get to this catch block. But the error message doesn't tell me that.
             console.log("An error occured.");
             console.log("Error:", error); // This is not a useful error message.
         }
-
         reset(); // Think about the default value here
     };
 
@@ -110,22 +107,18 @@ const UserSignup: React.FC = () => {
                             required: "Please enter a password.",
                             minLength: {
                                 value: 10,
-                                message:
-                                    "Your password must be at least ten characters long.",
+                                message: "Your password must be at least ten characters long.",
                             },
                             validate: {
                                 hasUppercaseChar: (value) =>
-                                    /[A-Z]/.test(value) ||
-                                    "Your password must contain at least one uppercase letter.",
+                                    /[A-Z]/.test(value) || "Your password must contain at least one uppercase letter.",
                                 hasLowercaseChar: (value) =>
-                                    /[a-z]/.test(value) ||
-                                    "Your password must contain at least one lowercase letter.",
+                                    /[a-z]/.test(value) || "Your password must contain at least one lowercase letter.",
                                 hasSpecialChar: (value) =>
                                     /[!@#$%^&*(),.?":{}|<>]/.test(value) ||
                                     "Your password must contain at least one special character.",
                                 hasNumber: (value) =>
-                                    /\d/.test(value) ||
-                                    "Your password must contain at least one number.",
+                                    /\d/.test(value) || "Your password must contain at least one number.",
                             },
                         })}
                     />
@@ -137,34 +130,4 @@ const UserSignup: React.FC = () => {
     );
 };
 
-export default UserSignup;
-
-// const handleUserFormSubmit = async (event: FormEvent) => {
-// event.preventDefault();
-
-// try {
-//     const response: Response = await fetch(
-//         "http://localhost:3000/signup",
-//         {
-//             method: "POST",
-//             headers: { "Content-Type": "application/json" },
-//             body: JSON.stringify({
-//                 firstName,
-//                 lastName,
-//                 email,
-//                 password,
-//             }),
-//         }
-//     );
-
-//     const result = await response.json();
-//     if (!response.ok) {
-//         throw new Error(result);
-//     } else {
-//         console.log("User successfully created.");
-//     }
-// } catch (error) {
-//     console.log("An error occured.");
-//     console.log("Error:", error);
-// }
-// };
+export default UserRegister;
