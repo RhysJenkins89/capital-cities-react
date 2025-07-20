@@ -1,4 +1,6 @@
+const API_URL = import.meta.env.VITE_API_URL;
 import { useState, FormEvent, useContext } from "react";
+import { useForm } from "react-hook-form";
 import { AppContext } from "./Context";
 
 const UserLogin: React.FC = () => {
@@ -8,14 +10,11 @@ const UserLogin: React.FC = () => {
     const handleUserLogin = async (event: FormEvent) => {
         event.preventDefault();
         try {
-            const response: Response = await fetch(
-                "http://localhost:3000/login", // I need a way to switch between the live api and my local machine
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email, password }),
-                }
-            );
+            const response: Response = await fetch(`${API_URL}/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+            });
 
             const userData = await response.json();
             if (!response.ok) {
@@ -48,9 +47,32 @@ const UserLogin: React.FC = () => {
 
     const { setUserIsLoggedIn } = context;
 
+    // const {
+    //     register,
+    //     handleSubmit,
+    //     reset,
+    //     formState: { errors },
+    // } = useForm<IFormInput>();
+
     return (
         <div>
             <form onSubmit={handleUserLogin}>
+                {/* <div>
+                    <label>
+                        Email:
+                        <input
+                            {...register("email", {
+                                required: "Email enter your email.",
+                                pattern: {
+                                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                    message: "Please enter a valid email address.",
+                                },
+                            })}
+                        />
+                        {errors.email && <p>{errors.email.message}</p>}
+                    </label>
+                </div> */}
+
                 <div>
                     <label>
                         Email:
