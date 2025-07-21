@@ -47,12 +47,17 @@ const UserLogin: React.FC = () => {
 
     const { setUserIsLoggedIn } = context;
 
-    // const {
-    //     register,
-    //     handleSubmit,
-    //     reset,
-    //     formState: { errors },
-    // } = useForm<IFormInput>();
+    interface IFormInput {
+        email: string;
+        password: string;
+    }
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<IFormInput>();
 
     return (
         <div>
