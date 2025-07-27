@@ -4,9 +4,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { AppContext } from "./Context";
 
 const UserLogin: React.FC = () => {
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-
     // const handleUserLogin = async (event: FormEvent) => {
     //     event.preventDefault();
     //     try {
@@ -60,7 +57,25 @@ const UserLogin: React.FC = () => {
     } = useForm<IFormInput>();
 
     const handleUserLogin: SubmitHandler<IFormInput> = async (formData: IFormInput) => {
+        const { email, password } = formData;
+        console.log("email:", email);
+        console.log("password:", password);
         console.log("This is the handleUserLogin function.");
+
+        try {
+            const response: Response = await fetch(`${API_URL}/signin`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+            });
+            const userData = await response.json();
+            // if (!response.ok) {
+            // }
+            console.log("response:", userData);
+            reset();
+        } catch (error) {
+            console.error("error:", error);
+        }
     };
 
     return (
@@ -81,17 +96,16 @@ const UserLogin: React.FC = () => {
                         {errors.email && <p>{errors.email.message}</p>}
                     </label>
                 </div>
-
-                {/* <div>
-                    <label>
-                        Email:
-                        <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
-                    </label>
-                </div> */}
                 <div>
                     <label>
                         Password:
-                        <input type="test" value={password} onChange={(event) => setPassword(event.target.value)} />
+                        <input
+                            type="password"
+                            {...register("password", {
+                                required: "Please enter your password.",
+                            })}
+                        />
+                        {errors.password && <p>{errors.password.message}</p>}
                     </label>
                 </div>
                 <input type="submit" />

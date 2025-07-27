@@ -1,9 +1,10 @@
 # Doing
 
--
+-   Building sign-in functionality
 
 ## To do
 
+-   Include show/hide functionality on the password fields
 -   Add accessibility functionality
 -   Sort Vite config warning
 -   Add an error boundary to the app
