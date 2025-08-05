@@ -1,7 +1,14 @@
 const API_URL = import.meta.env.VITE_API_URL;
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import loginUser from "./fetchFunctions/loginUser";
 
 const UserLogin: React.FC = () => {
+    const mutation = useMutation({
+        mutationKey: ["loginUser"],
+        mutationFn: loginUser,
+    });
+
     interface IFormInput {
         email: string;
         password: string;
@@ -16,6 +23,12 @@ const UserLogin: React.FC = () => {
 
     const handleUserLogin: SubmitHandler<IFormInput> = async (formData: IFormInput) => {
         const { email, password } = formData;
+        if (!email || !password) {
+            console.error("The email and password fields are required.");
+            return;
+        }
+
+        mutation.mutate({ email, password });
         try {
             const response: Response = await fetch(`${API_URL}/signin`, {
                 method: "POST",
