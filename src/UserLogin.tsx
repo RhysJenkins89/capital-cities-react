@@ -1,12 +1,17 @@
 const API_URL = import.meta.env.VITE_API_URL;
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
 import loginUser from "./fetchFunctions/loginUser";
 
 const UserLogin: React.FC = () => {
     const mutation = useMutation({
         mutationKey: ["loginUser"],
         mutationFn: loginUser,
+        onSuccess: () => {
+            navigate("/");
+        },
+        onError: () => {},
     });
 
     interface IFormInput {
@@ -20,6 +25,8 @@ const UserLogin: React.FC = () => {
         reset,
         formState: { errors },
     } = useForm<IFormInput>();
+
+    const navigate = useNavigate();
 
     const handleUserLogin: SubmitHandler<IFormInput> = async (formData: IFormInput) => {
         const { email, password } = formData;
