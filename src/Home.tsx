@@ -105,6 +105,15 @@ const Home: React.FC = () => {
                                 <button onClick={() => navigate("/signin")}>Sign in</button>
                             </div>
                         </div>
+                        {userIsLoggedIn ? (
+                            <div>
+                                <p>User logged in.</p>
+                            </div>
+                        ) : (
+                            <div>
+                                <p>User not logged in.</p>
+                            </div>
+                        )}
                         <p>Select continent:</p>
                         <SelectContinent
                             continentSelectionCallback={handleUserContinentSelection}

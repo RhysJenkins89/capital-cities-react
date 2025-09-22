@@ -9,6 +9,7 @@ const UserLogin: React.FC = () => {
         mutationKey: ["loginUser"],
         mutationFn: loginUser,
         onSuccess: () => {
+            // Update context here
             navigate("/");
         },
         onError: () => {},
