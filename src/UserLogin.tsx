@@ -8,13 +8,11 @@ import loginUser from "./fetchFunctions/loginUser";
 
 const UserLogin: React.FC = () => {
     // App context
-    // const context =
-
-    // if (!context) {
-    //     throw new Error("Use this component inside of the AppContextProvider component.");
-    // }
-
-    const { setUserIsLoggedIn } = useContext(AppContext);
+    const context = useContext(AppContext);
+    if (!context) {
+        throw new Error("Use this component inside of the AppContextProvider component.");
+    }
+    const { setUserIsLoggedIn } = context; // Note that the context check above is essential; otherwise, TypeScript will throw an error
 
     const mutation = useMutation({
         mutationKey: ["loginUser"],
