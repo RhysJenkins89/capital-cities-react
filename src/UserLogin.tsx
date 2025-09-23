@@ -1,18 +1,12 @@
 const API_URL = import.meta.env.VITE_API_URL;
-import { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
-import { AppContext } from "./Context";
+import { useAppContext } from "./customHooks/useAppContext";
 import loginUser from "./fetchFunctions/loginUser";
 
 const UserLogin: React.FC = () => {
-    // App context
-    const context = useContext(AppContext);
-    if (!context) {
-        throw new Error("Use this component inside of the AppContextProvider component.");
-    }
-    const { setUserIsLoggedIn } = context; // Note that the context check above is essential; otherwise, TypeScript will throw an error
+    const { setUserIsLoggedIn } = useAppContext();
 
     const mutation = useMutation({
         mutationKey: ["loginUser"],
