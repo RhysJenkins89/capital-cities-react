@@ -10,6 +10,7 @@ import UserSignup from "./UserRegister";
 import ContinentName from "./types/ContinentName";
 import CountryData from "./types/CountryData";
 import ConfidenceIndexButtons from "./ConfidenceIndexButtons";
+import { useAppContext } from "./customHooks/useAppContext";
 
 const Home: React.FC = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
@@ -23,13 +24,7 @@ const Home: React.FC = () => {
     const previousCountry: RefObject<string> = useRef<string>("");
 
     // App context
-    const context = useContext(AppContext);
-
-    if (!context) {
-        throw new Error("Use this component inside of the AppContextProvider component.");
-    }
-
-    const { userIsLoggedIn } = context;
+    const { userIsLoggedIn } = useAppContext();
 
     // useQuery
     const { isPending, error, data } = useQuery({
@@ -88,6 +83,10 @@ const Home: React.FC = () => {
         setContinent(continentName);
     };
 
+    const handleUserSignOut = () => {
+        console.log("handleUserSignOut function");
+    };
+
     return (
         <div>
             <h1>Capital cities</h1>
@@ -104,6 +103,14 @@ const Home: React.FC = () => {
                             <div>
                                 <button onClick={() => navigate("/signin")}>Sign in</button>
                             </div>
+                            {userIsLoggedIn ? (
+                                <div>
+                                    <br />
+                                    <div>
+                                        <button onClick={() => handleUserSignOut()}>Sign out</button>
+                                    </div>
+                                </div>
+                            ) : null}
                         </div>
                         {userIsLoggedIn ? (
                             <div>
