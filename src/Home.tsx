@@ -155,8 +155,3 @@ const Home: React.FC = () => {
 };
 
 export default Home;
-
-// Write about:
-// The fetch request issue
-// The useEffect/hooks bug
-// chatGPT thinks that React.MutableRefObject is the correct type for a useRef object, but VS Code tells me that it's been deprecated
