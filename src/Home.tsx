@@ -28,6 +28,7 @@ const Home: React.FC = () => {
 
     // useQuery
     const { isPending, error, data } = useQuery({
+        // I should use the error variable here to handle errors. Funny that.
         queryKey: [continent],
         queryFn: () => getContinentData(continent),
         staleTime: Infinity,
@@ -150,6 +151,8 @@ const Home: React.FC = () => {
                     </div>
                 )
             )}
+            {error ? <p>An error has occured.</p> : null}
+            <p>This is a test.</p>
         </div>
     );
 };

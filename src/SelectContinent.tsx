@@ -1,4 +1,4 @@
-import capitaliseFirstLetter from "./helperFunctions/capitaliseFirstLetter";
+import capitaliseFirstLetter from "./utils/capitaliseFirstLetter";
 import ContinentName from "./types/ContinentName";
 
 type SelectContinentProps = {

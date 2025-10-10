@@ -10,6 +10,7 @@ const getContinentData = async (continent: string) => {
         return continentData;
     } catch (error) {
         console.log("An error occured while fetching the data:", error);
+        throw new Error("This is an error message.");
     }
 };
 
