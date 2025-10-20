@@ -13,7 +13,8 @@ const UserLogin: React.FC = () => {
         mutationFn: loginUser,
         onSuccess: (userData) => {
             console.log("userData from UserLogin:", userData);
-            // I'll need to set context data here
+            // I'll need to set context data here. It'll be something like:
+            // setUser(userData);
             setUserIsLoggedIn(true);
             navigate("/");
         },
