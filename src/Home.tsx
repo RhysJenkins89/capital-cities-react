@@ -152,7 +152,6 @@ const Home: React.FC = () => {
                 )
             )}
             {error ? <p>An error has occured.</p> : null}
-            <p>This is a test.</p>
         </div>
     );
 };

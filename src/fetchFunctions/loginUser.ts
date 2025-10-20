@@ -17,7 +17,7 @@ const loginUser = async ({ email, password }: PropTypes) => {
             console.log("Response not okay:", body);
         } else {
             const userData = await response.json();
-            console.log("userData:", userData);
+            // console.log("userData:", userData);
             return userData;
         }
     } catch (error) {
