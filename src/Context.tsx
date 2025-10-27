@@ -12,15 +12,15 @@ interface ContextProps {
 type AppContextTypes = {
     userIsLoggedIn: boolean;
     setUserIsLoggedIn: (state: boolean) => void;
-    userData: {};
-    setUserData: () => void;
+    userData: { userEmail: string };
+    setUserData: (state: { userEmail: string }) => void;
 };
 
 const AppContext = createContext<AppContextTypes | undefined>(undefined);
 
 const AppContextProvider: React.FC<ContextProps> = ({ children }) => {
     const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
-    const [userData, setUserData] = useState();
+    const [userData, setUserData] = useState({ userEmail: "" });
 
     return (
         <AppContext.Provider value={{ userIsLoggedIn, setUserIsLoggedIn, userData, setUserData }}>
