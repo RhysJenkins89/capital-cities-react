@@ -1,32 +1,36 @@
-import { createContext, useState, ReactNode } from "react";
+import { createContext, useState, ReactNode, Dispatch, SetStateAction } from "react";
 
-interface ContextProps {
+interface UserData {
+    firstName: string;
+    lastName: string;
+    email: string;
+}
+
+interface AppContextValue {
+    userIsLoggedIn: boolean;
+    setUserIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+    userData: UserData;
+    setUserData: Dispatch<SetStateAction<UserData>>;
+}
+
+interface AppContextProviderProps {
     children: ReactNode;
 }
 
-// interface userLoggedIn {
-//     userIsLoggedIn: boolean;
-//     setUserIsLoggedIn: (state: boolean) => void;
-// }
+const AppContext = createContext<AppContextValue | null>(null);
 
-type AppContextTypes = {
-    userIsLoggedIn: boolean;
-    setUserIsLoggedIn: (state: boolean) => void;
-    userData: { userEmail: string };
-    setUserData: (state: { userEmail: string }) => void;
-};
+const AppContextProvider = ({ children }: AppContextProviderProps) => {
+    const [userIsLoggedIn, setUserIsLoggedIn] = useState<boolean>(false);
+    const [userData, setUserData] = useState<UserData>({ firstName: "", lastName: "", email: "" });
 
-const AppContext = createContext<AppContextTypes | undefined>(undefined);
+    const value: AppContextValue = {
+        userIsLoggedIn,
+        setUserIsLoggedIn,
+        userData,
+        setUserData,
+    };
 
-const AppContextProvider: React.FC<ContextProps> = ({ children }) => {
-    const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
-    const [userData, setUserData] = useState({ userEmail: "" });
-
-    return (
-        <AppContext.Provider value={{ userIsLoggedIn, setUserIsLoggedIn, userData, setUserData }}>
-            {children}
-        </AppContext.Provider>
-    );
+    return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
 export { AppContext, AppContextProvider };
