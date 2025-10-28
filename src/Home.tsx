@@ -12,6 +12,8 @@ import CountryData from "./types/CountryData";
 import ConfidenceIndexButtons from "./ConfidenceIndexButtons";
 import { useAppContext } from "./customHooks/useAppContext";
 
+// This is a test commit. Hello from my work laptop.
+
 const Home: React.FC = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
     const [continent, setContinent] = useState<string>(
