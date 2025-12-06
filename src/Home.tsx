@@ -41,6 +41,11 @@ const Home: React.FC = () => {
         mutationFn: updateCountryConfidenceIndex,
     });
 
+    const signOutMutation = useMutation({
+        mutationKey: ["userSignOut"],
+        mutationFn: userSignOut,
+    });
+
     // useEffect
     useEffect(() => {
         if (!data) {
@@ -86,6 +91,7 @@ const Home: React.FC = () => {
 
     const handleUserSignOut = () => {
         console.log("handleUserSignOut function");
+        // I imagine here I need to call an endpoint in order to delete the cookie that I created on the backend.
     };
 
     return (
