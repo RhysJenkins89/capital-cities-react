@@ -2,11 +2,11 @@ import { useState, useRef, useContext, useEffect, RefObject } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { AppContext } from "./Context";
 import { useNavigate } from "react-router";
-import getContinentData from "./fetchFunctions/getContinentData";
-import updateCountryConfidenceIndex from "./fetchFunctions/updateCountryConfidenceIndex";
+import getContinentData from "./api/getContinentData";
+import updateCountryConfidenceIndex from "./api/updateCountryConfidenceIndex";
 import SelectContinent from "./SelectContinent";
-import UserLogin from "./UserLogin";
-import UserSignup from "./UserRegister";
+// import UserLogin from "./UserLogin";
+// import UserSignup from "./UserRegister";
 import ContinentName from "./types/ContinentName";
 import CountryData from "./types/CountryData";
 import ConfidenceIndexButtons from "./ConfidenceIndexButtons";
@@ -17,7 +17,7 @@ import { useAppContext } from "./customHooks/useAppContext";
 const Home: React.FC = () => {
     const [showAnswer, setShowAnswer] = useState<boolean>(false);
     const [continent, setContinent] = useState<string>(
-        window.localStorage.getItem("lastUserContinentSelection") || "europe"
+        window.localStorage.getItem("lastUserContinentSelection") || "europe",
     );
     const [showLogin, setShowLogin] = useState<boolean>(false);
     const [showSignup, setShowSignup] = useState<boolean>(false);

@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { useAppContext } from "./customHooks/useAppContext";
-import loginUser from "./fetchFunctions/loginUser";
+import loginUser from "./api/loginUser";
 
 const UserLogin: React.FC = () => {
     const { setUserIsLoggedIn } = useAppContext();
