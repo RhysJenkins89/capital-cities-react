@@ -1,8 +1,13 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-const userSignOut = async () => {
+const userSignOut = async (email: string) => {
     try {
-        const response: Response = await fetch(`${API_URL}/signout`);
+        const response: Response = await fetch(`${API_URL}/signout`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: "This is a test." }),
+        });
+        console.log("response from userSignOut.ts:", response);
     } catch (error) {
         console.error("Error:", error);
     }

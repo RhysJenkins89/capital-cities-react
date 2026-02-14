@@ -4,6 +4,7 @@ import { AppContext } from "./Context";
 import { useNavigate } from "react-router";
 import getContinentData from "./api/getContinentData";
 import updateCountryConfidenceIndex from "./api/updateCountryConfidenceIndex";
+import userSignOut from "./api/userSignOut";
 import SelectContinent from "./SelectContinent";
 // import UserLogin from "./UserLogin";
 // import UserSignup from "./UserRegister";
@@ -93,6 +94,7 @@ const Home: React.FC = () => {
 
     const handleUserSignOut = () => {
         console.log("handleUserSignOut function");
+        signOutMutation.mutate("hello@test.com");
         // I imagine here I need to call an endpoint in order to delete the cookie that I created on the backend.
     };
 
