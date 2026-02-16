@@ -27,7 +27,7 @@ const Home: React.FC = () => {
     const previousCountry: RefObject<string> = useRef<string>("");
 
     // App context
-    const { userIsLoggedIn } = useAppContext();
+    const { userIsLoggedIn, userData } = useAppContext();
 
     // useQuery
     const { isPending, error, data } = useQuery({
@@ -94,8 +94,7 @@ const Home: React.FC = () => {
 
     const handleUserSignOut = () => {
         console.log("handleUserSignOut function");
-        signOutMutation.mutate("hello@test.com");
-        // I imagine here I need to call an endpoint in order to delete the cookie that I created on the backend.
+        signOutMutation.mutate(userData.email);
     };
 
     return (
@@ -130,6 +129,14 @@ const Home: React.FC = () => {
                         ) : (
                             <div>
                                 <p>User not logged in.</p>
+                            </div>
+                        )}
+                        {userData.firstName && ( // This isn't great, but I'm not going to worry about it for the moment.
+                            <div>
+                                <p>User data:</p>
+                                <p>{userData.firstName}</p>
+                                <p>{userData.lastName}</p>
+                                <p>{userData.email}</p>
                             </div>
                         )}
                         <p>Select continent:</p>

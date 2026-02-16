@@ -6,15 +6,18 @@ import { useAppContext } from "./customHooks/useAppContext";
 import loginUser from "./api/loginUser";
 
 const UserLogin: React.FC = () => {
-    const { setUserIsLoggedIn } = useAppContext();
+    const { setUserIsLoggedIn, setUserData } = useAppContext();
 
     const mutation = useMutation({
         mutationKey: ["loginUser"],
         mutationFn: loginUser,
         onSuccess: (userData) => {
             console.log("userData from UserLogin:", userData);
-            // I'll need to set context data here. It'll be something like:
-            // setUser(userData);
+            setUserData({
+                firstName: userData.data.firstName,
+                lastName: userData.data.lastName,
+                email: userData.data.email,
+            });
             setUserIsLoggedIn(true);
             navigate("/");
         },
