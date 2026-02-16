@@ -5,7 +5,7 @@ const userSignOut = async (email: string) => {
         const response: Response = await fetch(`${API_URL}/signout`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: "This is a test." }),
+            body: JSON.stringify({ userEmail: email }),
         });
         console.log("response from userSignOut.ts:", response);
     } catch (error) {
