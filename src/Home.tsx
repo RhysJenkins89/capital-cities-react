@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import getContinentData from "./api/getContinentData";
 import updateCountryConfidenceIndex from "./api/updateCountryConfidenceIndex";
 import userSignOut from "./api/userSignOut";
+import userAuth from "./api/userAuth";
 import SelectContinent from "./SelectContinent";
 // import UserLogin from "./UserLogin";
 // import UserSignup from "./UserRegister";
@@ -12,6 +13,8 @@ import ContinentName from "./types/ContinentName";
 import CountryData from "./types/CountryData";
 import ConfidenceIndexButtons from "./ConfidenceIndexButtons";
 import { useAppContext } from "./customHooks/useAppContext";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 // This is a test commit. Hello from my work laptop.
 
@@ -32,11 +35,16 @@ const Home: React.FC = () => {
     // useQuery
     const { isPending, error, data } = useQuery({
         // I should use the error variable here to handle errors. Funny that.
-        queryKey: [continent],
+        queryKey: [continent], // Is this the best name fot the queryKey?
         queryFn: () => getContinentData(continent),
         staleTime: Infinity,
         gcTime: Infinity,
     });
+
+    // const { data: userAuthData } = useQuery({
+    //     queryKey: ["getUserAuth"],
+    //     queryFn: () => userAuth(),
+    // });
 
     // useMutation
     const mutation = useMutation({
@@ -56,6 +64,23 @@ const Home: React.FC = () => {
         }
         const randomCountry: CountryData = data[Math.floor(Math.random() * data.length)];
         setRandomCountryData(randomCountry);
+
+        // Test here
+        const testAuth = async function () {
+            const response: Response = await fetch(`${API_URL}/auth`, {
+                credentials: "include",
+            });
+            if (!response.ok) {
+                const body = await response.json();
+                console.log("Response not okay:", body);
+            } else {
+                const data = await response.json();
+                console.log("data:", data);
+                return data;
+            }
+        };
+
+        testAuth();
     }, [data]);
 
     // useNavigate
