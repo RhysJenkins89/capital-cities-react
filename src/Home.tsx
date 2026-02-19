@@ -41,10 +41,10 @@ const Home: React.FC = () => {
         gcTime: Infinity,
     });
 
-    // const { data: userAuthData } = useQuery({
-    //     queryKey: ["getUserAuth"],
-    //     queryFn: () => userAuth(),
-    // });
+    const { data: userAuthData } = useQuery({
+        queryKey: ["getUserAuth"],
+        queryFn: () => userAuth(),
+    });
 
     // useMutation
     const mutation = useMutation({
@@ -66,21 +66,22 @@ const Home: React.FC = () => {
         setRandomCountryData(randomCountry);
 
         // Test here
-        const testAuth = async function () {
-            const response: Response = await fetch(`${API_URL}/auth`, {
-                credentials: "include",
-            });
-            if (!response.ok) {
-                const body = await response.json();
-                console.log("Response not okay:", body);
-            } else {
-                const data = await response.json();
-                console.log("data:", data);
-                return data;
-            }
-        };
+        // const testAuth = async function () {
+        //     console.log("This is the test auth function.");
+        //     const response: Response = await fetch(`${API_URL}/auth`, {
+        //         credentials: "include",
+        //     });
+        //     if (!response.ok) {
+        //         const body = await response.json();
+        //         console.log("Response not okay:", body);
+        //     } else {
+        //         const data = await response.json();
+        //         console.log("data:", data);
+        //         return data;
+        //     }
+        // };
 
-        testAuth();
+        // testAuth();
     }, [data]);
 
     // useNavigate

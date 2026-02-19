@@ -1,6 +1,7 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
 const userAuth = async () => {
+    console.log("This is the userAuth function.");
     try {
         const response: Response = await fetch(`${API_URL}/auth`, {
             credentials: "include",
