@@ -4,7 +4,7 @@ const userAuth = async () => {
     console.log("This is the userAuth function.");
     try {
         const response: Response = await fetch(`${API_URL}/auth`, {
-            credentials: "include",
+            credentials: "include", // Why is the request not sending the auth header?
         });
         if (!response.ok) {
             const body = await response.json();
