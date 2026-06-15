@@ -9,6 +9,7 @@ const loginUser = async ({ email, password }: PropTypes) => {
     try {
         const response: Response = await fetch(`${API_URL}/signin`, {
             method: "POST",
+            credentials: "include",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password }),
         });
