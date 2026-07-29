@@ -17,184 +17,184 @@ import { useAppContext } from "./customHooks/useAppContext";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Home: React.FC = () => {
-    const [showAnswer, setShowAnswer] = useState<boolean>(false);
-    const [continent, setContinent] = useState<string>(
-        window.localStorage.getItem("lastUserContinentSelection") || "europe",
-    );
-    const [showLogin, setShowLogin] = useState<boolean>(false);
-    const [showSignup, setShowSignup] = useState<boolean>(false);
-    const [randomCountryData, setRandomCountryData] = useState<CountryData | null>(null);
-    const [showConfidenceSelection, setShowConfidenceSelection] = useState<boolean>(false);
-    const previousCountry: RefObject<string> = useRef<string>("");
+  const [showAnswer, setShowAnswer] = useState<boolean>(false);
+  const [continent, setContinent] = useState<string>(
+    window.localStorage.getItem("lastUserContinentSelection") || "europe",
+  );
+  const [showLogin, setShowLogin] = useState<boolean>(false);
+  const [showSignup, setShowSignup] = useState<boolean>(false);
+  const [randomCountryData, setRandomCountryData] = useState<CountryData | null>(null);
+  // const [showConfidenceSelection, setShowConfidenceSelection] = useState<boolean>(false);
+  const previousCountry: RefObject<string> = useRef<string>("");
 
-    // App context
-    const { userIsLoggedIn, userData } = useAppContext();
+  // App context
+  const { userIsLoggedIn, userData } = useAppContext();
 
-    // useQuery
-    const { isPending, error, data } = useQuery({
-        // I should use the error variable here to handle errors. Funny that.
-        queryKey: ["getContinentData"],
-        queryFn: () => getContinentData(continent),
-        staleTime: Infinity,
-        gcTime: Infinity,
-    });
+  // useQuery
+  const { isPending, error, data } = useQuery({
+    // I should use the error variable here to handle errors. Funny that.
+    queryKey: ["getContinentData"],
+    queryFn: () => getContinentData(continent),
+    staleTime: Infinity,
+    gcTime: Infinity,
+  });
 
-    const { data: userAuthData } = useQuery({
-        queryKey: ["getUserAuth"],
-        queryFn: () => userAuth(),
-    });
+  const { data: userAuthData } = useQuery({
+    queryKey: ["getUserAuth"],
+    queryFn: () => userAuth(),
+  });
 
-    // useMutation
-    const mutation = useMutation({
-        mutationKey: ["updateConfidenceIndex"],
-        mutationFn: updateCountryConfidenceIndex,
-    });
+  // useMutation
+  const mutation = useMutation({
+    mutationKey: ["updateConfidenceIndex"],
+    mutationFn: updateCountryConfidenceIndex,
+  });
 
-    const signOutMutation = useMutation({
-        mutationKey: ["userSignOut"],
-        mutationFn: userSignOut,
-    });
+  const signOutMutation = useMutation({
+    mutationKey: ["userSignOut"],
+    mutationFn: userSignOut,
+  });
 
-    // useEffect
-    useEffect(() => {
-        if (!data) {
-            return;
-        }
-        const randomCountry: CountryData = data[Math.floor(Math.random() * data.length)];
-        setRandomCountryData(randomCountry);
+  // useEffect
+  useEffect(() => {
+    if (!data) {
+      return;
+    }
+    const randomCountry: CountryData = data[Math.floor(Math.random() * data.length)];
+    setRandomCountryData(randomCountry);
 
-        // Test here
-        // const testAuth = async function () {
-        //     console.log("This is the test auth function.");
-        //     const response: Response = await fetch(`${API_URL}/auth`, {
-        //         credentials: "include",
-        //     });
-        //     if (!response.ok) {
-        //         const body = await response.json();
-        //         console.log("Response not okay:", body);
-        //     } else {
-        //         const data = await response.json();
-        //         console.log("data:", data);
-        //         return data;
-        //     }
-        // };
+    // Test here
+    // const testAuth = async function () {
+    //     console.log("This is the test auth function.");
+    //     const response: Response = await fetch(`${API_URL}/auth`, {
+    //         credentials: "include",
+    //     });
+    //     if (!response.ok) {
+    //         const body = await response.json();
+    //         console.log("Response not okay:", body);
+    //     } else {
+    //         const data = await response.json();
+    //         console.log("data:", data);
+    //         return data;
+    //     }
+    // };
 
-        // testAuth();
-    }, [data]);
+    // testAuth();
+  }, [data]);
 
-    // useNavigate
-    const navigate = useNavigate();
+  // useNavigate
+  const navigate = useNavigate();
 
-    // Component functions
-    const getRandomCountryFromContinent = () => {
-        if (!data) {
-            return;
-        }
-        let randomCountry: CountryData = data[Math.floor(Math.random() * data.length)];
-        while (previousCountry.current === randomCountry.name) {
-            randomCountry = data[Math.floor(Math.random() * data.length)];
-        }
-        setRandomCountryData(randomCountry);
-        previousCountry.current = randomCountry.name;
-    };
+  // Component functions
+  const getRandomCountryFromContinent = () => {
+    if (!data) {
+      return;
+    }
+    let randomCountry: CountryData = data[Math.floor(Math.random() * data.length)];
+    while (previousCountry.current === randomCountry.name) {
+      randomCountry = data[Math.floor(Math.random() * data.length)];
+    }
+    setRandomCountryData(randomCountry);
+    previousCountry.current = randomCountry.name;
+  };
 
-    const handleRevealAnswer = () => {
-        setShowAnswer(true);
-        setShowConfidenceSelection(true);
-    };
+  const handleRevealAnswer = () => {
+    setShowAnswer(true);
+    setShowConfidenceSelection(true);
+  };
 
-    const handleConfidenceSelection = async (id: string, confidenceIndex: number) => {
-        setShowAnswer(false);
-        setShowConfidenceSelection(false);
-        getRandomCountryFromContinent();
-        mutation.mutate({ countryId: id, userConfidence: confidenceIndex });
-    };
+  const handleNextCountry = () => {
+    setShowAnswer(false);
+    getRandomCountryFromContinent();
+  };
 
-    const handleUserContinentSelection = (continentName: ContinentName["name"]) => {
-        window.localStorage.setItem("lastUserContinentSelection", continentName);
-        setShowAnswer(false);
-        setContinent(continentName);
-    };
+  // const handleConfidenceSelection = async (id: string, confidenceIndex: number) => {
+  //   setShowAnswer(false);
+  //   setShowConfidenceSelection(false);
+  //   getRandomCountryFromContinent();
+  //   mutation.mutate({ countryId: id, userConfidence: confidenceIndex });
+  // };
 
-    const handleUserSignOut = () => {
-        console.log("handleUserSignOut function");
-        signOutMutation.mutate(userData.email);
-    };
+  const handleUserContinentSelection = (continentName: ContinentName["name"]) => {
+    window.localStorage.setItem("lastUserContinentSelection", continentName);
+    setShowAnswer(false);
+    setContinent(continentName);
+  };
 
-    return (
-        <div>
-            <h1>Capital cities</h1>
-            {isPending ? (
-                <p>Loading country data.</p>
+  const handleUserSignOut = () => {
+    console.log("handleUserSignOut function");
+    signOutMutation.mutate(userData.email);
+  };
+
+  return (
+    <div>
+      <h1>Capital cities</h1>
+      {isPending ? (
+        <p>Loading country data.</p>
+      ) : (
+        randomCountryData && (
+          <div>
+            <div>
+              <div>
+                <button onClick={() => navigate("/register")}>Register</button>
+              </div>
+              <br />
+              <div>
+                <button onClick={() => navigate("/signin")}>Sign in</button>
+              </div>
+              {userIsLoggedIn ? (
+                <div>
+                  <br />
+                  <div>
+                    <button onClick={() => handleUserSignOut()}>Sign out</button>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+            {userIsLoggedIn ? (
+              <div>
+                <p>User logged in.</p>
+              </div>
             ) : (
-                randomCountryData && (
-                    <div>
-                        <div>
-                            <div>
-                                <button onClick={() => navigate("/register")}>Register</button>
-                            </div>
-                            <br />
-                            <div>
-                                <button onClick={() => navigate("/signin")}>Sign in</button>
-                            </div>
-                            {userIsLoggedIn ? (
-                                <div>
-                                    <br />
-                                    <div>
-                                        <button onClick={() => handleUserSignOut()}>Sign out</button>
-                                    </div>
-                                </div>
-                            ) : null}
-                        </div>
-                        {userIsLoggedIn ? (
-                            <div>
-                                <p>User logged in.</p>
-                            </div>
-                        ) : (
-                            <div>
-                                <p>User not logged in.</p>
-                            </div>
-                        )}
-                        {userData.firstName && ( // This isn't great, but I'm not going to worry about it for the moment.
-                            <div>
-                                <p>User data:</p>
-                                <p>{userData.firstName}</p>
-                                <p>{userData.lastName}</p>
-                                <p>{userData.email}</p>
-                            </div>
-                        )}
-                        <p>Select continent:</p>
-                        <SelectContinent
-                            continentSelectionCallback={handleUserContinentSelection}
-                            currentContinent={continent}
-                        />
-                        <p>
-                            What is the capital of {randomCountryData.definiteArticle ? "the " : null}
-                            {randomCountryData.name}?
-                        </p>
-                        <button onClick={handleRevealAnswer}>Reveal answer</button>
-                        {showAnswer ? <p>{randomCountryData.capital}</p> : <p></p>}
-                        {showConfidenceSelection ? (
-                            <div>
-                                <p>How well do you know this?</p>
-                                <div>
-                                    <ConfidenceIndexButtons
-                                        randomCountryId={randomCountryData._id}
-                                        confidenceIndexCallback={handleConfidenceSelection}
-                                    />
-                                </div>
-                                <p>
-                                    Note that this selection does not yet have any effect on the frequency of recurring
-                                    items.
-                                </p>
-                            </div>
-                        ) : null}
-                    </div>
-                )
+              <div>
+                <p>User not logged in.</p>
+              </div>
             )}
-            {error ? <p>An error has occured.</p> : null}
-        </div>
-    );
+            {userData.firstName && ( // This isn't great, but I'm not going to worry about it for the moment.
+              <div>
+                <p>User data:</p>
+                <p>{userData.firstName}</p>
+                <p>{userData.lastName}</p>
+                <p>{userData.email}</p>
+              </div>
+            )}
+            <p>Select continent:</p>
+            <SelectContinent continentSelectionCallback={handleUserContinentSelection} currentContinent={continent} />
+            <p>
+              What is the capital of {randomCountryData.definiteArticle ? "the " : null}
+              {randomCountryData.name}?
+            </p>
+            <button onClick={handleRevealAnswer}>Reveal answer</button>
+            {showAnswer ? <p>{randomCountryData.capital}</p> : <p></p>}
+            <button onClick={handleNextCountry}>Next country</button>
+            {/* {showConfidenceSelection ? (
+              <div>
+                <p>How well do you know this?</p>
+                <div>
+                  <ConfidenceIndexButtons
+                    randomCountryId={randomCountryData._id}
+                    confidenceIndexCallback={handleConfidenceSelection}
+                  />
+                </div>
+                <p>Note that this selection does not yet have any effect on the frequency of recurring items.</p>
+              </div>
+            ) : null} */}
+          </div>
+        )
+      )}
+      {error ? <p>An error has occured.</p> : null}
+    </div>
+  );
 };
 
 export default Home;
