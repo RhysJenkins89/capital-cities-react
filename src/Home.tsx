@@ -62,24 +62,6 @@ const Home: React.FC = () => {
     }
     const randomCountry: CountryData = data[Math.floor(Math.random() * data.length)];
     setRandomCountryData(randomCountry);
-
-    // Test here
-    // const testAuth = async function () {
-    //     console.log("This is the test auth function.");
-    //     const response: Response = await fetch(`${API_URL}/auth`, {
-    //         credentials: "include",
-    //     });
-    //     if (!response.ok) {
-    //         const body = await response.json();
-    //         console.log("Response not okay:", body);
-    //     } else {
-    //         const data = await response.json();
-    //         console.log("data:", data);
-    //         return data;
-    //     }
-    // };
-
-    // testAuth();
   }, [data]);
 
   // useNavigate
@@ -100,7 +82,7 @@ const Home: React.FC = () => {
 
   const handleRevealAnswer = () => {
     setShowAnswer(true);
-    setShowConfidenceSelection(true);
+    // setShowConfidenceSelection(true);
   };
 
   const handleNextCountry = () => {
