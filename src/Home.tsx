@@ -9,16 +9,25 @@ import userAuth from "./api/userAuth";
 import SelectContinent from "./SelectContinent";
 // import UserLogin from "./UserLogin";
 // import UserSignup from "./UserRegister";
-import ContinentName from "./types/ContinentName";
 import CountryData from "./types/CountryData";
+import Continent from "./types/Continent";
+import continents from "./constants/continents";
 import ConfidenceIndexButtons from "./ConfidenceIndexButtons";
 import { useAppContext } from "./customHooks/useAppContext";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+const readLocalStorage = (): Continent => {
+  const localStorageValue = window.localStorage.getItem("lastUserContinentSelection");
+  if (localStorageValue && continents.includes(localStorageValue)) {
+    return localStorageValue;
+  }
+  return "europe";
+};
+
 const Home: React.FC = () => {
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
-  const [continent, setContinent] = useState<string>(
+  const [continent, setContinent] = useState<Continent>(
     window.localStorage.getItem("lastUserContinentSelection") || "europe",
   );
   const [showLogin, setShowLogin] = useState<boolean>(false);
@@ -97,10 +106,10 @@ const Home: React.FC = () => {
   //   mutation.mutate({ countryId: id, userConfidence: confidenceIndex });
   // };
 
-  const handleUserContinentSelection = (continentName: ContinentName["name"]) => {
-    window.localStorage.setItem("lastUserContinentSelection", continentName);
+  const handleUserContinentSelection = (continent: Continent) => {
+    window.localStorage.setItem("lastUserContinentSelection", continent);
     setShowAnswer(false);
-    setContinent(continentName);
+    setContinent(continent);
   };
 
   const handleUserSignOut = () => {

@@ -1,3 +1,5 @@
-type Continent = "europe" | "asia" | "africa" | "north-america" | "south-america" | "oceania";
+import continents from "../constants/continents";
+
+type Continent = (typeof continents)[number];
 
 export default Continent;
