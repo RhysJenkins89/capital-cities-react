@@ -19,17 +19,19 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 const readLocalStorage = (): Continent => {
   const localStorageValue = window.localStorage.getItem("lastUserContinentSelection");
-  if (localStorageValue && continents.includes(localStorageValue)) {
-    return localStorageValue;
+  function isContinent(localItem: Continent | string | null): localItem is Continent {
+    return continents.includes(localItem as Continent); // There's a better way to do this. Come back to it tomorrow.
   }
-  return "europe";
+  if (isContinent(localStorageValue)) {
+    return localStorageValue;
+  } else {
+    return "europe";
+  }
 };
 
 const Home: React.FC = () => {
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
-  const [continent, setContinent] = useState<Continent>(
-    window.localStorage.getItem("lastUserContinentSelection") || "europe",
-  );
+  const [continent, setContinent] = useState<Continent>(readLocalStorage());
   const [showLogin, setShowLogin] = useState<boolean>(false);
   const [showSignup, setShowSignup] = useState<boolean>(false);
   const [randomCountryData, setRandomCountryData] = useState<CountryData | null>(null);
