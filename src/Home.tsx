@@ -19,8 +19,10 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 const readLocalStorage = (): Continent => {
   const localStorageValue = window.localStorage.getItem("lastUserContinentSelection");
-  function isContinent(localItem: Continent | string | null): localItem is Continent {
-    return continents.includes(localItem as Continent); // There's a better way to do this. Come back to it tomorrow.
+  function isContinent(localItem: string | null): localItem is Continent {
+    const readOnlyContinents: ReadonlyArray<string> = continents;
+    return localItem ? readOnlyContinents.includes(localItem) : false; // There's a better way to do this. Come back to it tomorrow.
+    // This doesn't make sense. Why would I assert that the item is a Contintent and then check if it's in the continents array.
   }
   if (isContinent(localStorageValue)) {
     return localStorageValue;
