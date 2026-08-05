@@ -14,22 +14,9 @@ import Continent from "./types/Continent";
 import continents from "./constants/continents";
 import ConfidenceIndexButtons from "./ConfidenceIndexButtons";
 import { useAppContext } from "./customHooks/useAppContext";
+import readLocalStorage from "./utils/readLocalStorage";
 
 const API_URL = import.meta.env.VITE_API_URL;
-
-const readLocalStorage = (): Continent => {
-  const localStorageValue = window.localStorage.getItem("lastUserContinentSelection");
-  function isContinent(localItem: string | null): localItem is Continent {
-    const readOnlyContinents: ReadonlyArray<string> = continents;
-    return localItem ? readOnlyContinents.includes(localItem) : false; // There's a better way to do this. Come back to it tomorrow.
-    // This doesn't make sense. Why would I assert that the item is a Contintent and then check if it's in the continents array.
-  }
-  if (isContinent(localStorageValue)) {
-    return localStorageValue;
-  } else {
-    return "europe";
-  }
-};
 
 const Home: React.FC = () => {
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
