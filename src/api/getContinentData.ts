@@ -9,8 +9,9 @@ const getContinentData = async (continent: Continent): Promise<CountryData[]> =>
     const continentData: CountryData[] = await data.json();
     return continentData;
   } catch (error) {
-    console.log("An error occured while fetching the data:", error);
-    throw new Error("This is the error message from getContintentData.ts");
+    console.error("An error occured while fetching the data:", error);
+    // throw new Error("This is the error message from getContintentData.ts");
+    // This throw doesn't seem to do anything. Come back to this as well.
     // Note that this line will stop execution of the function and report that something went wrong.
     // Obviously, the error should be more meaningful than this.
   }
