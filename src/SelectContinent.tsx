@@ -1,44 +1,47 @@
+import Continent from "./types/Continent";
+import continents from "./constants/continents";
+import isContinent from "./utils/isContinent";
 import capitaliseFirstLetter from "./utils/capitaliseFirstLetter";
-import ContinentName from "./types/ContinentName";
 
 type SelectContinentProps = {
-    continentSelectionCallback: (input: string) => void;
-    currentContinent: string;
+  continentSelectionCallback: (input: Continent) => void;
+  currentContinent: Continent;
 };
 
 const SelectContinent = ({ continentSelectionCallback, currentContinent }: SelectContinentProps) => {
-    const continents: string[] = ["europe", "asia", "oceania", "north-america", "south-america", "africa"];
+  const handleClick = (continent: Continent) => {
+    continentSelectionCallback(continent);
+  };
 
-    const handleClick = (continent: ContinentName["name"]) => {
-        continentSelectionCallback(continent);
-    };
+  const renderContinentText = (text: Continent): string => {
+    if (text === "north-america") return "North America";
+    if (text === "south-america") return "South America";
+    return capitaliseFirstLetter(text);
+  };
 
-    const renderContinentText = (text: string): string => {
-        if (text === "north-america") return "North America";
-        if (text === "south-america") return "South America";
-        return capitaliseFirstLetter(text);
-    };
-
-    return (
-        <div>
-            <div>
-                {continents.map((continent) => {
-                    return (
-                        <button
-                            key={continent}
-                            onClick={(event) => handleClick((event.target as HTMLInputElement).value)}
-                            value={continent}
-                        >
-                            {renderContinentText(continent)}
-                        </button>
-                    );
-                })}
-            </div>
-            <p>
-                Current continent: <span>{renderContinentText(currentContinent)}</span>
-            </p>
-        </div>
-    );
+  return (
+    <div>
+      <div>
+        {continents.map((continent) => {
+          return (
+            <button
+              key={continent}
+              onClick={(event) => handleClick((event.target as HTMLInputElement).value)}
+              // This is the problem: the value property on the HTMLInputElement type is a string. TypeScript doesn't know
+              // that the string will be one of the continents. All TypeScript knows is that it will be a string.
+              value={continent}
+            >
+              {/* event.target as HTMLInputElement).value */}
+              {renderContinentText(continent)}
+            </button>
+          );
+        })}
+      </div>
+      <p>
+        Current continent: <span>{renderContinentText(currentContinent)}</span>
+      </p>
+    </div>
+  );
 };
 
 export default SelectContinent;
