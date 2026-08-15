@@ -19,6 +19,10 @@ const SelectContinent = ({ continentSelectionCallback, currentContinent }: Selec
     return capitaliseFirstLetter(text);
   };
 
+  // You can define handleclick as an arrow function stored in a const variable. Closures should take care of this for you then as const does not get hoisted unlike a function.
+
+  // Simply changing function handleClick() { to const handleClick = () => should do the trick.
+
   return (
     <div>
       <div>
@@ -26,7 +30,10 @@ const SelectContinent = ({ continentSelectionCallback, currentContinent }: Selec
           return (
             <button
               key={continent}
-              onClick={(event) => handleClick((event.target as HTMLInputElement).value)}
+              onClick={(event) => {
+                handleClick((event.target as HTMLInputElement).value);
+              }}
+              // handleClick((event.target as HTMLInputElement).value)}
               // This is the problem: the value property on the HTMLInputElement type is a string. TypeScript doesn't know
               // that the string will be one of the continents. All TypeScript knows is that it will be a string.
               value={continent}
