@@ -23,6 +23,14 @@ const SelectContinent = ({ continentSelectionCallback, currentContinent }: Selec
 
   // Simply changing function handleClick() { to const handleClick = () => should do the trick.
 
+  // I need:
+  //    - change cities-api.rhysjenkins.uk to cities.rhysjenkins.uk/api
+  //    - a staging build
+  //    - a dev database
+  //    - pipelines
+  //    - to look into basic project management
+  //    - to look into deploying this app myself
+
   return (
     <div>
       <div>
