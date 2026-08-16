@@ -10,19 +10,19 @@ import UserLogin from "./UserLogin";
 const queryClient: QueryClient = new QueryClient();
 
 const App = () => {
-    return (
-        <BrowserRouter>
-            <AppContextProvider>
-                <QueryClientProvider client={queryClient}>
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/register" element={<UserRegister />} />
-                        <Route path="/signin" element={<UserLogin />} />
-                    </Routes>
-                </QueryClientProvider>
-            </AppContextProvider>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <AppContextProvider>
+        <QueryClientProvider client={queryClient}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<UserRegister />} />
+            <Route path="/signin" element={<UserLogin />} />
+          </Routes>
+        </QueryClientProvider>
+      </AppContextProvider>
+    </BrowserRouter>
+  );
 };
 
 const container = document.getElementById("root") as HTMLElement;

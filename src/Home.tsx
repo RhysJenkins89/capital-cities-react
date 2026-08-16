@@ -39,10 +39,10 @@ const Home: React.FC = () => {
     gcTime: Infinity,
   });
 
-  const { data: userAuthData } = useQuery({
-    queryKey: ["getUserAuth"],
-    queryFn: () => userAuth(),
-  });
+  // const { data: userAuthData } = useQuery({
+  //   queryKey: ["getUserAuth"],
+  //   queryFn: () => userAuth(),
+  // });
 
   // useMutation
   const mutation = useMutation({
@@ -116,7 +116,7 @@ const Home: React.FC = () => {
       ) : (
         randomCountryData && (
           <div>
-            <div>
+            {/* <div>
               <div>
                 <button onClick={() => navigate("/register")}>Register</button>
               </div>
@@ -132,7 +132,7 @@ const Home: React.FC = () => {
                   </div>
                 </div>
               ) : null}
-            </div>
+            </div> 
             {userIsLoggedIn ? (
               <div>
                 <p>User logged in.</p>
@@ -141,7 +141,7 @@ const Home: React.FC = () => {
               <div>
                 <p>User not logged in.</p>
               </div>
-            )}
+            )} */}
             {userData.firstName && ( // This isn't great, but I'm not going to worry about it for the moment.
               <div>
                 <p>User data:</p>

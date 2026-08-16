@@ -30,6 +30,7 @@ const SelectContinent = ({ continentSelectionCallback, currentContinent }: Selec
   //    - pipelines
   //    - to look into basic project management
   //    - to look into deploying this app myself
+  //    - to cache the api response
 
   return (
     <div>
