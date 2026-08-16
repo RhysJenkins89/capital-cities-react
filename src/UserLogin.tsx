@@ -1,66 +1,81 @@
-import { useState, FormEvent, useContext } from "react";
-import { AppContext } from "./Context";
+const API_URL = import.meta.env.VITE_API_URL;
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
+import { useAppContext } from "./customHooks/useAppContext";
+import loginUser from "./api/loginUser";
 
 const UserLogin: React.FC = () => {
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+    const { setUserIsLoggedIn, setUserData } = useAppContext();
 
-    const handleUserLogin = async (event: FormEvent) => {
-        event.preventDefault();
-        try {
-            const response: Response = await fetch(
-                "http://localhost:3000/login", // I need a way to switch between the live api and my local machine
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email, password }),
-                }
-            );
+    const mutation = useMutation({
+        mutationKey: ["loginUser"],
+        mutationFn: loginUser,
+        onSuccess: (userData) => {
+            console.log("userData from UserLogin:", userData);
+            setUserData({
+                firstName: userData.data.firstName,
+                lastName: userData.data.lastName,
+                email: userData.data.email,
+            });
+            setUserIsLoggedIn(true);
+            navigate("/");
+        },
+        onError: () => {},
+    });
 
-            const userData = await response.json();
-            if (!response.ok) {
-                throw new Error(userData.error);
-            } else {
-                setUserIsLoggedIn(true);
-                console.log("userData:", userData);
-                localStorage.setItem("token", userData.token);
-                console.log("Successfully logged in. Here is the token:", userData.token);
-            }
-            // If the user successfully logs in, I need to show it somehow. However, this state should probably live in the Home component
-            // For now, show the text 'You have logged in.'
-            // Show a signout button
-            // I also need signout functionaltity
-        } catch (error) {
-            console.log("An error occured.");
-            console.log("Error:", error);
-        }
-
-        // These two might cause a problem
-        setEmail("");
-        setPassword("");
-    };
-
-    const context = useContext(AppContext);
-
-    if (!context) {
-        throw new Error("Use this component inside of the AppContextProvider component.");
+    interface IFormInput {
+        email: string;
+        password: string;
     }
 
-    const { setUserIsLoggedIn } = context;
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<IFormInput>();
+
+    const navigate = useNavigate();
+
+    const handleUserLogin: SubmitHandler<IFormInput> = async (formData: IFormInput) => {
+        const { email, password } = formData;
+        if (!email || !password) {
+            console.error("The email and password fields are required.");
+            return;
+        }
+        mutation.mutate({ email, password });
+        reset();
+    };
 
     return (
         <div>
-            <form onSubmit={handleUserLogin}>
+            <form onSubmit={handleSubmit(handleUserLogin)}>
                 <div>
                     <label>
                         Email:
-                        <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
+                        <input
+                            {...register("email", {
+                                required: "Email enter your email.",
+                                pattern: {
+                                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                    message: "Please enter a valid email address.",
+                                },
+                            })}
+                        />
+                        {errors.email && <p>{errors.email.message}</p>}
                     </label>
                 </div>
                 <div>
                     <label>
                         Password:
-                        <input type="test" value={password} onChange={(event) => setPassword(event.target.value)} />
+                        <input
+                            type="password"
+                            {...register("password", {
+                                required: "Please enter your password.",
+                            })}
+                        />
+                        {errors.password && <p>{errors.password.message}</p>}
                     </label>
                 </div>
                 <input type="submit" />

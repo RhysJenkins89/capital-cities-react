@@ -1,11 +1,11 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-type UpdateCountryConfidenceIndexInput = {
+type PropTypes = {
     countryId: string;
     userConfidence: number;
 };
 
-const updateCountryConfidenceIndex = async ({ countryId, userConfidence }: UpdateCountryConfidenceIndexInput) => {
+const updateCountryConfidenceIndex = async ({ countryId, userConfidence }: PropTypes) => {
     try {
         const response: Response = await fetch(`${API_URL}/update`, {
             method: "PUT",
