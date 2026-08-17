@@ -27,6 +27,9 @@ const Home: React.FC = () => {
   // const [showConfidenceSelection, setShowConfidenceSelection] = useState<boolean>(false);
   const previousCountry: RefObject<string> = useRef<string>("");
 
+  console.log("continent:");
+  console.log(continent);
+
   // App context
   const { userIsLoggedIn, userData } = useAppContext();
 
@@ -100,6 +103,8 @@ const Home: React.FC = () => {
   const handleUserContinentSelection = (continent: Continent) => {
     window.localStorage.setItem("lastUserContinentSelection", continent);
     setShowAnswer(false);
+    // console.log("continent:");
+    // console.log(continent);
     setContinent(continent);
   };
 
