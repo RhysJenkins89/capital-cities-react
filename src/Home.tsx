@@ -42,6 +42,9 @@ const Home: React.FC = () => {
     gcTime: Infinity,
   });
 
+  console.log("useQuery data:");
+  console.log(data);
+
   // const { data: userAuthData } = useQuery({
   //   queryKey: ["getUserAuth"],
   //   queryFn: () => userAuth(),
@@ -101,6 +104,7 @@ const Home: React.FC = () => {
   // };
 
   const handleUserContinentSelection = (continent: Continent) => {
+    console.log("handleUserContinetnSelection from Home.tsx");
     window.localStorage.setItem("lastUserContinentSelection", continent);
     setShowAnswer(false);
     // console.log("continent:");
