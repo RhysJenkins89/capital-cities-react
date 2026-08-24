@@ -10,7 +10,7 @@ type SelectContinentProps = {
 
 const SelectContinent = ({ continentSelectionCallback, currentContinent }: SelectContinentProps) => {
   const handleClick = (continent: Continent) => {
-    console.log("handleClick in SelectContinent.tsx");
+    // console.log("handleClick in SelectContinent.tsx");
     continentSelectionCallback(continent);
   };
 

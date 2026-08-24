@@ -20,15 +20,15 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 const Home: React.FC = () => {
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
-  const [continent, setContinent] = useState<Continent>(readLocalStorage());
+  const [continent, setContinent] = useState<Continent>("europe");
   const [showLogin, setShowLogin] = useState<boolean>(false);
   const [showSignup, setShowSignup] = useState<boolean>(false);
   const [randomCountryData, setRandomCountryData] = useState<CountryData | null>(null);
   // const [showConfidenceSelection, setShowConfidenceSelection] = useState<boolean>(false);
   const previousCountry: RefObject<string> = useRef<string>("");
 
-  console.log("continent:");
-  console.log(continent);
+  // console.log("continent from the main body of the component:");
+  // console.log(continent);
 
   // App context
   const { userIsLoggedIn, userData } = useAppContext();
@@ -42,8 +42,8 @@ const Home: React.FC = () => {
     gcTime: Infinity,
   });
 
-  console.log("useQuery data:");
-  console.log(data);
+  // console.log("useQuery data:");
+  // console.log(data);
 
   // const { data: userAuthData } = useQuery({
   //   queryKey: ["getUserAuth"],
@@ -104,11 +104,11 @@ const Home: React.FC = () => {
   // };
 
   const handleUserContinentSelection = (continent: Continent) => {
-    console.log("handleUserContinetnSelection from Home.tsx");
+    // console.log("handleUserContinentSelection from Home.tsx");
     window.localStorage.setItem("lastUserContinentSelection", continent);
     setShowAnswer(false);
-    // console.log("continent:");
-    // console.log(continent);
+    console.log("continent in handleUserContinentSelection:");
+    console.log(continent);
     setContinent(continent);
   };
 
@@ -151,14 +151,14 @@ const Home: React.FC = () => {
                 <p>User not logged in.</p>
               </div>
             )} */}
-            {userData.firstName && ( // This isn't great, but I'm not going to worry about it for the moment.
+            {/* {userData.firstName && ( 
               <div>
                 <p>User data:</p>
                 <p>{userData.firstName}</p>
                 <p>{userData.lastName}</p>
                 <p>{userData.email}</p>
               </div>
-            )}
+            )} */}
             <p>Select continent:</p>
             <SelectContinent continentSelectionCallback={handleUserContinentSelection} currentContinent={continent} />
             <p>
