@@ -20,15 +20,15 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 const Home: React.FC = () => {
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
-  const [continent, setContinent] = useState<Continent>("europe");
+  const [continent, setContinent] = useState<Continent>(readLocalStorage());
   const [showLogin, setShowLogin] = useState<boolean>(false);
   const [showSignup, setShowSignup] = useState<boolean>(false);
   const [randomCountryData, setRandomCountryData] = useState<CountryData | null>(null);
   // const [showConfidenceSelection, setShowConfidenceSelection] = useState<boolean>(false);
   const previousCountry: RefObject<string> = useRef<string>("");
 
-  // console.log("continent from the main body of the component:");
-  // console.log(continent);
+  console.log("continent from the main body of the component:");
+  console.log(continent);
 
   // App context
   const { userIsLoggedIn, userData } = useAppContext();
@@ -38,8 +38,8 @@ const Home: React.FC = () => {
     // I should use the error variable here to handle errors. Funny that.
     queryKey: ["getContinentData"],
     queryFn: () => getContinentData(continent),
-    staleTime: Infinity,
-    gcTime: Infinity,
+    // staleTime: Infinity,
+    // gcTime: Infinity,
   });
 
   // console.log("useQuery data:");
