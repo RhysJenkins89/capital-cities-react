@@ -42,8 +42,8 @@ const Home: React.FC = () => {
     // gcTime: Infinity,
   });
 
-  // console.log("useQuery data:");
-  // console.log(data);
+  console.log("useQuery data:");
+  console.log(data);
 
   // const { data: userAuthData } = useQuery({
   //   queryKey: ["getUserAuth"],
@@ -166,7 +166,7 @@ const Home: React.FC = () => {
               {randomCountryData.name}?
             </p>
             <button onClick={handleRevealAnswer}>Reveal answer</button>
-            {showAnswer ? <p>{randomCountryData.capital}</p> : <p></p>}
+            {showAnswer ? <p>{randomCountryData.capital}</p> : null}
             <button onClick={handleNextCountry}>Next country</button>
             {/* {showConfidenceSelection ? (
               <div>
