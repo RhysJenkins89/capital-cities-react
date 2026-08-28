@@ -27,17 +27,26 @@ const Home: React.FC = () => {
   // const [showConfidenceSelection, setShowConfidenceSelection] = useState<boolean>(false);
   const previousCountry: RefObject<string> = useRef<string>("");
 
+  console.log("continent from the main body of the component:");
+  console.log(continent);
+
   // App context
   const { userIsLoggedIn, userData } = useAppContext();
 
   // useQuery
   const { isPending, error, data } = useQuery({
     // I should use the error variable here to handle errors. Funny that.
-    queryKey: ["getContinentData"],
+    queryKey: ["getContinentData", continent],
     queryFn: () => getContinentData(continent),
     staleTime: Infinity,
     gcTime: Infinity,
   });
+
+  // How does useQuery know that the data has been updated and should, therefore, call the API again.
+  // The useQuery function doesn't know that the data variable has changed.
+
+  console.log("useQuery data:");
+  console.log(data);
 
   // const { data: userAuthData } = useQuery({
   //   queryKey: ["getUserAuth"],
@@ -57,6 +66,7 @@ const Home: React.FC = () => {
 
   // useEffect
   useEffect(() => {
+    console.log("useEffect in Home.tsx");
     if (!data) {
       return;
     }
@@ -98,9 +108,13 @@ const Home: React.FC = () => {
   // };
 
   const handleUserContinentSelection = (continent: Continent) => {
+    // console.log("handleUserContinentSelection from Home.tsx");
     window.localStorage.setItem("lastUserContinentSelection", continent);
     setShowAnswer(false);
+    console.log("continent in handleUserContinentSelection:");
+    console.log(continent);
     setContinent(continent);
+    // debugger;
   };
 
   const handleUserSignOut = () => {
@@ -142,14 +156,14 @@ const Home: React.FC = () => {
                 <p>User not logged in.</p>
               </div>
             )} */}
-            {userData.firstName && ( // This isn't great, but I'm not going to worry about it for the moment.
+            {/* {userData.firstName && ( 
               <div>
                 <p>User data:</p>
                 <p>{userData.firstName}</p>
                 <p>{userData.lastName}</p>
                 <p>{userData.email}</p>
               </div>
-            )}
+            )} */}
             <p>Select continent:</p>
             <SelectContinent continentSelectionCallback={handleUserContinentSelection} currentContinent={continent} />
             <p>
@@ -157,8 +171,13 @@ const Home: React.FC = () => {
               {randomCountryData.name}?
             </p>
             <button onClick={handleRevealAnswer}>Reveal answer</button>
-            {showAnswer ? <p>{randomCountryData.capital}</p> : <p></p>}
-            <button onClick={handleNextCountry}>Next country</button>
+            {showAnswer ? (
+              <>
+                <p>{randomCountryData.capital}</p>
+                <button onClick={handleNextCountry}>Next country</button>
+              </>
+            ) : null}
+
             {/* {showConfidenceSelection ? (
               <div>
                 <p>How well do you know this?</p>

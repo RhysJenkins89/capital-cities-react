@@ -1,6 +1,6 @@
 import Continent from "./types/Continent";
 import continents from "./constants/continents";
-import isContinent from "./utils/isContinent";
+// import isContinent from "./utils/isContinent";
 import capitaliseFirstLetter from "./utils/capitaliseFirstLetter";
 
 type SelectContinentProps = {
@@ -10,6 +10,7 @@ type SelectContinentProps = {
 
 const SelectContinent = ({ continentSelectionCallback, currentContinent }: SelectContinentProps) => {
   const handleClick = (continent: Continent) => {
+    // console.log("handleClick in SelectContinent.tsx");
     continentSelectionCallback(continent);
   };
 
@@ -40,7 +41,7 @@ const SelectContinent = ({ continentSelectionCallback, currentContinent }: Selec
             <button
               key={continent}
               onClick={(event) => {
-                handleClick((event.target as HTMLInputElement).value);
+                handleClick((event.target as HTMLInputElement).value as Continent); // as Continent is not good. But it'll do for now.
               }}
               // handleClick((event.target as HTMLInputElement).value)}
               // This is the problem: the value property on the HTMLInputElement type is a string. TypeScript doesn't know
