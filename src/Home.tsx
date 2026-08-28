@@ -36,11 +36,14 @@ const Home: React.FC = () => {
   // useQuery
   const { isPending, error, data } = useQuery({
     // I should use the error variable here to handle errors. Funny that.
-    queryKey: ["getContinentData"],
+    queryKey: ["getContinentData", continent],
     queryFn: () => getContinentData(continent),
-    // staleTime: Infinity,
-    // gcTime: Infinity,
+    staleTime: Infinity,
+    gcTime: Infinity,
   });
+
+  // How does useQuery know that the data has been updated and should, therefore, call the API again.
+  // The useQuery function doesn't know that the data variable has changed.
 
   console.log("useQuery data:");
   console.log(data);
@@ -63,6 +66,7 @@ const Home: React.FC = () => {
 
   // useEffect
   useEffect(() => {
+    console.log("useEffect in Home.tsx");
     if (!data) {
       return;
     }
@@ -110,6 +114,7 @@ const Home: React.FC = () => {
     console.log("continent in handleUserContinentSelection:");
     console.log(continent);
     setContinent(continent);
+    // debugger;
   };
 
   const handleUserSignOut = () => {
@@ -166,8 +171,13 @@ const Home: React.FC = () => {
               {randomCountryData.name}?
             </p>
             <button onClick={handleRevealAnswer}>Reveal answer</button>
-            {showAnswer ? <p>{randomCountryData.capital}</p> : null}
-            <button onClick={handleNextCountry}>Next country</button>
+            {showAnswer ? (
+              <>
+                <p>{randomCountryData.capital}</p>
+                <button onClick={handleNextCountry}>Next country</button>
+              </>
+            ) : null}
+
             {/* {showConfidenceSelection ? (
               <div>
                 <p>How well do you know this?</p>
