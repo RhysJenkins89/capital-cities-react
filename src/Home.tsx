@@ -27,9 +27,6 @@ const Home: React.FC = () => {
   // const [showConfidenceSelection, setShowConfidenceSelection] = useState<boolean>(false);
   const previousCountry: RefObject<string> = useRef<string>("");
 
-  console.log("continent from the main body of the component:");
-  console.log(continent);
-
   // App context
   const { userIsLoggedIn, userData } = useAppContext();
 
@@ -44,9 +41,6 @@ const Home: React.FC = () => {
 
   // How does useQuery know that the data has been updated and should, therefore, call the API again.
   // The useQuery function doesn't know that the data variable has changed.
-
-  console.log("useQuery data:");
-  console.log(data);
 
   // const { data: userAuthData } = useQuery({
   //   queryKey: ["getUserAuth"],
@@ -66,7 +60,6 @@ const Home: React.FC = () => {
 
   // useEffect
   useEffect(() => {
-    console.log("useEffect in Home.tsx");
     if (!data) {
       return;
     }
@@ -108,13 +101,9 @@ const Home: React.FC = () => {
   // };
 
   const handleUserContinentSelection = (continent: Continent) => {
-    // console.log("handleUserContinentSelection from Home.tsx");
     window.localStorage.setItem("lastUserContinentSelection", continent);
     setShowAnswer(false);
-    console.log("continent in handleUserContinentSelection:");
-    console.log(continent);
     setContinent(continent);
-    // debugger;
   };
 
   const handleUserSignOut = () => {
@@ -125,29 +114,31 @@ const Home: React.FC = () => {
   return (
     <div>
       <h1>Capital cities</h1>
+      <div>
+        <div>
+          <button onClick={() => navigate("/register")}>Register</button>
+        </div>
+        <br />
+        <div>
+          <button onClick={() => navigate("/signin")}>Sign in</button>
+        </div>
+        {userIsLoggedIn ? (
+          <div>
+            <br />
+            <div>
+              <button onClick={() => handleUserSignOut()}>Sign out</button>
+            </div>
+          </div>
+        ) : null}
+      </div>
+      <p>Select continent:</p>
+      <SelectContinent continentSelectionCallback={handleUserContinentSelection} currentContinent={continent} />
       {isPending ? (
         <p>Loading country data.</p>
       ) : (
         randomCountryData && (
           <div>
-            {/* <div>
-              <div>
-                <button onClick={() => navigate("/register")}>Register</button>
-              </div>
-              <br />
-              <div>
-                <button onClick={() => navigate("/signin")}>Sign in</button>
-              </div>
-              {userIsLoggedIn ? (
-                <div>
-                  <br />
-                  <div>
-                    <button onClick={() => handleUserSignOut()}>Sign out</button>
-                  </div>
-                </div>
-              ) : null}
-            </div> 
-            {userIsLoggedIn ? (
+            {/* {userIsLoggedIn ? (
               <div>
                 <p>User logged in.</p>
               </div>
@@ -164,8 +155,6 @@ const Home: React.FC = () => {
                 <p>{userData.email}</p>
               </div>
             )} */}
-            <p>Select continent:</p>
-            <SelectContinent continentSelectionCallback={handleUserContinentSelection} currentContinent={continent} />
             <p>
               What is the capital of {randomCountryData.definiteArticle ? "the " : null}
               {randomCountryData.name}?

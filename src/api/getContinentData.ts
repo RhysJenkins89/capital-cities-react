@@ -4,7 +4,6 @@ import Continent from "../types/Continent";
 
 const getContinentData = async (continent: Continent): Promise<CountryData[]> => {
   try {
-    console.log("getContinentData.ts");
     const url: string = continent ? `${API_URL}/${continent}` : `${API_URL}/europe`;
     const data: Response = await fetch(url);
     const continentData: CountryData[] = await data.json();
