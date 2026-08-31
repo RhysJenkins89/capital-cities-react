@@ -136,6 +136,8 @@ const UserRegister: React.FC = () => {
             />
             <span style={{ cursor: "pointer" }} onClick={() => setShowPasswordText(!showPasswordText)}>
               {/* Why does onClick need to take an arrow function in this context? This would be useful to write about. */}
+              {/* Also talk about how routing works on the frontend and the backend */}
+              {/* I should actually put all of these ideas into a list. That way, I would always have something write about. */}
               {showPasswordText ? "Hide" : "Show"}
             </span>
             {errors.password && <p>{errors.password.message}</p>}
