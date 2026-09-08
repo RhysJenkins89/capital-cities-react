@@ -33,6 +33,10 @@ const SelectContinent = ({ continentSelectionCallback, currentContinent }: Selec
   //    - to look into deploying this app myself
   //    - to cache the api response
 
+  const handleUnitedStatesClick = () => {
+    console.log("The best. So big.");
+  };
+
   return (
     <div>
       <div>
@@ -53,6 +57,10 @@ const SelectContinent = ({ continentSelectionCallback, currentContinent }: Selec
             </button>
           );
         })}
+        <div style={{ margin: "1rem 0 0 0" }}></div>
+        <div>
+          <button onClick={() => handleUnitedStatesClick()}>The United States of America</button>
+        </div>
       </div>
       <p>
         Current continent: <span>{renderContinentText(currentContinent)}</span>

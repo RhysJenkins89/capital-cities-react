@@ -114,7 +114,7 @@ const Home: React.FC = () => {
   return (
     <div>
       <h1>Capital cities</h1>
-      <div>
+      {/* <div>
         <div>
           <button onClick={() => navigate("/register")}>Register</button>
         </div>
@@ -130,8 +130,8 @@ const Home: React.FC = () => {
             </div>
           </div>
         ) : null}
-      </div>
-      <p>Select continent:</p>
+      </div> */}
+      <p>Select continent or country:</p>
       <SelectContinent continentSelectionCallback={handleUserContinentSelection} currentContinent={continent} />
       {isPending ? (
         <p>Loading country data.</p>
