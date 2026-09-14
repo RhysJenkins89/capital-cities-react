@@ -57,10 +57,10 @@ const SelectContinent = ({ continentSelectionCallback, currentContinent }: Selec
             </button>
           );
         })}
-        <div style={{ margin: "1rem 0 0 0" }}></div>
+        {/* <div style={{ margin: "1rem 0 0 0" }}></div>
         <div>
           <button onClick={() => handleUnitedStatesClick()}>The United States of America</button>
-        </div>
+        </div> */}
       </div>
       <p>
         Current continent: <span>{renderContinentText(currentContinent)}</span>
