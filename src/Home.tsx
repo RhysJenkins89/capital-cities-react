@@ -133,6 +133,7 @@ const Home: React.FC = () => {
       </div> */}
       <p>Select continent or country:</p>
       <SelectContinent continentSelectionCallback={handleUserContinentSelection} currentContinent={continent} />
+      {/* Instead of handling both continents and countries in the above component, I should build a seperate component to handle country logic. All it would need to do is currentContinent state. I will also have to update the name of that veriable. But that's trvial. How would this affect the types? That's going to be worth some consideration. I could also show/hide it based on component state. Remember, all it must do is update the state that controls the data that useQuery consumes.  */}
       {isPending ? (
         <p>Loading country data.</p>
       ) : (
